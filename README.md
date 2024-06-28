@@ -71,37 +71,37 @@ In this round, the winning contestant has two minutes to find the longest word f
 
 ## Project Structure
 
-des-chiffres-et-des-lettres/
-├── client/                 # React frontend
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── NumberRound.tsx
-│   │   │   ├── LetterRound.tsx
-│   │   │   ├── Duel.tsx
-│   │   │   ├── FinalWords.tsx
-│   │   ├── redux/
-│   │   │   ├── store.ts
-│   │   │   ├── gameSlice.ts
-│   │   ├── services/
-│   │   │   ├── gameService.ts
-│   │   ├── App.tsx
-│   │   ├── index.tsx
-│   ├── package.json
-│   ├── tsconfig.json
-│   ├── README.md
-├── server/                 # Node.js backend
-│   ├── src/
-│   │   ├── routes/
-│   │   │   ├── gameRoutes.ts
-│   │   ├── controllers/
-│   │   │   ├── gameController.ts
-│   │   ├── app.ts
-│   │   ├── server.ts
-│   ├── tsconfig.json
-│   ├── package.json
-├── README.md
-└─ README.md
+des-chiffres-et-des-lettres/</br>
+├── client/                 # React frontend</br>
+│   ├── public/</br>
+│   ├── src/</br>
+│   │   ├── components/</br>
+│   │   │   ├── NumberRound.tsx</br>
+│   │   │   ├── LetterRound.tsx</br>
+│   │   │   ├── Duel.tsx</br>
+│   │   │   ├── FinalWords.tsx</br>
+│   │   ├── redux/</br>
+│   │   │   ├── store.ts</br>
+│   │   │   ├── gameSlice.ts</br>
+│   │   ├── services/</br>
+│   │   │   ├── gameService.ts</br>
+│   │   ├── App.tsx</br>
+│   │   ├── index.tsx</br>
+│   ├── package.json</br>
+│   ├── tsconfig.json</br>
+│   ├── README.md</br>
+├── server/                 # Node.js backend</br>
+│   ├── src/</br>
+│   │   ├── routes/</br>
+│   │   │   ├── gameRoutes.ts</br>
+│   │   ├── controllers/</br>
+│   │   │   ├── gameController.ts</br>
+│   │   ├── app.ts</br>
+│   │   ├── server.ts</br>
+│   ├── tsconfig.json</br>
+│   ├── package.json</br>
+├── README.md</br>
+└─ README.md</br>
 
 ## Getting Started
 
