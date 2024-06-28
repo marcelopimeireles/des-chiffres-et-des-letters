@@ -1,10 +1,39 @@
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+} */
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  
+  overflow: hidden;
+  
+  color: white;
+  font: 300 15px / 1 "Chivo Mono", monospace;
+  letter-spacing: 0.075em;
+  
+  &:before {
+    position: absolute;
+    inset: -100px;
+    z-index: -1;
+    
+    display: block;
+    
+    background: #093740 url("https://assets.codepen.io/5817405/noise_2.png");
+    background-blend-mode: overlay;
+
+    animation: noise-background 0.5s steps(1) infinite;
+
+    content: '';
+  }
 }
 
 code {

@@ -1,5 +1,13 @@
 .App {
   text-align: center;
+  background-color: #282c34;
+  background-image: url(./images/Logo.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 20px;
 }
 
 .App-logo {
