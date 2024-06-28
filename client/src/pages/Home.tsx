@@ -1,17 +1,9 @@
-import React from 'react';
-import './Home.scss';
+import ActionButton from '../components/ActionButton';
 
-const Home: React.FC = () => {
+const Home = () => {
 
   return (
-    <a href="/letter-round" className="btn" target="_blank">
-        <span className="btn__inner">
-          <span className="btn__label" data-label="Get ready" data-hover="Go!💪">
-              Get in touch
-              <span className="btn__label__background"></span>
-          </span>
-      </span><span className="btn__background"></span>
-      </a>
+    <ActionButton label="Get ready" hover="Go!💪" link="/letter-round" />
   );
 };
 
