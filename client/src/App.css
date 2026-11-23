@@ -344,3 +344,24 @@
   .letter-choice-controls .button { min-width: 0; flex: 1; }
   .letter-draw-controls .button { width: 100%; }
 }
+
+/* Dictionary language selector for a new letters round. */
+.language-selector {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 12px;
+  margin: 0 0 33px; padding: 14px 16px;
+  background: rgba(6, 15, 42, .56);
+  border: 1px solid rgba(179, 204, 255, .19);
+  border-radius: 8px;
+}
+.language-selector label { color: #eef2ff; font-size: 13px; font-weight: 800; }
+.language-selector select {
+  min-height: 42px; min-width: 185px; padding: 0 30px 0 12px;
+  color: #fff; background: #182752;
+  border: 1px solid #586ca2; border-radius: 6px;
+  font: inherit; font-size: 14px;
+}
+.language-selector select:disabled { opacity: .72; cursor: not-allowed; }
+.language-selector-hint { flex: 1; color: #adbee5; font-size: 12px; line-height: 1.5; }
+@media (max-width: 490px) {
+  .language-selector select { flex: 1; width: 100%; }
+}
