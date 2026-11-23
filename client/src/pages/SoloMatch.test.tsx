@@ -14,7 +14,9 @@ jest.mock('../services/gameService', () => ({
   validateLettersWord: jest.fn(),
   validateNumbersAnswer: jest.fn(),
   fetchLettersSolutions: jest.fn(),
-  fetchNumbersSolutions: jest.fn()
+  fetchNumbersSolutions: jest.fn(),
+  validateDuelAnswer: jest.fn(), validateFinaleWord: jest.fn(), skipFinaleWord: jest.fn(),
+  fetchDuelSolution: jest.fn(), fetchFinaleSolutions: jest.fn()
 }));
 
 const create = createSoloMatch as jest.MockedFunction<typeof createSoloMatch>;
@@ -26,7 +28,7 @@ const numberSolutions = fetchNumbersSolutions as jest.MockedFunction<typeof fetc
 
 const playing: MatchData = {
   matchId: 'match-test', language: 'fr', largeCount: 2,
-  totalRounds: 6, currentIndex: 0, status: 'playing', totalScore: 0,
+  totalRounds: 9, currentIndex: 0, status: 'playing', totalScore: 0,
   history: [],
   current: {
     kind: 'letters', index: 0, drawId: 'letters-round',
@@ -56,7 +58,7 @@ beforeEach(() => {
   letterSolutions.mockResolvedValue({bestLength: 5, bestWords: ['carte'], lexiconEntries: 11000});
 });
 
-test('creates a six-round solo game and persists match ID', async () => {
+test('creates a nine-stage solo game and persists match ID', async () => {
   render(<MemoryRouter><SoloMatch /></MemoryRouter>);
   await screen.findByText('Nouvelle partie');
   fireEvent.change(screen.getByRole('combobox', { name: 'Langue des lettres' }), {
@@ -104,11 +106,11 @@ test('restores saved server match on page reload', async () => {
 
 test('finished match shows server score and new match option', async () => {
   const done: MatchData = {
-    ...review, currentIndex: 6, status: 'finished', current: null,
+    ...review, currentIndex: 9, status: 'finished', current: null,
     history: [
       ...review.history,
-      ...[1,2,3,4,5].map(index => ({
-        kind: (index % 2 ? 'numbers' : 'letters') as 'numbers' | 'letters',
+      ...[1,2,3,4,5,6,7,8].map(index => ({
+        kind: (index < 6 ? (index % 2 ? 'numbers' : 'letters') : index < 8 ? 'duel' : 'final') as 'numbers' | 'letters' | 'duel' | 'final',
         index, drawId: String(index), score: 0, answer: null
       }))
     ]
