@@ -1,51 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import CountdownClock from '../components/CountdownClock';
+import StudioRound from '../components/StudioRound';
 import { fetchDuel } from '../services/gameService';
 
-interface DuelProps {
-  type: string;
-  challenge: string;
-  answer: string;
-}
-
-const Duel: React.FC<DuelProps> = () => {
-  const [type, setType] = useState<string>('');
-  const [challenge, setChallenge] = useState<string>('');
-  const [answer, setAnswer] = useState<string>('');
-  const [input, setInput] = useState<string>('');
-  const [result, setResult] = useState<string | null>(null);
+const Duel: React.FC = () => {
+  const [challenge, setChallenge] = useState('');
+  const [answer, setAnswer] = useState('');
+  const [type, setType] = useState('');
+  const [input, setInput] = useState('');
+  const [feedback, setFeedback] = useState('');
+  const [won, setWon] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchDuel().then(data => {
-      setType(data.type);
       setChallenge(data.challenge);
       setAnswer(data.answer);
-    });
+      setType(data.type);
+    }).catch(() => setFeedback('Le serveur de jeu est indisponible.'))
+      .finally(() => setLoading(false));
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (input.toLowerCase() === answer.toLowerCase()) {
-      setResult('Correct');
-    } else {
-      setResult('Incorrect');
-    }
+  const submit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const correct = input.trim().toLocaleUpperCase('fr') === answer.toLocaleUpperCase('fr');
+    setWon(correct);
+    setFeedback(correct ? 'Bonne réponse !' : 'Ce n’est pas la réponse attendue.');
   };
 
   return (
-    <div>
-      <h2>Duel: {type}</h2>
-      <p>Challenge: {challenge}</p>
-      <form onSubmit={handleSubmit}>
-        <input 
-          type="text" 
-          value={input} 
-          onChange={(e) => setInput(e.target.value)} 
-          placeholder="Enter your answer" 
-        />
-        <button type="submit">Submit</button>
+    <StudioRound number="03" title="Les duels" animationCue={won ? "success" : "draw"}
+      description="Un défi de rapidité. Découvrez l’énigme et proposez votre réponse."
+      aside={<><CountdownClock seconds={30} resetKey={1} running={!loading && !won} />
+        <p className="aside-note">Prototype : les différents types de duels seront ajoutés progressivement.</p></>}>
+      <div className="puzzle-label">DÉFI : {type || 'CHARGEMENT'}</div>
+      <div className="target-display" style={{ fontSize: 34, letterSpacing: 4 }}>{loading ? '···' : challenge}</div>
+      <form className="answer-form" onSubmit={submit}>
+        <label htmlFor="duel-answer">Votre réponse</label>
+        <div className="answer-row">
+          <input id="duel-answer" value={input} onChange={event => setInput(event.target.value)}
+            placeholder="Votre solution…" disabled={loading || won} required />
+          <button className="button button--primary" type="submit" disabled={loading || won}>Valider</button>
+        </div>
       </form>
-      {result && <p>{result}</p>}
-    </div>
+      {feedback && <p className={`answer-feedback ${won ? 'answer-feedback--success' : ''}`} role="status">{feedback}</p>}
+    </StudioRound>
   );
 };
 

@@ -1,23 +1,21 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/game';
+// Override for production with REACT_APP_API_URL; localhost remains the dev default.
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/game';
 
-export const fetchNumbersGame = async () => {
-  const response = await axios.get(`${API_URL}/numbers`);
-  return response.data;
-};
+export interface NumbersGame { targetNumber: number; numbers: number[] }
+export interface LettersGame { letters: string[] }
+export interface DuelGame { type: string; challenge: string; answer: string }
+export interface FinalGame { wordSets: string[][] }
 
-export const fetchLettersGame = async () => {
-  const response = await axios.get(`${API_URL}/letters`);
-  return response.data;
-};
+export const fetchNumbersGame = async (): Promise<NumbersGame> =>
+  (await axios.get<NumbersGame>(`${API_URL}/numbers`)).data;
 
-export const fetchDuel = async () => {
-  const response = await axios.get(`${API_URL}/duel`);
-  return response.data;
-};
+export const fetchLettersGame = async (): Promise<LettersGame> =>
+  (await axios.get<LettersGame>(`${API_URL}/letters`)).data;
 
-export const fetchFinalWords = async () => {
-  const response = await axios.get(`${API_URL}/final`);
-  return response.data;
-};
+export const fetchDuel = async (): Promise<DuelGame> =>
+  (await axios.get<DuelGame>(`${API_URL}/duel`)).data;
+
+export const fetchFinalWords = async (): Promise<FinalGame> =>
+  (await axios.get<FinalGame>(`${API_URL}/final`)).data;
