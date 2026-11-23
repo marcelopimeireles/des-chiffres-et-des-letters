@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import CountdownClock from '../components/CountdownClock';
 import StudioRound from '../components/StudioRound';
 import TileRack from '../components/TileRack';
@@ -154,7 +153,9 @@ const LetterRound: React.FC = () => {
       }
     } catch (error) {
       if (revision !== requestRef.current) return;
-      const status = axios.isAxiosError(error) ? error.response?.status : undefined;
+      const status = error && typeof error === 'object' && 'response' in error
+        ? (error as { response?: { status?: number } }).response?.status
+        : undefined;
       if (status === 409 || status === 404) {
         setPhase('finished');
         setFeedback('Le temps est écoulé, ou cette ronde est déjà terminée.');
