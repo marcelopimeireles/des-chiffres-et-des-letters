@@ -451,3 +451,16 @@
   .match-history li span:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
   .match-review .button, .match-final .button { width: 100%; }
 }
+
+/* M4 duel/finale: validatable challenge presentation. */
+.challenge-setup { display: flex; flex-wrap: wrap; align-items: end; gap: 18px; margin-bottom: 22px; }
+.challenge-setup label { flex: 1 1 185px; display: flex; flex-direction: column; gap: 8px; color: #cfdaf2; font-size: 13px; font-weight: 700; }
+.challenge-setup select { min-height: 45px; padding: 8px 12px; background: #10224b; border: 1px solid #6278ae; border-radius: 6px; color: #f3f5ff; }
+.challenge-board .tile-rack { margin-bottom: 20px; }
+.challenge-calculation { padding: 28px 10px; text-align: center; font-size: clamp(26px, 5vw, 50px); color: #ffdf9c; font-weight: 900; font-variant-numeric: tabular-nums; }
+.challenge-total { color: #d9e5ff; margin: 12px 0 22px; }
+.challenge-total strong { color: #f6d796; }
+.challenge-answers { padding-left: 24px; line-height: 2; }
+.challenge-answers li { margin-bottom: 7px; }
+.challenge-answers li span { display: block; color: #c3d0ef; font-size: 13px; }
+@media(max-width:560px) { .challenge-setup .button { width: 100%; } }
