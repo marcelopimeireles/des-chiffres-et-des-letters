@@ -1,19 +1,11 @@
 import { Request, Response } from 'express';
+import { drawLetters, isLetterChoices, LetterKind, shuffle } from '../domain/letters';
 
 // Traditional pool: two of each small number and one of each large plate.
 const numberPool = [25, 50, 75, 100,
   ...Array.from({ length: 10 }, (_, i) => i + 1),
   ...Array.from({ length: 10 }, (_, i) => i + 1)
 ];
-
-function shuffle<T>(values: T[]): T[] {
-  const result = [...values];
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-  return result;
-}
 
 export const getNumbersGame = (_req: Request, res: Response) => {
   const targetNumber = Math.floor(Math.random() * 899) + 101;
@@ -22,14 +14,24 @@ export const getNumbersGame = (_req: Request, res: Response) => {
 };
 
 export const getLettersGame = (_req: Request, res: Response) => {
-  // Balanced first version; choosing vowels/consonants is future work.
-  const vowels = 'AAAAAAAEEEEEEEEIIIIIOOOOOUUU';
-  const consonants = 'BBCCDDFFGGHHJJKKLLMMNNPPQRRRSSSSTTTVVWWXXYYZZ';
-  const letters = [
-    ...Array.from({ length: 5 }, () => vowels[Math.floor(Math.random() * vowels.length)]),
-    ...Array.from({ length: 5 }, () => consonants[Math.floor(Math.random() * consonants.length)])
-  ];
-  res.json({ letters: shuffle(letters) });
+  // Backward-compatible endpoint. New rounds use POST /letters/draw.
+  const types: LetterKind[] = shuffle([
+    ...Array<LetterKind>(5).fill('vowel'),
+    ...Array<LetterKind>(5).fill('consonant')
+  ]);
+  res.json({ letters: drawLetters(types) });
+};
+
+export const createLettersDraw = (req: Request, res: Response) => {
+  const choices: unknown = req.body?.choices;
+  if (!isLetterChoices(choices)) {
+    res.status(400).json({
+      error: 'choices must contain exactly 10 entries: vowel or consonant'
+    });
+    return;
+  }
+  const letters = drawLetters(choices);
+  res.json({ letters, choices });
 };
 
 export const getDuel = (_req: Request, res: Response) => {
