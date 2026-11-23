@@ -39,8 +39,8 @@ test('solver provides nearest approximation when no exact result exists', () => 
   const tiles = [1, 1, 1, 1, 1, 1];
   const solved = solveNumbers(tiles, 999);
   assert.equal(solved.exact, false);
-  assert.equal(solved.value, 6);
-  assert.equal(solved.distance, 993);
+  assert.equal(solved.value, 9);
+  assert.equal(solved.distance, 990);
   assert.equal(parseNumbersExpression(solved.expression, tiles), solved.value);
 });
 

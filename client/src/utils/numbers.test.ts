@@ -1,4 +1,4 @@
-import { canMakeWord, evaluateNumbersExpression } from './numbers';
+import { canMakeWord, evaluateNumbersExpression, calculateBuilderStep } from './numbers';
 
 describe('safe numbers expression evaluator', () => {
   const tiles = [10, 5, 8, 3, 2, 1];
@@ -35,4 +35,11 @@ test('Portuguese and French accents use their unaccented letter tiles', () => {
   expect(canMakeWord('café', ['C','A','F','E'])).toBe(true);
   expect(canMakeWord('cœur', ['C','O','E','U','R'])).toBe(true);
   expect(canMakeWord('café!', ['C','A','F','E'])).toBe(false);
+});
+
+test('number step builder uses integer-only arithmetic', () => {
+  expect(calculateBuilderStep(25, 75, '+')).toBe(100);
+  expect(calculateBuilderStep(100, 25, '/')).toBe(4);
+  expect(() => calculateBuilderStep(10, 3, '/')).toThrow();
+  expect(() => calculateBuilderStep(3, 10, '-')).toThrow();
 });
