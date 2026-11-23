@@ -73,7 +73,7 @@ test('a valid English word is only accepted after server dictionary validation',
     await act(async () => { await Promise.resolve(); });
     expect(mockedValidate).toHaveBeenCalledWith('example-uuid', 'cat');
     expect(screen.getByText(/Mot reconnu dans le lexique local/)).toBeInTheDocument();
-    expect(screen.getByText(/3 points/)).toBeInTheDocument();
+    expect(screen.getByText('3 points')).toBeInTheDocument();
     expect(screen.getByText('certain')).toBeInTheDocument();
   } finally {
     jest.useRealTimers();
