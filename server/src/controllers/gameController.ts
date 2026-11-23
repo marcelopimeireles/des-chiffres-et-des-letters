@@ -91,6 +91,7 @@ export const validateLettersWord = (req: Request, res: Response) => {
       res.status(409).json({ code: 'round_finished', error: 'Round already finished.' });
       return;
     }
+    soloMatchStore.markResolved(round.drawId);
     res.json({
       valid: true, reason: 'accepted', language: round.language,
       word: canonical, score, source: 'local-lexicon',
