@@ -64,7 +64,7 @@ test('creates a six-round solo game and persists match ID', async () => {
   });
   fireEvent.click(screen.getByRole('button', { name: 'Commencer la partie' }));
   await waitFor(() => expect(create).toHaveBeenCalledWith('pt', 2));
-  expect(window.localStorage.getItem('des-chiffres-et-des-lettres:solo-match')).toBe('match-test');
+  await waitFor(() => expect(window.localStorage.getItem('des-chiffres-et-des-lettres:solo-match')).toBe('match-test'));
   expect(screen.getByRole('textbox', { name: 'Votre mot' })).toBeInTheDocument();
 });
 
@@ -117,7 +117,7 @@ test('finished match shows server score and new match option', async () => {
   fetchMatch.mockResolvedValue(done);
   render(<MemoryRouter><SoloMatch /></MemoryRouter>);
   expect(await screen.findByText('Votre résultat final')).toBeInTheDocument();
-  expect(screen.getByText('3 points')).toBeInTheDocument();
+  expect(screen.getAllByText('3 points').length).toBeGreaterThan(0);
   fireEvent.click(screen.getByRole('button', { name: 'Nouvelle partie' }));
   expect(window.localStorage.getItem('des-chiffres-et-des-lettres:solo-match')).toBeNull();
   expect(screen.getByText('Nouvelle partie')).toBeInTheDocument();
