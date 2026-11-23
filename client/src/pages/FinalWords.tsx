@@ -74,7 +74,7 @@ const FinalWords: React.FC = () => {
     <StudioRound number="04" title="Les mots de la fin"
       animationCue={round?.finished && round.score > 0 ? 'success' : 'draw'}
       description="Huit anagrammes de dix lettres, deux minutes globales. 10 points par mot validé."
-      aside={round && <><DeadlineClock deadlineAt={round.deadlineAt}
+      aside={round && <><DeadlineClock deadlineAt={round.deadlineAt} totalSeconds={120}
         running={!round.finished} onExpire={() => void refresh(round.drawId)} />
         <p className="aside-note">Le temps continue entre les huit tirages et après un rechargement.</p></>}>
       {!round && <section className="challenge-setup">

@@ -226,6 +226,7 @@ const SoloMatch: React.FC = () => {
       description="Neuf épreuves : trois lettres, trois comptes, deux duels et une finale de huit mots. Les scores viennent du serveur."
       aside={round && !finished ? <>
         <DeadlineClock key={round.drawId} deadlineAt={round.deadlineAt}
+          totalSeconds={round.kind === 'final' ? 120 : round.kind === 'numbers' ? 45 : round.kind === 'letters' ? 33 : 30}
           running={match?.status === 'playing'}
           onExpire={() => { if (match) void load(match.matchId); }} />
         <p className="aside-note">Le chrono est contrôlé par le serveur. Actualiser la page ne relance pas le temps.</p>
