@@ -10,6 +10,7 @@ As modalidades Letras e Números já validam respostas no servidor e revelam sol
 
 - [Roadmap de desenvolvimento](ROADMAP.md)
 - [Guia do estúdio e das animações Rive](docs/STUDIO-AND-RIVE.md)
+- [Deploy na Vercel (React + Express + Redis)](docs/DEPLOY-VERCEL.md)
 
 ## Tecnologias
 
@@ -149,6 +150,24 @@ responde HTTP 503; a ação pode ter sido aplicada em memória. Consulte o
 estado da partida antes de repetir a submissão.
 
 Consulte [Persistência e recuperação](docs/GAME-STATE-PERSISTENCE.md).
+
+## Deploy na Vercel
+
+O repositório está preparado para **dois projetos Vercel** a partir do mesmo
+GitHub: `client/` para a SPA React e `server/` para a API Express. Em
+Vercel, o estado das partidas usa Redis externo (Upstash) em vez de ficheiros
+locais. **Sem as credenciais Redis, a API devolve HTTP 503 e não
+inicia partidas efémeras.**
+
+Antes de importar os projetos, consulte os passos completos em
+[docs/DEPLOY-VERCEL.md](docs/DEPLOY-VERCEL.md). As variáveis obrigatórias
+são `REACT_APP_API_URL` no frontend e `UPSTASH_REDIS_REST_URL` /
+`UPSTASH_REDIS_REST_TOKEN` no backend. Recomenda-se também
+`CORS_ORIGIN` e um `GAME_STATE_REDIS_KEY` isolado por ambiente.
+
+O deploy público só fica ativo **depois** de associar o repositório à conta
+Vercel, criar o Redis, inserir credenciais e publicar os dois projetos.
+Ter os ficheiros `vercel.json` no Git não cria o projeto na plataforma.
 
 ## 5. Testes e build
 
