@@ -19,7 +19,7 @@ export interface RuntimeGameStores {
   matches: SoloMatchStore;
 }
 
-const globalStores: RuntimeGameStores = {
+export const globalStores: RuntimeGameStores = {
   letters: letterRoundStore,
   numbers: numberRoundStore,
   duels: duelRoundStore,
@@ -61,7 +61,7 @@ function assertArray(
   }
 }
 
-function parseGameState(raw: string): StoredGameState {
+export function parseGameState(raw: string): StoredGameState {
   if (Buffer.byteLength(raw, 'utf8') > 16 * 1024 * 1024) {
     throw new Error('Game state is larger than the supported limit.');
   }
@@ -125,6 +125,38 @@ function parseGameState(raw: string): StoredGameState {
   return value as unknown as StoredGameState;
 }
 
+/** Serialize all authoritative round and match stores; includes secret answers. */
+export function serializeGameState(stores: RuntimeGameStores): string {
+  const contents: StoredGameState = {
+    version: 1,
+    savedAt: Date.now(),
+    letters: stores.letters.exportState(),
+    numbers: stores.numbers.exportState(),
+    duels: stores.duels.exportState(),
+    finals: stores.finals.exportState(),
+    matches: stores.matches.exportState()
+  };
+  return JSON.stringify(contents);
+}
+
+/** Fully validate before modifying the stores. Used by disk and Redis adapters. */
+export function hydrateGameState(raw: string | StoredGameState, stores: RuntimeGameStores): void {
+  const parsed = typeof raw === 'string' ? parseGameState(raw) : raw;
+  stores.letters.restoreState(parsed.letters);
+  stores.numbers.restoreState(parsed.numbers);
+  stores.duels.restoreState(parsed.duels);
+  stores.finals.restoreState(parsed.finals);
+  stores.matches.restoreState(parsed.matches);
+}
+
+export function clearGameState(stores: RuntimeGameStores): void {
+  stores.letters.restoreState([]);
+  stores.numbers.restoreState([]);
+  stores.duels.restoreState([]);
+  stores.finals.restoreState([]);
+  stores.matches.restoreState([]);
+}
+
 /**
  * One-process, one-filesystem persistence. Each successful API mutation writes
  * a full versioned state snapshot to a private temp file and atomically renames
@@ -144,30 +176,18 @@ export class GameStatePersistence {
     const parsed = parseGameState(readFileSync(this.file, 'utf8'));
     // Validate every section before mutating any store: a corrupted file
     // aborts startup instead of silently resetting players' scores.
-    this.stores.letters.restoreState(parsed.letters);
-    this.stores.numbers.restoreState(parsed.numbers);
-    this.stores.duels.restoreState(parsed.duels);
-    this.stores.finals.restoreState(parsed.finals);
-    this.stores.matches.restoreState(parsed.matches);
+    hydrateGameState(parsed, this.stores);
     return true;
   }
 
   save(): void {
-    const contents: StoredGameState = {
-      version: 1,
-      savedAt: Date.now(),
-      letters: this.stores.letters.exportState(),
-      numbers: this.stores.numbers.exportState(),
-      duels: this.stores.duels.exportState(),
-      finals: this.stores.finals.exportState(),
-      matches: this.stores.matches.exportState()
-    };
+    const contents = serializeGameState(this.stores);
     const path = resolve(this.file);
     const directory = dirname(path);
     mkdirSync(directory, { recursive: true, mode: 0o700 });
     const temporary = path + '.' + process.pid + '.' + randomUUID() + '.tmp';
     try {
-      writeFileSync(temporary, JSON.stringify(contents), { mode: 0o600, flag: 'wx' });
+      writeFileSync(temporary, contents, { mode: 0o600, flag: 'wx' });
       const fd = openSync(temporary, 'r');
       try { fsyncSync(fd); } finally { closeSync(fd); }
       renameSync(temporary, path);
