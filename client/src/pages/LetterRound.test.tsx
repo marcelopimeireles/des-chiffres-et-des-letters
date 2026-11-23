@@ -21,7 +21,8 @@ test('language selection is sent to the server and locked once drawing starts', 
   mockedDraw.mockResolvedValue({
     drawId: 'example-uuid', language: 'pt',
     letters: ['A','B','C','D','E','F','G','H','I','J'],
-    choices: Array(10).fill('vowel')
+    choices: Array(10).fill('vowel'), deadlineAt: Date.now() + 32300,
+    revealDurationMs: 2300, playSeconds: 30
   });
   render(<MemoryRouter><LetterRound /></MemoryRouter>);
   const selector = screen.getByRole('combobox', { name: 'Langue du dictionnaire' });
@@ -51,10 +52,12 @@ test('a valid English word is only accepted after server dictionary validation',
     mockedDraw.mockResolvedValue({
       drawId: 'example-uuid', language: 'en',
       letters: ['C','A','T','E','R','S','O','N','L','I'],
-      choices: Array(10).fill('consonant')
+      choices: Array(10).fill('consonant'), deadlineAt: Date.now() + 32300,
+      revealDurationMs: 2300, playSeconds: 30
     });
     mockedValidate.mockResolvedValue({
-      valid: true, reason: 'accepted', language: 'en', word: 'cat', source: 'dictionaryapi.dev'
+      valid: true, reason: 'accepted', language: 'en', word: 'cat', score: 3,
+      source: 'local-lexicon', solutions: { bestLength: 7, bestWords: ['certain'], lexiconEntries: 4867 }
     });
     render(<MemoryRouter><LetterRound /></MemoryRouter>);
     fireEvent.change(screen.getByRole('combobox'), { target: { value: 'en' } });
@@ -69,7 +72,9 @@ test('a valid English word is only accepted after server dictionary validation',
     fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
     await act(async () => { await Promise.resolve(); });
     expect(mockedValidate).toHaveBeenCalledWith('example-uuid', 'cat');
-    expect(screen.getByText(/Mot reconnu par le dictionnaire/)).toBeInTheDocument();
+    expect(screen.getByText(/Mot reconnu dans le lexique local/)).toBeInTheDocument();
+    expect(screen.getByText(/3 points/)).toBeInTheDocument();
+    expect(screen.getByText('certain')).toBeInTheDocument();
   } finally {
     jest.useRealTimers();
   }

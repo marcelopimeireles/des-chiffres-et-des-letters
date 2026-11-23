@@ -18,10 +18,10 @@
 | Tabuleiros e cronómetros | 🟡 Em evolução | Letras: escolha, revelação e prazo de resposta; outras rondas ainda só visual |
 | Parser matemático seguro; impede reutilização de placa | ✅ Implementado | Não equivale a validar todas as regras da modalidade |
 | Sorteio de seis placas com placas grandes | ✅ Implementado | Alvo aleatório pode não ter solução exata |
-| Sorteio de letras interativo | 🟡 Em evolução | Escolha de língua en/pt/fr, dicionário remoto e `drawId`; falta fonte licenciada definitiva, pontos e solução |
+| Sorteio de letras interativo | 🟡 Em evolução | EN/PT-PT/FR, léxicos locais, prazo no servidor, pontos provisórios e solver; falta regras oficiais e persistência |
 | Integração Rive por máquina `Studio` / `intro, draw, success` | 🟡 Ponte de código | **Ainda não existe asset `.riv`** |
 | Duels / Final Words | 🟡 Ecrãs demonstrativos | Dados fixos/provisórios no backend |
-| Pontuação, progressão de partida, regras de tempo | ❌ Pendente | Não existe motor de partida completo |
+| Pontuação, progressão de partida, regras de tempo | 🟡 Parcial | Letras pontuadas pelo servidor e prazo fixo; partida entre provas pendente |
 | CI com testes e build do cliente | ✅ Implementado | Ampliar cobertura |
 
 ## 2. Entregas por versão
@@ -74,18 +74,19 @@ licença compatível (uso comercial/redistribuição, se aplicável).
 - [x] Validar no servidor a sequência de dez escolhas e revelar as letras por ordem.
 - [x] Guardar temporariamente sorteio e idioma no servidor usando `drawId` (5 minutos, em memória).
 - [ ] Adicionar `seed` e armazenamento persistente para auditabilidade/reinício do servidor.
-- [x] Adicionar seletor de língua (en, pt-BR, fr) e consulta lexical no servidor via API remota (primeira versão).
-- [ ] Adotar léxicos completos por língua (preferir pt-PT para Portugal), documentar licenças,
-      normalização Unicode, flexões e lista de palavras admitidas nas regras finais.
-- [x] Validar no **servidor** o idioma do sorteio, as letras utilizadas e existência no dicionário remoto.
-- [ ] Adicionar cache, quotas e serviço lexical local/sem rede quando a versão de concurso for fechada.
-- [ ] Calcular tamanho, melhor palavra possível e exemplos de soluções
-      após a revelação (não antes).
-- [x] Impedir submissão após os 30 segundos de uma ronda de Letras (validação no cliente, ainda não autoritativa).
-- [ ] Implementar pontuação, feedback lexical, tempo regulamentar configurável
-      e histórico da ronda no servidor.
-- [ ] Testar acentos, letras repetidas, maiúsculas, palavras inválidas e
-      limites de tempo.
+- [x] Seletor de língua EN, PT-PT e FR com validação em léxicos locais offline.
+- [x] Disponibilizar subconjuntos de léxicos locais e documentar fontes/licenças.
+- [ ] Substituir subconjuntos por dicionários completos de competição, com revisão de direitos, flexões e lista de termos admitidos.
+- [x] Validar no **servidor** idioma, letras utilizadas e existência no léxico offline.
+- [x] Substituir a API remota por índices lexicais carregados em memória; nenhuma consulta externa necessária.
+- [ ] Rever qualidade da curadoria e proveniência dos dados antes de uso comercial.
+- [x] Calcular comprimento da melhor palavra **do léxico instalado** e exemplos após o fim da ronda.
+- [ ] Usar léxicos completos para garantir a melhor palavra possível em competição.
+- [x] Aplicar prazo máximo (30 s mais revelação) no servidor e bloquear submissões/repetição de pontos.
+- [x] Aplicar pontuação provisória de 1 ponto/letra e apresentar os melhores termos do léxico.
+- [ ] Configurar barème regulamentar e guardar histórico de rondas persistente.
+- [x] Testes de acentos, letras repetidas, palavras inválidas e limites de tempo no domínio.
+- [ ] Testes completos de integração e acessibilidade em browsers reais.
 
 **Aceitação:** uma resposta só recebe pontos quando pode ser formada com o
 tiragem **e** consta do dicionário aprovado; soluções e pontuação são
@@ -248,7 +249,7 @@ Uma issue funcional está concluída apenas quando:
 **Concluído nesta branch:**
 
 - Escolha manual de 10 vogais/consoantes, desfazer, escolha automática (5 V / 5 C).
-- Escolha de English, Português (Brasil) ou Français ANTES do sorteio; consulta de dicionário e composição no backend.
+- Escolha de English, Português (Portugal) ou Français ANTES do sorteio; verificação offline e pontuação no backend.
 - `POST /api/game/letters/draw` valida o padrão e sorteia as letras no servidor.
 - Animação CSS de revelação sequencial de cada peça, com ponte Rive `draw` preservada.
 - Cronómetro de 30 s começa depois da última peça e termina a rodada; a entrada de
@@ -257,10 +258,10 @@ Uma issue funcional está concluída apenas quando:
 
 **Ainda não concluído / bloqueadores para a primeira vertical slice:**
 
-1. Substituir o dicionário remoto provisório por léxicos licenciados e reproduzíveis para EN, PT (incluindo pt-PT) e FR.
+1. Melhorar a qualidade dos léxicos locais existentes, confirmar a cadeia de direitos e selecionar dicionários de concurso completos.
 2. Criar e exportar os assets reais `.riv` para `Studio` e placas.
-3. Persistir sorteios e relógio no servidor e tornar a partida verificável (o `drawId` atual vive só em memória).
-4. Somar pontos válidos, apresentar soluções e testar a experiência integral.
+3. Persistir sorteios e relógio no servidor e tornar a partida verificável (o `drawId` atual vive só em memória; o servidor já verifica o prazo).
+4. ~~Somar pontos provisórios e apresentar soluções~~ concluído; integrar teste ponta a ponta, regras oficiais e placar entre rondas.
 
 A interface **não atribui pontos** por palavras apenas formáveis. As animações
 CSS disponíveis não devem ser confundidas com assets Rive finalizados.
