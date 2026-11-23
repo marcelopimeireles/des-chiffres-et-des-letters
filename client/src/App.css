@@ -365,3 +365,22 @@
 @media (max-width: 490px) {
   .language-selector select { flex: 1; width: 100%; }
 }
+
+/* Result panel for the local lexicon solver. */
+.letter-results {
+  margin: 20px 0 28px;
+  padding: clamp(16px, 3vw, 28px);
+  background: linear-gradient(135deg, rgba(40, 61, 118, .55), rgba(11, 24, 58, .88));
+  border: 1px solid rgba(175, 203, 255, .3);
+  border-radius: 10px;
+}
+.letter-results h2 { margin: 0 0 15px; font-size: 22px; color: #f1f4ff; }
+.letter-results p { margin: 12px 0; }
+.letter-score strong { font-size: 24px; color: #f7d591; }
+.letter-solutions-label { color: #c8d5f3; font-weight: 800; }
+.letter-solution-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.letter-solution-list span {
+  color: #15254c; background: #f9e7c7; font-weight: 800;
+  border-radius: 4px; padding: 7px 12px; text-transform: uppercase;
+}
+.letter-results .letter-data-note { color: #b8c7e6; font-size: 12px; line-height: 1.6; }

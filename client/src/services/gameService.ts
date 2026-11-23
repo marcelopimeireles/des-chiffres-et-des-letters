@@ -11,6 +11,17 @@ export interface LettersDraw extends LettersGame {
   choices: LetterKind[];
   drawId: string;
   language: WordLanguage;
+  deadlineAt: number;
+  revealDurationMs: number;
+  playSeconds: number;
+}
+
+export interface LetterSolutions {
+  bestLength: number;
+  bestWords: string[];
+  lexiconEntries: number;
+  language?: WordLanguage;
+  score?: number;
 }
 
 export type WordValidationReason =
@@ -21,7 +32,9 @@ export interface WordValidation {
   reason: WordValidationReason;
   language: WordLanguage;
   word?: string;
+  score: number;
   source?: string;
+  solutions?: LetterSolutions;
 }
 
 export interface DuelGame { type: string; challenge: string; answer: string }
@@ -42,6 +55,9 @@ export const validateLettersWord = async (
   drawId: string, word: string
 ): Promise<WordValidation> =>
   (await axios.post<WordValidation>(`${API_URL}/letters/validate`, { drawId, word })).data;
+
+export const fetchLettersSolutions = async (drawId: string): Promise<LetterSolutions> =>
+  (await axios.get<LetterSolutions>(`${API_URL}/letters/${encodeURIComponent(drawId)}/solutions`)).data;
 
 export const fetchDuel = async (): Promise<DuelGame> =>
   (await axios.get<DuelGame>(`${API_URL}/duel`)).data;

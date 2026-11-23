@@ -5,8 +5,8 @@ visual de estúdio e integração opcional com [Rive](https://rive.app).
 
 **Estado:** protótipo ativo. A interface das quatro modalidades já existe.
 A rodada de Letras permite escolher vogais e consoantes, revelar as peças e
-jogar contra o relógio. A validação lexical por idioma já funciona via API pública (requer internet).
-A pontuação completa, os duelos e a final ainda não estão implementados como partidas completas.
+jogar contra o relógio. A validação lexical funciona **offline**, com listas locais de inglês, português de Portugal e francês.
+A modalidade Letras já calcula pontos provisórios e revela soluções; os duelos e a final ainda não estão implementados como partidas completas.
 
 - [Roadmap de desenvolvimento](ROADMAP.md)
 - [Guia do estúdio e das animações Rive](docs/STUDIO-AND-RIVE.md)
@@ -148,7 +148,7 @@ O GitHub Actions também executa testes e builds após alterações relevantes.
 | Rota da interface | Modalidade | Estado |
 | --- | --- | --- |
 | `/` | Estúdio / seleção | Interface disponível |
-| `/letter-round` | Le mot le plus long | Idiomas EN/PT/FR, sorteio e validação lexical via servidor |
+| `/letter-round` | Le mot le plus long | EN/PT-PT/FR, sorteio, léxicos locais, pontuação e soluções |
 | `/number-round` | Le compte est bon | Sorteio, calculadora segura e comparação com o alvo |
 | `/duel` | Les duels | Demonstração com desafio fixo |
 | `/final-words` | Les mots de la fin | Demonstração com conjunto fixo |
@@ -159,7 +159,8 @@ Endpoints da API (`http://localhost:5000/api/game`):
 | --- | --- | --- |
 | GET | `/letters` | Tiragem automática simples (compatibilidade) |
 | POST | `/letters/draw` | Sorteia dez letras e fixa o idioma (en, pt ou fr); retorna `drawId` |
-| POST | `/letters/validate` | Valida palavra no dicionário e nas letras do sorteio identificado |
+| POST | `/letters/validate` | Valida a palavra no servidor e atribui pontos por letra se válida |
+| GET | `/letters/:drawId/solutions` | Revela as melhores palavras no léxico local após o fim da ronda |
 | GET | `/numbers` | Sorteia seis placas e o alvo |
 | GET | `/duel` | Desafio demonstrativo |
 | GET | `/final` | Conjuntos demonstrativos |
@@ -182,27 +183,36 @@ Exemplo de validação (substitua o UUID pelo `drawId` recebido):
 { "drawId": "00000000-0000-4000-8000-000000000000", "word": "bonjour" }
 ```
 
-O backend guarda temporariamente o sorteio e o idioma; **não** aceita letras
-escolhidas pelo cliente durante a validação. Os sorteios ficam em memória por
-até cinco minutos e são perdidos se o servidor reiniciar.
+O backend guarda em memória o sorteio, idioma, resposta e prazo. Não aceita
+letras fornecidas pelo browser na validação; impede que o mesmo sorteio marque
+pontos duas vezes. Os sorteios expiram após cinco minutos e perdem-se ao
+reiniciar o servidor.
 
-**Dicionários por idioma:** English usa `en`, Français usa `fr` e
-Português usa a fonte `pt-BR` (Brasil) da
-[Free Dictionary API](https://dictionaryapi.dev/). A consulta exige internet
-no **backend**; indisponibilidade ou limite de chamadas gera HTTP 503,
-não uma falsa resposta "palavra inválida". Nem todas as flexões e palavras
-admitidas em concursos televisivos estão cobertas por essa fonte, e português
-europeu ainda exige um léxico `pt-PT` próprio.
+**Dicionários locais por idioma:**
 
-**Limitações:** faltam melhor solução, pontuação e regras de um concurso
-completo; os tempos são controlados pelo cliente e o backend só guarda
-sorteios temporários. O Rive é decorativo: as regras
+| Opção | Origem | Entradas aproximadas |
+| --- | --- | --- |
+| English (`en`) | Listas de palavras comuns em inglês, domínio público | 4.867 |
+| Português (Portugal, `pt`) | Corpus de palavras portuguesas, fonte que declara domínio público | 27.248 |
+| Français (`fr`) | Vocabulário de jogos do Mot Valide, CC BY-SA 4.0 | 11.158 |
+
+O servidor lê ficheiros UTF-8 em `server/data/dictionaries`; não precisa de
+consultar serviços externos. As listas são **subconjuntos** e não equivalem
+a dicionários oficiais. A pontuação atual, **1 ponto por letra**, é provisória.
+A melhor solução é calculada **dentro da lista instalada**, não necessariamente
+a melhor palavra existente no idioma. Consultar a
+[proveniência e licenças dos léxicos](server/data/LEXICON-SOURCES.md).
+
+**Limitações:** falta um léxico integral de competição, regras finais e
+pontuação de partida. O servidor verifica o limite de tempo da ronda de Letras,
+mas a sessão está em memória e deve migrar para armazenamento persistente. O Rive é decorativo: as regras
 não devem depender da animação.
 
 ## 7. Problemas comuns
 
-- **Validação de palavra falha:** o backend precisa de acesso a `api.dictionaryapi.dev`;
-  verifique a ligação de rede. Se receber HTTP 503, repita a consulta.
+- **Dicionário local indisponível:** confirme que os ficheiros
+  `server/data/dictionaries/{en,pt,fr}.txt` estão presentes no servidor.
+  As respostas HTTP 503 indicam erro de carregamento do léxico.
 - **Letras ou números não carregam:** confirme que o servidor está em execução
   e que a URL em `REACT_APP_API_URL` aponta para `/api/game`.
 - **Porta ocupada:** altere `PORT` na API ou liberte a porta 3000 do cliente.

@@ -3,7 +3,7 @@ export type WordLanguage = 'en' | 'pt' | 'fr';
 
 export const LANGUAGE_NAMES: Record<WordLanguage, string> = {
   en: 'English',
-  pt: 'Português (Brasil)',
+  pt: 'Português (Portugal)',
   fr: 'Français'
 };
 
