@@ -236,6 +236,23 @@ export class SoloMatchStore {
     this.byDraw.set(entry.drawId, match.matchId);
   }
 
+  /** Internal match/answer history; never expose this structure via HTTP. */
+  exportState(): SoloMatch[] {
+    return [...this.matches.values()];
+  }
+
+  restoreState(rows: SoloMatch[]): void {
+    this.matches.clear();
+    this.byDraw.clear();
+    for (const match of rows) {
+      if (this.now() - match.createdAt > this.ttlMs) continue;
+      this.matches.set(match.matchId, match);
+      const entry = match.entries[match.currentIndex];
+      // Restore the callback index used to freeze validated round scores.
+      if (entry && !entry.result) this.byDraw.set(entry.drawId, match.matchId);
+    }
+  }
+
   private find(id: string): SoloMatch | undefined {
     const match = this.matches.get(id);
     if (!match) return undefined;

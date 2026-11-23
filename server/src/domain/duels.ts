@@ -118,6 +118,18 @@ export class DuelRoundStore {
     return this.isFinished(round) ? { answer: round.expected, score: round.score } : null;
   }
 
+  /** Includes expected secret answers; keep on the server only. */
+  exportState(): DuelRound[] {
+    return [...this.rounds.values()];
+  }
+
+  restoreState(rows: DuelRound[]): void {
+    this.rounds = new Map(
+      rows.filter(row => this.now() - row.createdAt <= this.ttlMs)
+        .map(row => [row.drawId, row])
+    );
+  }
+
   private prune(): void {
     for (const [id, round] of this.rounds) {
       if (this.now() - round.createdAt > this.ttlMs) this.rounds.delete(id);

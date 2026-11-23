@@ -58,6 +58,18 @@ export class NumberRoundStore {
     return Boolean(round.answer) || this.now() >= round.deadlineAt;
   }
 
+  /** Privileged local snapshot. */
+  exportState(): NumberRound[] {
+    return [...this.rounds.values()];
+  }
+
+  restoreState(rows: NumberRound[]): void {
+    this.rounds = new Map(
+      rows.filter(row => this.now() - row.createdAt <= this.ttlMs)
+        .map(row => [row.drawId, row])
+    );
+  }
+
   complete(round: NumberRound, expression: string, value: number, score: number): boolean {
     if (this.isFinished(round)) return false;
     round.answer = {
