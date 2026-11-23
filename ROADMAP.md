@@ -317,3 +317,23 @@ ou Redis antes de publicar um serviço multi-instância; criar assets Rive.
 
 **Fora do escopo:** várias instâncias, transações partilhadas, contas e
 autenticação, migração automática de schemas e backups distribuídos.
+
+
+## 13. Deploy Vercel (branch `feat/vercel-deploy-20261123`)
+
+- [x] Configurar `client/vercel.json` para Create React App com fallback de
+      rotas do React Router.
+- [x] Configurar `server/vercel.json` para entrada Express `src/app.ts`,
+      incluindo os dicionários PT/FR/EN no bundle.
+- [x] Configurar frontend para exigir `REACT_APP_API_URL` válido na Vercel.
+- [x] Configurar API serverless para guardar partidas no Upstash Redis via REST,
+      com lease distribuído e commit atómico do snapshot antes do HTTP 200.
+- [x] Separar keys de Preview e Production, com override por
+      `GAME_STATE_REDIS_KEY`; CORS configurável para o domínio do frontend.
+- [x] Documentar criação dos dois projetos, variáveis de ambiente,
+      teste de URLs e limitações.
+- [ ] Ligar a conta Vercel do proprietário, criar os projetos e definir as
+      credenciais reais do Redis **sem as adicionar ao Git**.
+- [ ] Verificar um deploy real Preview e Production e os dicionários na função.
+- [ ] Substituir o snapshot global em Redis por dados por sessão/DB mais
+      escaláveis, se necessário para maior tráfego.
