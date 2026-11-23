@@ -29,3 +29,10 @@ describe('letter composition', () => {
     expect(canMakeWord('R2', ['R', 'A'])).toBe(false);
   });
 });
+
+test('Portuguese and French accents use their unaccented letter tiles', () => {
+  expect(canMakeWord('ação', ['A','C','A','O'])).toBe(true);
+  expect(canMakeWord('café', ['C','A','F','E'])).toBe(true);
+  expect(canMakeWord('cœur', ['C','O','E','U','R'])).toBe(true);
+  expect(canMakeWord('café!', ['C','A','F','E'])).toBe(false);
+});

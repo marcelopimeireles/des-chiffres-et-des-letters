@@ -60,11 +60,15 @@ export function evaluateNumbersExpression(expression: string, available: number[
 
 export function canMakeWord(word: string, letters: string[]): boolean {
   const counts = new Map<string, number>();
+  // Accented French/Portuguese characters use the equivalent unaccented tiles.
+  const normalize = (input: string): string => input.toUpperCase()
+    .replace(/Œ/g, 'OE').replace(/Æ/g, 'AE')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   letters.forEach(letter => {
-    const character = letter.toLocaleUpperCase('fr');
+    const character = normalize(letter);
     counts.set(character, (counts.get(character) || 0) + 1);
   });
-  const normalized = word.trim().toLocaleUpperCase('fr');
+  const normalized = normalize(word.trim());
   if (!/^[A-Z]+$/.test(normalized)) return false;
   return normalized.split('').every(character => {
     const remaining = counts.get(character) || 0;

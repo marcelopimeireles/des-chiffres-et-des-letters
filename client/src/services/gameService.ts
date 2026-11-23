@@ -5,7 +5,25 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/game
 export interface NumbersGame { targetNumber: number; numbers: number[] }
 export interface LettersGame { letters: string[] }
 export type LetterKind = 'vowel' | 'consonant';
-export interface LettersDraw extends LettersGame { choices: LetterKind[] }
+export type WordLanguage = 'en' | 'pt' | 'fr';
+
+export interface LettersDraw extends LettersGame {
+  choices: LetterKind[];
+  drawId: string;
+  language: WordLanguage;
+}
+
+export type WordValidationReason =
+  'accepted' | 'not_in_dictionary' | 'letters_mismatch' | 'invalid_format';
+
+export interface WordValidation {
+  valid: boolean;
+  reason: WordValidationReason;
+  language: WordLanguage;
+  word?: string;
+  source?: string;
+}
+
 export interface DuelGame { type: string; challenge: string; answer: string }
 export interface FinalGame { wordSets: string[][] }
 
@@ -15,8 +33,15 @@ export const fetchNumbersGame = async (): Promise<NumbersGame> =>
 export const fetchLettersGame = async (): Promise<LettersGame> =>
   (await axios.get<LettersGame>(`${API_URL}/letters`)).data;
 
-export const fetchLettersDraw = async (choices: LetterKind[]): Promise<LettersDraw> =>
-  (await axios.post<LettersDraw>(`${API_URL}/letters/draw`, { choices })).data;
+export const fetchLettersDraw = async (
+  choices: LetterKind[], language: WordLanguage = 'fr'
+): Promise<LettersDraw> =>
+  (await axios.post<LettersDraw>(`${API_URL}/letters/draw`, { choices, language })).data;
+
+export const validateLettersWord = async (
+  drawId: string, word: string
+): Promise<WordValidation> =>
+  (await axios.post<WordValidation>(`${API_URL}/letters/validate`, { drawId, word })).data;
 
 export const fetchDuel = async (): Promise<DuelGame> =>
   (await axios.get<DuelGame>(`${API_URL}/duel`)).data;
