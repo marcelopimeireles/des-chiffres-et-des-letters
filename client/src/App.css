@@ -310,3 +310,8 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Custom Rive scene for the current round, if configured. */
+.round-rive-badge { width: 174px; height: 126px; flex: 0 0 174px; pointer-events: none; }
+.studio-visual--compact { height: 100%; min-height: 0; }
+@media (max-width: 760px) { .round-rive-badge { display: none; } }

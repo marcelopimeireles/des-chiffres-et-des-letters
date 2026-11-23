@@ -50,16 +50,14 @@ const assetUrl = process.env.REACT_APP_RIVE_STUDIO_SRC || '';
 interface RiveSceneProps {
   cue?: 'intro' | 'draw' | 'success';
   revision?: number;
+  compact?: boolean;
 }
 
-const RiveScene: React.FC<RiveSceneProps> = ({ cue = 'intro', revision = 0 }) => {
+const RiveScene: React.FC<RiveSceneProps> = ({ cue = 'intro', revision = 0, compact = false }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const instanceRef = useRef<RiveInstance | null>(null);
-  const cueRef = useRef(cue);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
-
-  useEffect(() => { cueRef.current = cue; }, [cue]);
 
   useEffect(() => {
     if (!assetUrl || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -76,8 +74,6 @@ const RiveScene: React.FC<RiveSceneProps> = ({ cue = 'intro', revision = 0 }) =>
           if (disposed) return;
           setReady(true);
           instanceRef.current?.resizeDrawingSurfaceToCanvas();
-          instanceRef.current?.stateMachineInputs('Studio')
-            .find(input => input.name === cueRef.current)?.fire?.();
         },
         onLoadError: () => { if (!disposed) setFailed(true); }
       });
@@ -103,8 +99,8 @@ const RiveScene: React.FC<RiveSceneProps> = ({ cue = 'intro', revision = 0 }) =>
   }, [cue, revision, ready]);
 
   return (
-    <div className="studio-visual" aria-hidden="true">
-      <div className={`studio-fallback ${ready ? 'studio-fallback--hidden' : ''}`}>
+    <div className={`studio-visual ${compact ? "studio-visual--compact" : ""}`} aria-hidden="true">
+      {!compact && <div className={`studio-fallback ${ready ? 'studio-fallback--hidden' : ''}`}>
         <div className="studio-orbit studio-orbit--outer" />
         <div className="studio-orbit studio-orbit--inner" />
         <div className="studio-light studio-light--left" />
@@ -122,7 +118,7 @@ const RiveScene: React.FC<RiveSceneProps> = ({ cue = 'intro', revision = 0 }) =>
           </div>
         </div>
         <div className="studio-floor" />
-      </div>
+      </div>}
       {assetUrl && !failed && (
         <canvas ref={canvasRef} className="rive-canvas"
           style={{ opacity: ready ? 1 : 0 }} />

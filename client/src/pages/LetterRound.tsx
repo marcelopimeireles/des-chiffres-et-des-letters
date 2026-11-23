@@ -41,7 +41,7 @@ const LetterRound: React.FC = () => {
   };
 
   return (
-    <StudioRound number="01" title="Le mot le plus long"
+    <StudioRound number="01" title="Le mot le plus long" animationCue="draw" animationRevision={round}
       description="Dix lettres à votre disposition. Trouvez la combinaison la plus longue avant la fin du compte à rebours."
       aside={<><CountdownClock seconds={30} resetKey={round} running={!loading && !validCombination} />
         <p className="aside-note">Chaque lettre ne peut être utilisée qu’une seule fois par occurrence.</p></>}>

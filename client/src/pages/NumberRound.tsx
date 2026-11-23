@@ -49,7 +49,7 @@ const NumberRound: React.FC = () => {
   };
 
   return (
-    <StudioRound number="02" title="Le compte est bon"
+    <StudioRound number="02" title="Le compte est bon" animationCue={success ? "success" : "draw"} animationRevision={round}
       description="Six plaques, quatre opérations. Atteignez le nombre cible en utilisant chaque plaque au plus une fois."
       aside={<><CountdownClock seconds={45} resetKey={round} running={!loading && !success} />
         <p className="aside-note">Utilisez +, -, * et /, avec des parenthèses si nécessaire.</p></>}>

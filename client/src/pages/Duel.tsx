@@ -29,7 +29,7 @@ const Duel: React.FC = () => {
   };
 
   return (
-    <StudioRound number="03" title="Les duels"
+    <StudioRound number="03" title="Les duels" animationCue={won ? "success" : "draw"}
       description="Un défi de rapidité. Découvrez l’énigme et proposez votre réponse."
       aside={<><CountdownClock seconds={30} resetKey={1} running={!loading && !won} />
         <p className="aside-note">Prototype : les différents types de duels seront ajoutés progressivement.</p></>}>
