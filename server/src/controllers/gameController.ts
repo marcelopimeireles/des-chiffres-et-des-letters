@@ -7,6 +7,7 @@ import {
   LETTER_PLAY_SECONDS, LETTER_REVEAL_MS, letterRoundStore
 } from '../domain/letterRounds';
 import { getLexicon, lookupDictionaryWord, solveLetters } from '../services/dictionary';
+import { soloMatchStore } from '../domain/matches';
 
 const numberPool = [25, 50, 75, 100,
   ...Array.from({ length: 10 }, (_, i) => i + 1),

@@ -36,13 +36,13 @@ test('match alternates letter and number rounds and scores only verified answers
   // Play the four remaining rounds as time-outs, without awarding points.
   let current = store.next(created.matchId);
   for (let i = 2; i < 6; i++) {
-    assert.ok(current !== 'missing' && current !== 'active');
-    if (current === 'missing' || current === 'active') throw new Error('No round');
+    assert.equal(typeof current, 'object');
+    if (typeof current === 'string') throw new Error('No round');
     assert.equal(current.current?.kind, i % 2 === 0 ? 'letters' : 'numbers');
     now = current.current!.deadlineAt + 1;
     current = store.next(created.matchId);
   }
-  if (current === 'missing' || current === 'active') throw new Error('No match');
+  if (typeof current === 'string') throw new Error('No match');
   assert.equal(current.status, 'finished');
   assert.equal(current.current, null);
   assert.equal(current.history.length, 6);
