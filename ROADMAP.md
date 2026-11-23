@@ -21,7 +21,7 @@
 | Sorteio de letras interativo | 🟡 Em evolução | EN/PT-PT/FR, léxicos locais, prazo no servidor, pontos provisórios e solver; falta regras oficiais e persistência |
 | Integração Rive por máquina `Studio` / `intro, draw, success` | 🟡 Ponte de código | **Ainda não existe asset `.riv`** |
 | Duels / Final Words | 🟡 MVP jogável | Dois duelos validados no servidor e final 8×10 letras / 120s; regras provisórias |
-| Pontuação, progressão de partida, regras de tempo | 🟡 Em evolução | M4: nove etapas (6 clássicas + 2 duelos + final), placar e retoma sem persistência de DB |
+| Pontuação, progressão de partida, regras de tempo | 🟡 Em evolução | M4: nove etapas e placar, retoma após restart via snapshot local; DB partilhada pendente |
 | CI com testes e build do cliente | ✅ Implementado | Ampliar cobertura |
 
 ## 2. Entregas por versão
@@ -125,7 +125,8 @@ reprodutíveis com um `seed` de sorteio.
 - [x] Criar placar acumulado, histórico de respostas e ecrã de resultado final do modo solo.
 - [ ] Acrescentar transições Rive reais entre provas e apresentação oficial.
 - [x] Guardar `matchId` no localStorage e retomar estado e deadline reais no servidor após refresh.
-- [ ] Persistir rondas/partidas no backend além da memória para sobreviver a deploy e várias instâncias.
+- [x] Persistir rondas/partidas em ficheiro local versionado para restart da mesma instância.
+- [ ] Migrar para DB/Redis transacional com suporte a múltiplas instâncias e deploys.
 
 **Aceitação parcial (M4 MVP):** jogador conclui nove etapas (6 clássicas,
 2 duelos, final 8×10 letras) com soma validada no servidor. Regras oficiais,
@@ -257,7 +258,7 @@ Uma issue funcional está concluída apenas quando:
 
 1. Melhorar a qualidade dos léxicos locais existentes, confirmar a cadeia de direitos e selecionar dicionários de concurso completos.
 2. Criar e exportar os assets reais `.riv` para `Studio` e placas.
-3. Persistir sorteios e relógio no servidor e tornar a partida verificável (o `drawId` atual vive só em memória; o servidor já verifica o prazo).
+3. ~~Persistir sorteios e relógio localmente~~ concluído com snapshots atómicos; falta base de dados partilhada para múltiplas instâncias.
 4. ~~Somar pontos provisórios e apresentar soluções~~ concluído; integrar teste ponta a ponta, regras oficiais e placar entre rondas.
 
 A interface **não atribui pontos** por palavras apenas formáveis. As animações
@@ -301,3 +302,18 @@ ou Redis antes de publicar um serviço multi-instância; criar assets Rive.
 - [x] Endpoints de início, submissão, passar a palavra, consulta e solução protegida após término.
 - [x] Integrar os duelos e a final na sequência da partida solo e no placar autoritativo.
 - [ ] Concluir definição da edição oficial, revisão de dicionários, persistência multi-instância e animações Rive.
+
+
+## 12. Incremento M5 — Recuperação após reinício (branch `feat/durable-game-state-20261123`)
+
+- [x] Snapshot atómico por alteração confirmada pela API (escrita privada + rename).
+- [x] Guardar sorteios, respostas, prazos e scores dos motores de Letras, Números,
+      Duelos, Final e Partida solo.
+- [x] Reconstituir índices `drawId → matchId` e pontuação após restart.
+- [x] Respeitar deadlines e TTL originais durante a recuperação.
+- [x] Não substituir silenciosamente snapshots inválidos ou de schema desconhecido.
+- [x] Suportar volume configurável `GAME_STATE_FILE`; ignorar ficheiros privados no Git.
+- [x] Testar round-trip, expiry, corrupção e gravação no contrato HTTP.
+
+**Fora do escopo:** várias instâncias, transações partilhadas, contas e
+autenticação, migração automática de schemas e backups distribuídos.

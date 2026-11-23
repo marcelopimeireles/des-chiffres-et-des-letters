@@ -109,6 +109,47 @@ O recurso `.riv` **não está incluído** atualmente; consulte a
 
 A API usa `PORT=5000` por padrão, configurável por variável de ambiente.
 
+### Persistência local do servidor
+
+Por padrão, o Express guarda as rondas e partidas em
+`server/data/runtime/game-state.json` (quando iniciado com `cd server`).
+O diretório é criado automaticamente na primeira operação de escrita e
+não é versionado no Git. O estado pode ser movido para um volume persistente:
+
+```bash
+cd server
+GAME_STATE_FILE=/var/lib/des-chiffres/game-state.json yarn start
+```
+
+No Windows PowerShell:
+
+```powershell
+cd server
+$env:GAME_STATE_FILE='C:\\game-data\\des-chiffres\\game-state.json'
+yarn start
+```
+
+O ficheiro guarda **todo o estado necessário para retomar o jogo**, incluindo
+as respostas ainda secretas de duelos e da final. Não o coloque em
+`public/`, não o envie para o Git e proteja o acesso e os backups.
+Cada alteração confirmada pela API é gravada num ficheiro temporário
+privado e substitui o snapshot anterior por renomeação atómica.
+
+Um reinício do **mesmo servidor** recupera as partidas e deadlines ainda
+válidos, sem oferecer tempo adicional. As rondas isoladas expiram em
+5 minutos; a sessão da partida expira em 1 hora. A persistência local
+**não suporta várias instâncias a escrever no mesmo ficheiro**, discos
+efémeros, nem constitui sistema de autenticação. Para alojamento com
+réplicas, migrar para armazenamento transacional partilhado.
+
+Se o ficheiro estiver corrompido ou numa versão incompatível, o servidor
+recusa iniciar em vez de o sobrescrever. Guarde uma cópia antes de reparar
+ou migrar a estrutura. Se uma gravação falhar durante uma operação, a API
+responde HTTP 503; a ação pode ter sido aplicada em memória. Consulte o
+estado da partida antes de repetir a submissão.
+
+Consulte [Persistência e recuperação](docs/GAME-STATE-PERSISTENCE.md).
+
 ## 5. Testes e build
 
 **Testes e build do frontend:**
@@ -199,10 +240,10 @@ Exemplo de validação (substitua o UUID pelo `drawId` recebido):
 { "drawId": "00000000-0000-4000-8000-000000000000", "word": "bonjour" }
 ```
 
-O backend guarda em memória o sorteio, idioma, resposta e prazo. Não aceita
-letras fornecidas pelo browser na validação; impede que o mesmo sorteio marque
-pontos duas vezes. Os sorteios expiram após cinco minutos e perdem-se ao
-reiniciar o servidor.
+O backend guarda o sorteio, idioma, resposta e prazo, persistindo o estado
+num snapshot local antes de confirmar alterações. Não aceita letras fornecidas
+pelo browser na validação; impede a atribuição de pontos duplicados. Os
+sorteios expiram após cinco minutos, mesmo que o servidor reinicie.
 
 **Dicionários locais por idioma:**
 
@@ -220,7 +261,7 @@ a melhor palavra existente no idioma. Consultar a
 [proveniência e licenças dos léxicos](server/data/LEXICON-SOURCES.md).
 
 **Limitações:** faltam léxicos integrais de competição, regras finais e modos completos de duelos/final. O servidor verifica o limite de tempo da ronda de Letras,
-mas a sessão está em memória e deve migrar para armazenamento persistente. O Rive é decorativo: as regras
+com snapshots locais de uma instância; base de dados partilhada continua pendente. O Rive é decorativo: as regras
 não devem depender da animação.
 
 ### M3 — Le compte est bon
@@ -263,9 +304,9 @@ curl -X POST http://localhost:5000/api/game/numbers/validate \
   -d '{"drawId":"00000000-0000-4000-8000-000000000000","expression":"(10+5)*8-3"}'
 ```
 
-A API guarda o sorteio e os resultados **em memória por cinco minutos**.
-Para deployment com múltiplas instâncias serão necessários armazenamento
-persistente e sincronização de tempo. Consulte
+A API guarda sorteios por **cinco minutos** e recupera-os do snapshot local
+após reiniciar. Para deployment com múltiplas instâncias será necessário
+armazenamento transacional partilhado e sincronização de tempo. Consulte
 [Regras e endpoints do M3](docs/NUMBER-RULES.md).
 
 ## 7. Partida a solo (primeiro incremento M4)
@@ -293,9 +334,9 @@ de pontuação final e a lista das seis respostas.
 
 O identificador da partida é guardado no `localStorage`; a página pode ser
 recarregada sem reiniciar o cronómetro. Os dados completos da partida
-permanecem apenas **na memória do processo Express durante uma hora**
-(incluindo após abandono); reiniciar ou escalar a API sem afinidade de sessão
-perde a partida. Para a V1 será necessário persistir o estado.
+ficam numa sessão do servidor durante uma hora e são guardados em
+**snapshot local durável**. Reiniciar a mesma instância não perde a partida;
+escalar a API sem base de dados partilhada continua não suportado.
 
 Exemplos de API:
 

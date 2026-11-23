@@ -22,3 +22,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Per-server snapshots contain players' opaque session IDs and secret answers.
+/server/data/runtime/
+/server/**/game-state.json
+/server/**/game-state.json.*.tmp
