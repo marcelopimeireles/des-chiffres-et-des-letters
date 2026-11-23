@@ -33,7 +33,10 @@ is supplied, the game screens fire the `draw` and `success` triggers.
 - Numbers use a traditional number pool (including 25, 50, 75, 100).
 - The numeric input is parsed safely without `eval`, and drawn numbers
   cannot be reused more often than they appear.
-- Letter draws have a default split of five vowels and five consonants.
+- Letter rounds now offer ten individual vowel/consonant choices, undo, and a
+  balanced automatic preset. A server POST endpoint performs the draw.
+- Letters are revealed sequentially using CSS; the round's 30-second timer
+  begins after the last reveal and disables input when time expires.
 
 ## Explicit gameplay limitations
 
@@ -41,8 +44,17 @@ is supplied, the game screens fire the `draw` and `success` triggers.
   The submitted numeric result is checked, not the order of operations.
 - Letter proposals are checked only against available letters: **no French
   dictionary** or scoring has been implemented.
+- Letter timing is currently client-side only, not authoritative on the server.
+- Actual tile-reveal animations still use CSS until custom Rive assets exist.
 - The Duel and Final Words API routes still serve prototype puzzles.
 - Timers are visual and not yet enforced as a gameplay rule.
+
+## Letters draw API
+
+`POST /api/game/letters/draw` accepts exactly ten values from
+`vowel` and `consonant` in `choices` and returns `letters` + `choices`.
+Invalid input receives HTTP 400. The older `GET /api/game/letters` still
+returns a balanced automatic draw for backward compatibility.
 
 ## Running locally
 

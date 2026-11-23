@@ -1,6 +1,6 @@
 # Roadmap — Des Chiffres et des Lettres
 
-> Atualizado em 23/11/2026. Planeamento incremental, baseado no estado da `master`.
+> Atualizado em 23/11/2026. Planeamento incremental. O trabalho na branch de desenvolvimento continua pendente de merge.
 >
 > **Objetivo:** transformar o protótipo React/TypeScript + Express num jogo web a solo,
 > com apresentação televisiva original, animações Rive, regras verificáveis,
@@ -15,10 +15,10 @@
 | --- | --- | --- |
 | React/TypeScript, Redux, Router, API Express | ✅ Implementado | Preservar e evoluir incrementalmente |
 | Home com quatro modalidades, estilo estúdio, layout responsivo | ✅ Primeira versão | Refinamento visual ainda necessário |
-| Tabuleiros de letras/números e cronómetros visuais | ✅ Primeira versão | Cronómetro ainda não determina o fim da ronda |
+| Tabuleiros e cronómetros | 🟡 Em evolução | Letras: escolha, revelação e prazo de resposta; outras rondas ainda só visual |
 | Parser matemático seguro; impede reutilização de placa | ✅ Implementado | Não equivale a validar todas as regras da modalidade |
 | Sorteio de seis placas com placas grandes | ✅ Implementado | Alvo aleatório pode não ter solução exata |
-| Composição de letras com 5 vogais/5 consoantes | ✅ Básico | Falta escolha interativa e dicionário |
+| Sorteio de letras interativo | 🟡 Incremento implementado | V/C individuais + sorteio automático 5/5; falta léxico e sorteio reproduzível |
 | Integração Rive por máquina `Studio` / `intro, draw, success` | 🟡 Ponte de código | **Ainda não existe asset `.riv`** |
 | Duels / Final Words | 🟡 Ecrãs demonstrativos | Dados fixos/provisórios no backend |
 | Pontuação, progressão de partida, regras de tempo | ❌ Pendente | Não existe motor de partida completo |
@@ -52,8 +52,8 @@ M4 + M5. Não antecipar multijogador nem contas para o MVP.
       triggers `intro`, `draw` e `success`; preservar o fallback CSS.
 - [ ] Construir primeiro a abertura do estúdio e o sorteio sequencial
       de placas (letras e números), sincronizados com eventos React.
-- [ ] Evoluir o cronómetro para estado de jogo (iniciar, pausar quando
-      permitido, esgotar, bloquear submissão), sem depender do frame do Rive.
+- [x] Ligar o cronómetro à fase de jogo e bloquear submissão após o prazo em Letras.
+- [ ] Repetir o modelo nas outras modalidades e validar relógio no servidor.
 - [ ] Criar estados visuais: a sortear, a jogar, tempo esgotado, resposta,
       resultado correto/incorreto e transição entre rondas.
 - [ ] Garantir `prefers-reduced-motion`, teclado, ecrãs pequenos e fallback
@@ -70,15 +70,17 @@ uma ronda, as placas aparecem por ordem; resposta correta dispara a animação
 **Dependências:** definir variante de regras e escolher lexicon francês com
 licença compatível (uso comercial/redistribuição, se aplicável).
 
-- [ ] Permitir selecionar vogal ou consoante em cada uma das dez escolhas;
-      equilibrar e validar sorteios, com opção de tiragem automática.
+- [x] Permitir escolher vogal ou consoante dez vezes e oferecer tiragem automática de 5/5.
+- [x] Validar no servidor a sequência de dez escolhas e revelar as letras por ordem.
+- [ ] Adicionar `seed` de sorteio e persistência de sessão para auditabilidade e segurança.
 - [ ] Integrar léxico francês indexado (normalização Unicode, acentos,
       plurais/flexões segundo a regra escolhida); excluir palavras não admitidas.
 - [ ] Validar no **servidor** existência no léxico e multiplicidade das letras.
 - [ ] Calcular tamanho, melhor palavra possível e exemplos de soluções
       após a revelação (não antes).
-- [ ] Implementar pontuação, feedback explicativo, tempo regulamentar
-      configurável e histórico da ronda.
+- [x] Impedir submissão após os 30 segundos de uma ronda de Letras (validação no cliente, ainda não autoritativa).
+- [ ] Implementar pontuação, feedback lexical, tempo regulamentar configurável
+      e histórico da ronda no servidor.
 - [ ] Testar acentos, letras repetidas, maiúsculas, palavras inválidas e
       limites de tempo.
 
@@ -142,8 +144,8 @@ provisórios.
       CI backend/frontend e configuração de ambientes.
 - [ ] Configurar publicação de frontend e API com variáveis de ambiente,
       CORS restrito e monitorização de falhas.
-- [ ] Atualizar README e incluir instruções simples para correr,
-      testar, criar assets e fazer release.
+- [x] Documentar instalação, desenvolvimento, testes, build e integração Rive no README.
+- [ ] Completar documentação de deployment e processo de release.
 
 **Aceitação:** pipeline verde, build publicável, jogo funcional sem Rive,
 sem regressões graves de acessibilidade e com documentação de deployment.
@@ -238,12 +240,25 @@ Uma issue funcional está concluída apenas quando:
 - [ ] Testes/CI e build passam; README ou docs relevantes foram atualizados.
 - [ ] Existem critérios de aceitação observáveis, sem tarefas escondidas.
 
-## 8. Primeiro incremento recomendado
+## 8. Incremento em execução — Letras (M1/M2)
 
-**Vertical slice: uma ronda completa de Letras** com escolha de letras,
-revelação animada em Rive, cronómetro que termina a ronda, resposta
-validada por dicionário, pontuação e ecrã de solução. Essa entrega
-valida conjuntamente UX, assets, domínio, API e testes antes de
-repetir a arquitetura nas outras modalidades.
+**Concluído nesta branch:**
+
+- Escolha manual de 10 vogais/consoantes, desfazer, escolha automática (5 V / 5 C).
+- `POST /api/game/letters/draw` valida o padrão e sorteia as letras no servidor.
+- Animação CSS de revelação sequencial de cada peça, com ponte Rive `draw` preservada.
+- Cronómetro de 30 s começa depois da última peça e termina a rodada; a entrada de
+  palavras é bloqueada depois do tempo. Há testes de UI e de domínio.
+- README atualizado com guia de execução e desenvolvimento.
+
+**Ainda não concluído / bloqueadores para a primeira vertical slice:**
+
+1. Escolher lexicon francês, regras oficiais e licença; validação por dicionário no servidor.
+2. Criar e exportar os assets reais `.riv` para `Studio` e placas.
+3. Persistir sorteios e relógio no servidor e tornar a partida verificável.
+4. Somar pontos válidos, apresentar soluções e testar a experiência integral.
+
+A interface **não atribui pontos** por palavras apenas formáveis. As animações
+CSS disponíveis não devem ser confundidas com assets Rive finalizados.
 
 Documentação complementar: [Studio e Rive](docs/STUDIO-AND-RIVE.md).

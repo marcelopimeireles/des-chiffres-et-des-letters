@@ -1,157 +1,198 @@
-# Des Chiffres et Des Lettres Game
+# Des chiffres et des lettres — Web Game
 
-> **Roadmap:** [Plano de desenvolvimento por versões, prioridades, critérios de aceitação e integração Rive](ROADMAP.md).
+Jogo web inspirado no programa francês de letras e números, com interface
+visual de estúdio e integração opcional com [Rive](https://rive.app).
 
-> **Studio UI (2026):** A responsive, television-inspired interface, animated CSS fallback and optional [Rive integration](docs/STUDIO-AND-RIVE.md) are now available in the new frontend. Start the backend with `cd server && yarn && yarn dev` and the frontend with `cd client && yarn && yarn start`. The Rive `.riv` asset and dictionary validation remain future work.
+**Estado:** protótipo ativo. A interface das quatro modalidades já existe.
+A rodada de Letras permite escolher vogais e consoantes, revelar as peças e
+jogar contra o relógio. O dicionário francês, a pontuação completa, os duelos
+e a final ainda não estão implementados como partidas completas.
 
-Welcome to the **Des Chiffres et Des Lettres Game**, a modern web application inspired by the classic French television game show. This project aims to bring the excitement and educational value of the show to the digital world, allowing users to test their numeracy and vocabulary skills.
+- [Roadmap de desenvolvimento](ROADMAP.md)
+- [Guia do estúdio e das animações Rive](docs/STUDIO-AND-RIVE.md)
 
-## Table of Contents
+## Tecnologias
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Gameplay](#gameplay)
-  - [Numbers Round](#numbers-round)
-  - [Letters Round](#letters-round)
-  - [Duels](#duels)
-  - [Final Words](#final-words)
-- [Technologies Used](#technologies-used)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Running the Application](#running-the-application)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+- **Frontend:** React 18, TypeScript, React Router, Redux Toolkit, CSS, Rive opcional.
+- **Backend:** Node.js, Express e TypeScript, com API REST.
+- **Dependências:** Yarn Classic (v1), usando os `yarn.lock` incluídos.
+- **Desenvolvimento:** frontend em `http://localhost:3000`, API em `http://localhost:5000`.
 
-## Introduction
+## 1. Requisitos
 
-**Des Chiffres et Des Lettres** is a web application based on the popular French television game show of the same name. The game tests players' mathematical skills and vocabulary in a series of engaging rounds. This project replicates the game using modern web technologies to provide an interactive and educational experience.
+Instale **Node.js 20.x** e **Yarn Classic 1.x**. Para disponibilizar Yarn, use
+`corepack enable` se o Corepack estiver instalado, ou
+`npm install -g yarn@1`.
 
-## Features
+Verifique a instalação:
 
-- **Numbers Round:** Solve mathematical puzzles using a set of random numbers to reach a target number.
-- **Letters Round:** Form the longest possible word from a random selection of letters.
-- **Duels:** Compete in quick-fire challenges such as traditional duels, mental arithmetic, and more.
-- **Final Words:** Find the longest word from a given set of letters within a time limit.
-- **Responsive Design:** Optimized for both desktop and mobile devices.
-- **Scoring System:** Keep track of your score and improve your skills over time.
+```bash
+node --version
+yarn --version
+```
 
-## Gameplay
+> Evite misturar `npm install` com Yarn: o `package-lock.json` do frontend
+> está desatualizado; use os ficheiros `yarn.lock`.
 
-### Numbers Round
+## 2. Instalar o projeto
 
-In the Numbers Round, players are given a target number (between 101 and 999) and a selection of six random numbers. The goal is to use basic arithmetic operations (+, −, ×, ÷) to reach the target number.
+```bash
+git clone https://github.com/marcelopimeireles/des-chiffres-et-des-letters.git
+cd des-chiffres-et-des-letters
 
-### Letters Round
+cd server
+yarn install --frozen-lockfile
+cd ../client
+yarn install --frozen-lockfile
+cd ..
+```
 
-In the Letters Round, players are provided with a random selection of ten letters. The objective is to form the longest possible valid word using these letters.
+## 3. Executar em desenvolvimento
 
-### Duels
+Abra **dois terminais**, ambos na raiz do repositório.
 
-Duels are quick challenges where players must solve problems faster than their opponent. Types of duels include:
-- **Traditional Duel:** Find words from a given set of letters.
-- **Mental Arithmetic:** Solve calculations in your head.
-- **Correct Spelling:** Spell a given word correctly.
-- **One Within the Other:** Find two related words within a set of letters.
+**Terminal 1 — API:**
 
-### Final Words
+```bash
+cd server
+yarn dev
+```
 
-In this round, the winning contestant has two minutes to find the longest word from eight different ten-letter selections. Each correct word earns points and helps the player improve their vocabulary skills.
+O servidor inicia na porta **5000**, usando `ts-node-dev` para atualizar
+automaticamente depois de alterações de código.
 
-## Technologies Used
+**Terminal 2 — aplicação React:**
 
-- **Frontend:**
-  - React with TypeScript
-  - Redux for state management
-  - Material-UI for styling
-  - Axios for API requests
+```bash
+cd client
+yarn start
+```
 
-- **Backend:**
-  - Node.js with Express
-  - TypeScript
-  - RESTful API
+Abra **http://localhost:3000** no navegador. A API pode ser testada em
+**http://localhost:5000/api/game/letters** ou
+**http://localhost:5000/api/game/numbers**.
 
-## Project Structure
+> `yarn start` no diretório `server` é para produção, e necessita de um
+> `yarn build` prévio. No dia a dia utilize `yarn dev` na API.
 
-des-chiffres-et-des-lettres/</br>
-├── client/                 # React frontend</br>
-│   ├── public/</br>
-│   ├── src/</br>
-│   │   ├── components/</br>
-│   │   │   ├── NumberRound.tsx</br>
-│   │   │   ├── LetterRound.tsx</br>
-│   │   │   ├── Duel.tsx</br>
-│   │   │   ├── FinalWords.tsx</br>
-│   │   ├── redux/</br>
-│   │   │   ├── store.ts</br>
-│   │   │   ├── gameSlice.ts</br>
-│   │   ├── services/</br>
-│   │   │   ├── gameService.ts</br>
-│   │   ├── App.tsx</br>
-│   │   ├── index.tsx</br>
-│   ├── package.json</br>
-│   ├── tsconfig.json</br>
-│   ├── README.md</br>
-├── server/                 # Node.js backend</br>
-│   ├── src/</br>
-│   │   ├── routes/</br>
-│   │   │   ├── gameRoutes.ts</br>
-│   │   ├── controllers/</br>
-│   │   │   ├── gameController.ts</br>
-│   │   ├── app.ts</br>
-│   │   ├── server.ts</br>
-│   ├── tsconfig.json</br>
-│   ├── package.json</br>
-├── README.md</br>
-└─ README.md</br>
+## 4. Configurar ambiente e Rive (opcional)
 
-## Getting Started
+O frontend funciona **sem conta ou ficheiro Rive**; o estúdio apresenta uma
+animação CSS de substituição. Para configurar um ficheiro Rive próprio:
 
-### Prerequisites
+```bash
+# Linux / macOS, na raiz do repositório
+cp client/.env.example client/.env
 
-Ensure you have the following installed on your machine:
-- Node.js (v14 or higher)
-- Yarn
+# Windows PowerShell (alternativa)
+# Copy-Item client/.env.example client/.env
+```
 
-### Installation
+Edite `client/.env`:
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/yourusername/des-chiffres-et-des-lettres.git
-   cd des-chiffres-et-des-lettres
+```dotenv
+REACT_APP_API_URL=http://localhost:5000/api/game
+REACT_APP_RIVE_STUDIO_SRC=
+```
 
-2. **Clone the repository:**
-    cd client
-    yarn install
+Para utilizar a sua animação:
 
-3. **Clone the repository:**
-    cd ../server
-    yarn install
+1. Crie uma cena no Rive Editor e exporte o ficheiro `studio.riv`.
+2. Coloque o ficheiro em `client/public/animations/studio.riv`.
+3. Defina `REACT_APP_RIVE_STUDIO_SRC=/animations/studio.riv`.
+4. Reinicie `yarn start` no frontend.
 
+A animação deve disponibilizar uma máquina de estados chamada `Studio` com
+os triggers `intro`, `draw` e `success`.
+O recurso `.riv` **não está incluído** atualmente; consulte a
+[especificação de integração](docs/STUDIO-AND-RIVE.md).
 
-### Running the Application
-1. **Start the backend server:**
-    ```bash
-    cd server
-    yarn start
+A API usa `PORT=5000` por padrão, configurável por variável de ambiente.
 
-2. **Start the frontend development server:**
-    ```bash
-    cd ../client
-    yarn start
+## 5. Testes e build
 
+**Testes e build do frontend:**
 
-3. **Open your browser and navigate to:**
-    ```bash
-    http://localhost:3000
+```bash
+cd client
+CI=true yarn test --watchAll=false
+yarn build
+```
 
-### Contributing
-We welcome contributions to enhance the game! Please fork the repository and create a pull request with your changes. Make sure to follow the code style and add appropriate tests.
+No Windows PowerShell, para executar os testes uma vez:
 
-### License
-This project is licensed under the MIT License - see the LICENSE file for details.
+```powershell
+cd client
+$env:CI='true'
+yarn test --watchAll=false
+```
 
-### Contact
-For questions or feedback, please open an issue on GitHub or contact the project maintainers at marcelopimeireles@gmail.com .
+**Testes e build do servidor:**
+
+```bash
+cd server
+yarn test
+yarn build
+yarn start
+```
+
+Os ficheiros compilados vão para `server/dist` e `client/build`.
+O conteúdo de `client/build` precisa ser servido por um host estático
+num deploy de produção; `yarn start` no cliente inicia o servidor de
+desenvolvimento, não um servidor de produção.
+
+O GitHub Actions também executa testes e builds após alterações relevantes.
+
+## 6. Rotas e funcionamento atual
+
+| Rota da interface | Modalidade | Estado |
+| --- | --- | --- |
+| `/` | Estúdio / seleção | Interface disponível |
+| `/letter-round` | Le mot le plus long | Sorteio manual/automático, relógio e verificação de composição |
+| `/number-round` | Le compte est bon | Sorteio, calculadora segura e comparação com o alvo |
+| `/duel` | Les duels | Demonstração com desafio fixo |
+| `/final-words` | Les mots de la fin | Demonstração com conjunto fixo |
+
+Endpoints da API (`http://localhost:5000/api/game`):
+
+| Método | Endpoint | Descrição |
+| --- | --- | --- |
+| GET | `/letters` | Tiragem automática simples (compatibilidade) |
+| POST | `/letters/draw` | Sorteia a partir de dez escolhas `vowel`/`consonant` |
+| GET | `/numbers` | Sorteia seis placas e o alvo |
+| GET | `/duel` | Desafio demonstrativo |
+| GET | `/final` | Conjuntos demonstrativos |
+
+Exemplo do corpo de `POST /letters/draw`:
+
+```json
+{
+  "choices": [
+    "vowel", "consonant", "vowel", "consonant", "vowel",
+    "consonant", "vowel", "consonant", "vowel", "consonant"
+  ]
+}
+```
+
+**Limitações:** ainda não existe validação por dicionário, geração de melhor
+solução ou pontuação completa; os tempos são controlados pelo cliente e o
+backend ainda não guarda uma sessão de jogo. O Rive é decorativo: as regras
+não devem depender da animação.
+
+## 7. Problemas comuns
+
+- **Letras ou números não carregam:** confirme que o servidor está em execução
+  e que a URL em `REACT_APP_API_URL` aponta para `/api/game`.
+- **Porta ocupada:** altere `PORT` na API ou liberte a porta 3000 do cliente.
+- **`yarn start` falha no backend:** execute `yarn build` antes, ou utilize `yarn dev`.
+- **Rive não aparece:** confira o caminho para o `.riv`, os nomes da máquina
+  de estados e triggers e a conectividade com o runtime; a interface CSS
+  continua disponível sem Rive.
+
+## Contribuir
+
+Utilize uma branch e abra um pull request com testes. As próximas prioridades
+estão detalhadas em [ROADMAP.md](ROADMAP.md).
+
+A interface é uma interpretação original inspirada em jogos televisivos.
+Não estão incluídos grafismos, músicas ou animações oficiais licenciadas.
