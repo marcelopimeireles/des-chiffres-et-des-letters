@@ -123,6 +123,18 @@ export class FinaleRoundStore {
     };
   }
 
+  /** Includes all eight hidden words; keep on the server only. */
+  exportState(): FinaleRound[] {
+    return [...this.rounds.values()];
+  }
+
+  restoreState(rows: FinaleRound[]): void {
+    this.rounds = new Map(
+      rows.filter(row => this.now() - row.createdAt <= this.ttlMs)
+        .map(row => [row.drawId, row])
+    );
+  }
+
   private prune(): void {
     for (const [id, item] of this.rounds) {
       if (this.now() - item.createdAt > this.ttlMs) this.rounds.delete(id);

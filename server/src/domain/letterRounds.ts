@@ -60,6 +60,18 @@ export class LetterRoundStore {
     return Boolean(round.answer) || this.now() >= round.deadlineAt;
   }
 
+  /** Privileged local snapshot, including secret tiles/answers (never send to browser). */
+  exportState(): LetterRound[] {
+    return [...this.rounds.values()];
+  }
+
+  restoreState(rows: LetterRound[]): void {
+    this.rounds = new Map(
+      rows.filter(row => this.now() - row.createdAt <= this.ttlMs)
+        .map(row => [row.drawId, row])
+    );
+  }
+
   complete(round: LetterRound, word: string, score: number): boolean {
     if (this.isFinished(round)) return false;
     round.answer = { word, score };
