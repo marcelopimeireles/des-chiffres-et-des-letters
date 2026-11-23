@@ -1,65 +1,63 @@
 # Studio UI and Rive integration
 
-## Goal
+The responsive front end offers a TV-studio-inspired home page and four round
+screens. Rive is optional: without a .riv export, CSS provides the ambient
+studio animation. The site does not bundle third-party show graphics/audio.
 
-Turn the existing React game into a studio-inspired interface without coupling
-game rules to presentation. This is an original interface inspired by the
-lighting, scoreboards, typography and puzzle tiles of televised word/number
-contests. It does not bundle the TV show's protected graphics or audio.
+## Rive workflow
 
-## Implemented in the first iteration
+1. Open [rive.app](https://rive.app) and create an original studio scene.
+2. Create a state machine `Studio` with three trigger inputs:
+   - `intro`: hero opening / ambient lights
+   - `draw`: new game draw
+   - `success`: correct answer celebration
+3. Export to `client/public/animations/studio.riv`.
+4. Copy `client/.env.example` to `client/.env` and set
+   `REACT_APP_RIVE_STUDIO_SRC=/animations/studio.riv`.
+5. Restart the React dev server.
 
-- Full responsive home screen with 4 modes, studio illustration and navigation.
-- Shared round framing, tile rack and countdown clock for Letters and Numbers.
-- Optional Rive Canvas runtime integration with CSS fallback when no .riv is provided.
-- Safe arithmetic parser (no eval) which verifies that used numbers are in the draw.
-- Letter composition checks, explicitly *not* dictionary validation.
-- Configurable API URL for deployments.
+The app loads the pinned Rive Canvas JS runtime from a CDN **only when**
+a .riv URL is configured; this leaves existing npm/yarn lockfiles intact.
+For offline production or a strict Content Security Policy, the runtime
+should be bundled locally in a later dependency update. The animation
+is decorative; essential game text and controls are accessible HTML.
 
-Existing Duel and Final Words routes remain available; their full gameplay and
-dictionary/score logic require a later iteration.
+**No .riv asset has been created or committed yet.** The current homepage
+uses a CSS fallback until a custom Rive project is exported. When a .riv
+is supplied, the game screens fire the `draw` and `success` triggers.
 
-## Editing the animation in rive.app
+## What works now
 
-Create an artboard appropriate for a landscape hero (for example, 960 x 700).
-Name the state machine `Studio`; expose trigger inputs:
+- Responsive homepage and four navigable game screens.
+- Shared tiles, studio scoreboard presentation and visual countdown timers.
+- Numbers use a traditional number pool (including 25, 50, 75, 100).
+- The numeric input is parsed safely without `eval`, and drawn numbers
+  cannot be reused more often than they appear.
+- Letter draws have a default split of five vowels and five consonants.
 
-| Trigger | Intended event |
-| ------- | -------------- |
-| `intro` | Opening view / ambient studio lights |
-| `draw` | New tile draw / reveal |
-| `success` | Correct answer / celebration |
+## Explicit gameplay limitations
 
-Suggested layers: stage backdrop, concentric light rings, large illuminated
-screen, title, tile holders, light accents. Keep puzzle tiles themselves in
-accessible React DOM; Rive is decorative and must not contain essential text.
+- Random number targets are not guaranteed to have an exact solution.
+  The submitted numeric result is checked, not the order of operations.
+- Letter proposals are checked only against available letters: **no French
+  dictionary** or scoring has been implemented.
+- The Duel and Final Words API routes still serve prototype puzzles.
+- Timers are visual and not yet enforced as a gameplay rule.
 
-Export to `client/public/animations/studio.riv`, and set:
+## Running locally
 
-```dotenv
-REACT_APP_RIVE_STUDIO_SRC=/animations/studio.riv
-```
-
-Copy `client/.env.example` to `client/.env` and restart the development server.
-The runtime loads on demand from the pinned Rive Canvas CDN only when a path is
-configured. To ship fully offline or with a restrictive Content Security
-Policy, bundle the Rive runtime locally in a subsequent dependency upgrade.
-
-The current interface *does not contain a compiled .riv asset*: it shows a CSS
-illustration until the custom Rive animation is created and exported.
-
-## Development
-
-```bash
+```sh
 cd server && yarn && yarn start
-# separate shell
+# in a second terminal
 cd client && yarn && yarn start
 ```
 
-## Follow-up work
+Set `REACT_APP_API_URL` in the client's environment for another backend.
 
-1. Animate the tile draw in Rive and connect React events to `draw`/`success`.
-2. Build a dictionary/lexicon service for valid French words and scoring.
-3. Generate solvable numbers draws and provide step-by-step solution validation.
-4. Finish Duel / Final Words, turn-based score tracking and tests.
-5. Optionally move to the packaged React Rive runtime after updating the lockfile.
+## Suggested next steps
+
+1. Export original animation artwork from Rive and polish scene timing.
+2. Introduce interactive vowel/consonant drawing and per-tile reveals.
+3. Add a French dictionary service, word validation and scorekeeping.
+4. Extend numbers scoring with operation steps and possible solutions.
+5. Implement real duel/finale challenges, sound settings and end-to-end tests.
