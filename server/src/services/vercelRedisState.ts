@@ -70,7 +70,7 @@ export class RedisGameState {
     const deadline = this.now() + 5500;
     do {
       // TTL prevents a crashed function from leaving a permanent lock.
-      const result = await this.command('SET', this.lockKey, token, 'PX', 20000, 'NX');
+      const result = await this.command('SET', this.lockKey, token, 'PX', 45000, 'NX');
       if (result === 'OK') return token;
       if (this.now() >= deadline) break;
       await this.pause(75);

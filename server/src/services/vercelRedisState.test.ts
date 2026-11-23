@@ -114,7 +114,7 @@ test('expired Redis lock cannot overwrite newer state', async () => {
   const leaseA = await instanceA.acquire();
   await instanceA.load();
   storesA.matches.create({language:'en',largeCount:0});
-  time += 20001; // 20s lock expires while the function is still working
+  time += 45001; // 45s lock expires while the function is still working
 
   const storesB = makeStores(now);
   const instanceB = new RedisGameState(redis,'test:race',storesB,now);
