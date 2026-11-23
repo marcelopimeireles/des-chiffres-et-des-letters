@@ -16,12 +16,12 @@
 | React/TypeScript, Redux, Router, API Express | ✅ Implementado | Preservar e evoluir incrementalmente |
 | Home com quatro modalidades, estilo estúdio, layout responsivo | ✅ Primeira versão | Refinamento visual ainda necessário |
 | Tabuleiros e cronómetros | 🟡 Em evolução | Letras: escolha, revelação e prazo de resposta; outras rondas ainda só visual |
-| Parser matemático seguro; impede reutilização de placa | ✅ Implementado | Não equivale a validar todas as regras da modalidade |
-| Sorteio de seis placas com placas grandes | ✅ Implementado | Alvo aleatório pode não ter solução exata |
+| Parser matemático seguro e motor de regras | ✅ Implementado | Números: +, −, ×, ÷; inteiros positivos, divisão exata e uso único das placas |
+| Sorteio de seis placas e solver | ✅ Implementado | 0–4 placas grandes e alvo 101–999; solver exato ou melhor aproximação |
 | Sorteio de letras interativo | 🟡 Em evolução | EN/PT-PT/FR, léxicos locais, prazo no servidor, pontos provisórios e solver; falta regras oficiais e persistência |
 | Integração Rive por máquina `Studio` / `intro, draw, success` | 🟡 Ponte de código | **Ainda não existe asset `.riv`** |
 | Duels / Final Words | 🟡 Ecrãs demonstrativos | Dados fixos/provisórios no backend |
-| Pontuação, progressão de partida, regras de tempo | 🟡 Parcial | Letras pontuadas pelo servidor e prazo fixo; partida entre provas pendente |
+| Pontuação, progressão de partida, regras de tempo | 🟡 Parcial | Letras e Números com pontos provisórios, prazo no servidor; partida entre provas pendente |
 | CI com testes e build do cliente | ✅ Implementado | Ampliar cobertura |
 
 ## 2. Entregas por versão
@@ -96,19 +96,16 @@ reprodutíveis com um `seed` de sorteio.
 
 **Dependência:** fechar regras numéricas da edição/modo escolhido.
 
-- [ ] Tornar os sorteios reproduzíveis e configurar quantidade de placas
-      grandes, universo das placas e intervalo do número alvo.
-- [ ] Implementar motor matemático **puro**, separado da UI, para operações
-      permitidas e uso único de cada placa.
-- [ ] Decidir e aplicar regras de resultados intermédios
-      (inteiros positivos, divisão exata, proibição de zero, etc.).
-- [ ] Desenvolver solver para encontrar solução exata ou aproximação,
-      sem exigir que todo sorteio admita resposta exata.
-- [ ] Criar entrada passo a passo, com representação legível do cálculo,
-      botão para desfazer, relógio e validação de cada operação.
-- [ ] Pontuar segundo distância ao alvo e regra da edição; revelar
-      exemplos de soluções quando a ronda terminar.
-- [ ] Testar limites, números repetidos, parênteses, empate e performance.
+- [x] Configurar 0–4 placas grandes, seis placas com multiplicidade e alvo 101–999.
+- [ ] Adicionar seed/armazenamento persistente para sorteios reproduzíveis entre sessões.
+- [x] Implementar motor matemático puro e parser seguro no servidor, separado da UI, com uso único de cada placa.
+- [x] Definir regras provisórias: resultados intermédios inteiros positivos, divisões exatas, sem zero.
+- [x] Solver por subconjuntos de placas, procura solução exata ou melhor aproximação sem exigir solução exata para todos os sorteios.
+- [x] Editor de cálculo passo a passo, botão desfazer, alternativa de expressão livre, e relógio de 45s.
+- [x] Aplicar pontuação provisória por distância: 10 / 7 / 5 / 0, e revelar solução após o fim.
+- [ ] Rever pontuação e regras para edição televisiva selecionada.
+- [x] Testar repetição de placas, precedência, resultados intermédios, empate, solver e contrato HTTP.
+- [ ] Executar testes E2E em browsers e perfis de desempenho para sorteios difíceis.
 
 **Aceitação:** os cálculos são validados pelo motor de regras (não por
 `eval`); solver e validador concordam; a pontuação e o tempo são auditáveis.
@@ -244,7 +241,7 @@ Uma issue funcional está concluída apenas quando:
 - [ ] Testes/CI e build passam; README ou docs relevantes foram atualizados.
 - [ ] Existem critérios de aceitação observáveis, sem tarefas escondidas.
 
-## 8. Incremento em execução — Letras (M1/M2)
+## 8. Incrementos implementados — Letras (M2) e Números (M3)
 
 **Concluído nesta branch:**
 
@@ -267,3 +264,15 @@ A interface **não atribui pontos** por palavras apenas formáveis. As animaçõ
 CSS disponíveis não devem ser confundidas com assets Rive finalizados.
 
 Documentação complementar: [Studio e Rive](docs/STUDIO-AND-RIVE.md).
+
+
+## 9. Incremento M3 — Le compte est bon (nesta branch)
+
+- [x] `POST /api/game/numbers/draw` com controlo de 0–4 placas grandes e `drawId`.
+- [x] `POST /api/game/numbers/validate` valida expressão no servidor, aplica prazo e atribui pontos provisórios uma vez.
+- [x] `GET /api/game/numbers/:drawId/solutions` impede spoilers antes do fim, revela operações e aproximação ótima encontrada.
+- [x] Solver puro com operações +, -, *, /, intermediários positivos inteiros e divisões exatas, sem `eval`.
+- [x] Interface responsiva com construtor por etapas, desfazer, entrada manual e painel de resultados.
+- [x] Testes unitários, testes HTTP, build do frontend, documentação e README.
+
+**A completar:** regras oficiais da edição, experiência Rive real, persistência e placar de uma partida completa.

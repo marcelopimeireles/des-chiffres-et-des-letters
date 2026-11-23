@@ -384,3 +384,33 @@
   border-radius: 4px; padding: 7px 12px; text-transform: uppercase;
 }
 .letter-results .letter-data-note { color: #b8c7e6; font-size: 12px; line-height: 1.6; }
+
+/* M3: step-by-step numbers console and result panel. */
+.number-setup { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; padding: 18px; margin: 6px 0 28px; border: 1px solid var(--line); background: rgba(14,29,67,.65); border-radius: 8px; }
+.number-setup label { color: #f2f6ff; font-size: 14px; font-weight: 700; }
+.number-setup select, .number-step-controls select {
+  border: 1px solid #596da5; background: #111f45; border-radius: 6px;
+  min-height: 45px; padding: 0 11px; color: #fff; font-size: 15px;
+}
+.number-setup select { min-width: 130px; }
+.number-setup .button { margin-left: auto; }
+.number-builder { margin: 20px 0 28px; padding: clamp(16px, 3vw, 23px); border-radius: 10px; border: 1px solid rgba(176,196,245,.26); background: rgba(7,20,54,.68); }
+.number-builder h2 { font-size: 20px; color: #eef3ff; margin: 0 0 10px; }
+.number-builder p { color: #acbde2; font-size: 13px; line-height: 1.6; }
+.number-available { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; min-height: 39px; }
+.number-available-tile { display: grid; place-items: center; min-width: 40px; padding: 0 10px; min-height: 39px; border-radius: 5px; background: #f5e4c3; color: #14244a; font-weight: 900; box-shadow: 0 3px 0 #a8a9b3; }
+.number-step-controls { display: grid; grid-template-columns: minmax(0,1fr) minmax(80px,.6fr) minmax(0,1fr); gap: 10px; }
+.number-step-controls label { display: flex; flex-direction: column; gap: 7px; font-size: 12px; color: #b9c9ed; font-weight: 700; }
+.number-step-controls select { width: 100%; }
+.number-builder-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin: 18px 0 0; }
+.number-builder-actions .text-button { margin: 0; }
+.number-steps, .number-solution-steps { margin: 18px 0 0; padding-left: 24px; color: #e0eaff; line-height: 1.8; font-variant-numeric: tabular-nums; }
+.number-steps li::marker, .number-solution-steps li::marker { color: #a4ceff; }
+.number-solution-expression { overflow-wrap: anywhere; background: rgba(4,13,35,.6); padding: 12px; border-radius: 6px; font-weight: 800; color: #f8d995; }
+@media (max-width: 580px) {
+  .number-setup { flex-direction: column; align-items: stretch; }
+  .number-setup .button { width: 100%; margin-left: 0; }
+  .number-step-controls { grid-template-columns: 1fr 80px 1fr; gap: 6px; }
+  .number-step-controls select { padding: 0 4px; font-size: 14px; }
+  .number-builder-actions .button { width: 100%; }
+}

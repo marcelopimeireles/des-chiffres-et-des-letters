@@ -3,6 +3,48 @@ import axios from 'axios';
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/game';
 
 export interface NumbersGame { targetNumber: number; numbers: number[] }
+
+export interface NumbersDraw extends NumbersGame {
+  drawId: string;
+  largeCount: number;
+  deadlineAt: number;
+  playSeconds: number;
+}
+
+export type NumberOperator = '+' | '-' | '*' | '/';
+export interface NumberCalculationStep {
+  left: number;
+  operator: NumberOperator;
+  right: number;
+  result: number;
+}
+
+export interface NumbersSolution {
+  value: number;
+  distance: number;
+  exact: boolean;
+  expression: string;
+  steps: NumberCalculationStep[];
+  usedTiles: number[];
+}
+
+export interface NumbersValidation {
+  valid: boolean;
+  reason: 'accepted' | 'invalid_expression';
+  error?: string;
+  value?: number;
+  distance?: number;
+  exact?: boolean;
+  score: number;
+  solution?: NumbersSolution | null;
+}
+
+export interface NumbersSolutions {
+  targetNumber: number;
+  score: number;
+  submittedValue: number | null;
+  solution: NumbersSolution;
+}
 export interface LettersGame { letters: string[] }
 export type LetterKind = 'vowel' | 'consonant';
 export type WordLanguage = 'en' | 'pt' | 'fr';
@@ -42,6 +84,19 @@ export interface FinalGame { wordSets: string[][] }
 
 export const fetchNumbersGame = async (): Promise<NumbersGame> =>
   (await axios.get<NumbersGame>(`${API_URL}/numbers`)).data;
+
+export const fetchNumbersDraw = async (largeCount: number): Promise<NumbersDraw> =>
+  (await axios.post<NumbersDraw>(`${API_URL}/numbers/draw`, { largeCount })).data;
+
+export const validateNumbersAnswer = async (
+  drawId: string, expression: string
+): Promise<NumbersValidation> =>
+  (await axios.post<NumbersValidation>(`${API_URL}/numbers/validate`, { drawId, expression })).data;
+
+export const fetchNumbersSolutions = async (drawId: string): Promise<NumbersSolutions> =>
+  (await axios.get<NumbersSolutions>(
+    `${API_URL}/numbers/${encodeURIComponent(drawId)}/solutions`
+  )).data;
 
 export const fetchLettersGame = async (): Promise<LettersGame> =>
   (await axios.get<LettersGame>(`${API_URL}/letters`)).data;

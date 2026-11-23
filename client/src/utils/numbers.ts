@@ -77,3 +77,27 @@ export function canMakeWord(word: string, letters: string[]): boolean {
     return true;
   });
 }
+
+/** Preview only: the Express backend remains authoritative for every submission. */
+export function calculateBuilderStep(
+  a: number, b: number, operator: '+' | '-' | '*' | '/'
+): number {
+  if (!Number.isSafeInteger(a) || !Number.isSafeInteger(b) || a <= 0 || b <= 0) {
+    throw new Error('Utilisez deux nombres entiers positifs.');
+  }
+  let result = 0;
+  switch (operator) {
+    case '+': result = a + b; break;
+    case '-': result = a - b; break;
+    case '*': result = a * b; break;
+    case '/':
+      if (a % b !== 0) throw new Error('La division doit être exacte.');
+      result = a / b;
+      break;
+    default: throw new Error('Opération non autorisée.');
+  }
+  if (!Number.isSafeInteger(result) || result <= 0 || result > 1_000_000_000) {
+    throw new Error('Le résultat doit être un entier strictement positif.');
+  }
+  return result;
+}
