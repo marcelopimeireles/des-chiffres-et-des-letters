@@ -1,6 +1,6 @@
 # Roadmap — Des Chiffres et des Lettres
 
-> Atualizado em 23/11/2026. Planeamento incremental. O trabalho na branch de desenvolvimento continua pendente de merge.
+> Atualizado em 23/11/2026. Planeamento incremental; os incrementos em branches de trabalho precisam de PR antes de entrar na master.
 >
 > **Objetivo:** transformar o protótipo React/TypeScript + Express num jogo web a solo,
 > com apresentação televisiva original, animações Rive, regras verificáveis,
@@ -21,7 +21,7 @@
 | Sorteio de letras interativo | 🟡 Em evolução | EN/PT-PT/FR, léxicos locais, prazo no servidor, pontos provisórios e solver; falta regras oficiais e persistência |
 | Integração Rive por máquina `Studio` / `intro, draw, success` | 🟡 Ponte de código | **Ainda não existe asset `.riv`** |
 | Duels / Final Words | 🟡 Ecrãs demonstrativos | Dados fixos/provisórios no backend |
-| Pontuação, progressão de partida, regras de tempo | 🟡 Parcial | Letras e Números com pontos provisórios, prazo no servidor; partida entre provas pendente |
+| Pontuação, progressão de partida, regras de tempo | 🟡 Em evolução | M4: seis rondas solo, placar acumulado, retoma e resultado final (sem duelos/final) |
 | CI com testes e build do cliente | ✅ Implementado | Ampliar cobertura |
 
 ## 2. Entregas por versão
@@ -112,24 +112,24 @@ reprodutíveis com um `seed` de sorteio.
 
 ### M4 — Jogo completo e pontuação [P1]
 
-- [ ] Definir máquina de estados da partida:
-      `lobby → draw → countdown → answer → reveal → scoring → next → finished`.
+- [x] Implementar progressão de partida a solo: configuração → ronda ativa → revisão → próxima → resultado final.
+- [ ] Adicionar estados explícitos de transições animadas e apresentação Rive.
 - [ ] Consolidar Redux para estado de sessão e apresentação;
       guardar dados determinísticos da ronda no domínio/servidor.
-- [ ] Implementar configuração de partida: nome(s), edição/modo,
-      tipo e sequência de rondas, dificuldade e tempo (quando permitido).
+- [x] Configuração inicial a solo de idioma e número de grandes placas, com seis rondas alternadas.
+- [ ] Adicionar nomes, seleção de variantes oficiais, dificuldade e sequências personalizáveis.
 - [ ] Implementar pelo menos dois duelos reais com geração e solução
       verificáveis, substituindo o desafio estático existente.
 - [ ] Implementar a final com oito tiragens, tempo global, validação de
       dicionário e pontuação própria.
-- [ ] Criar placar permanente, transições Rive entre provas,
-      resumo de respostas e ecrã de resultado final.
-- [ ] Persistir localmente uma partida a solo, com retoma segura;
-      definir quando um cronómetro continua ou expira após a pausa.
+- [x] Criar placar acumulado, histórico de respostas e ecrã de resultado final do modo solo.
+- [ ] Acrescentar transições Rive reais entre provas e apresentação oficial.
+- [x] Guardar `matchId` no localStorage e retomar estado e deadline reais no servidor após refresh.
+- [ ] Persistir rondas/partidas no backend além da memória para sobreviver a deploy e várias instâncias.
 
-**Aceitação:** um jogador conclui uma partida do princípio ao fim sem
-recarregar; o resultado final é a soma de rondas verificadas, sem pontos
-provisórios.
+**Aceitação parcial (M4 MVP):** jogador conclui seis rondas alternadas com
+soma de pontuação validada pelo servidor. O formato de concurso completo,
+duelos e final, sem barème provisório, ainda está pendente.
 
 ### M5 — Qualidade, distribuição e observabilidade [P1]
 
@@ -276,3 +276,18 @@ Documentação complementar: [Studio e Rive](docs/STUDIO-AND-RIVE.md).
 - [x] Testes unitários, testes HTTP, build do frontend, documentação e README.
 
 **A completar:** regras oficiais da edição, experiência Rive real, persistência e placar de uma partida completa.
+
+
+## 10. Incremento M4 — Partida solo (branch `feat/solo-match-m4-20261123`)
+
+- [x] Sequência do MVP: Letras → Números → Letras → Números → Letras → Números.
+- [x] API `POST /matches`, `GET /matches/:matchId` e `POST /matches/:matchId/next`.
+- [x] Reutilizar sorteio, verificação, solver e pontuação dos motores do servidor.
+- [x] Contador absoluto que não reinicia quando a página é atualizada, histórico e placar agregados no servidor.
+- [x] Retomar por `matchId` no localStorage, sem atribuir confiança ao total enviado pelo browser.
+- [x] Ecrã de resultado final a solo com seis respostas, incluindo rondas sem pontuação.
+- [x] Testes do domínio, fluxo HTTP, interface React e documentação.
+
+**Próximos passos:** criar pelo menos dois duelos realmente jogáveis, a final
+de oito palavras e regras de campeonato; guardar partidas em base de dados
+ou Redis antes de publicar um serviço multi-instância; criar assets Rive.

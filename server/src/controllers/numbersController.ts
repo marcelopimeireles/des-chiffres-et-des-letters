@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { numberRoundStore, NUMBER_PLAY_SECONDS } from '../domain/numberRounds';
+import { soloMatchStore } from '../domain/matches';
 import { parseNumbersExpression, scoreNumbers, solveNumbers } from '../domain/numbers';
 
 const uuidPattern = /^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i;
@@ -51,6 +52,7 @@ export const validateNumbersAnswer = (req: Request, res: Response) => {
     res.status(409).json({ code: 'round_finished', error: 'Round already finished.' });
     return;
   }
+  soloMatchStore.markResolved(round.drawId);
   try {
     const solution = round.solution ?? solveNumbers(round.numbers, round.targetNumber);
     round.solution = solution;

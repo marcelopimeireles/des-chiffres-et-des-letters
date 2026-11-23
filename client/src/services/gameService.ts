@@ -119,3 +119,47 @@ export const fetchDuel = async (): Promise<DuelGame> =>
 
 export const fetchFinalWords = async (): Promise<FinalGame> =>
   (await axios.get<FinalGame>(`${API_URL}/final`)).data;
+
+/** A match links only server-created/validated letter and number rounds. */
+export type SoloMatchRoundKind = 'letters' | 'numbers';
+
+export interface SoloMatchRound {
+  kind: SoloMatchRoundKind;
+  index: number;
+  drawId: string;
+  deadlineAt: number;
+  letters?: string[];
+  numbers?: number[];
+  targetNumber?: number;
+}
+
+export interface SoloMatchResult {
+  kind: SoloMatchRoundKind;
+  index: number;
+  drawId: string;
+  score: number;
+  answer: string | null;
+}
+
+export interface SoloMatch {
+  matchId: string;
+  language: WordLanguage;
+  largeCount: number;
+  totalRounds: number;
+  currentIndex: number;
+  status: 'playing' | 'review' | 'finished';
+  totalScore: number;
+  history: SoloMatchResult[];
+  current: SoloMatchRound | null;
+}
+
+export const createSoloMatch = async (
+  language: WordLanguage, largeCount: number
+): Promise<SoloMatch> =>
+  (await axios.post<SoloMatch>(`${API_URL}/matches`, { language, largeCount })).data;
+
+export const fetchSoloMatch = async (id: string): Promise<SoloMatch> =>
+  (await axios.get<SoloMatch>(`${API_URL}/matches/${encodeURIComponent(id)}`)).data;
+
+export const nextSoloRound = async (id: string): Promise<SoloMatch> =>
+  (await axios.post<SoloMatch>(`${API_URL}/matches/${encodeURIComponent(id)}/next`)).data;

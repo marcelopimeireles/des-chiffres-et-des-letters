@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { createSoloMatch, getSoloMatch, nextSoloRound } from '../controllers/matchesController';
 import {
   createNumbersDraw, validateNumbersAnswer, getNumbersSolutions
 } from '../controllers/numbersController';
@@ -8,6 +9,9 @@ import {
 } from '../controllers/gameController';
 
 const router = Router();
+router.post('/matches', createSoloMatch);
+router.get('/matches/:matchId', getSoloMatch);
+router.post('/matches/:matchId/next', nextSoloRound);
 router.get('/numbers', getNumbersGame); // backwards-compatible, no match state
 router.post('/numbers/draw', createNumbersDraw);
 router.post('/numbers/validate', validateNumbersAnswer);

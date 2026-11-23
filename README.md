@@ -6,7 +6,7 @@ visual de estúdio e integração opcional com [Rive](https://rive.app).
 **Estado:** protótipo ativo. A interface das quatro modalidades já existe.
 A rodada de Letras permite escolher vogais e consoantes, revelar as peças e
 jogar contra o relógio. A validação lexical funciona **offline**, com listas locais de inglês, português de Portugal e francês.
-As modalidades Letras e Números já validam respostas no servidor, atribuem pontuações provisórias e revelam soluções; os duelos e a final ainda são protótipos.
+As modalidades Letras e Números já validam respostas no servidor e revelam soluções. O **modo Partida solo** agora reúne seis rondas alternadas com pontuação acumulada e resultado final. Os duelos e a final televisiva continuam protótipos.
 
 - [Roadmap de desenvolvimento](ROADMAP.md)
 - [Guia do estúdio e das animações Rive](docs/STUDIO-AND-RIVE.md)
@@ -148,6 +148,7 @@ O GitHub Actions também executa testes e builds após alterações relevantes.
 | Rota da interface | Modalidade | Estado |
 | --- | --- | --- |
 | `/` | Estúdio / seleção | Interface disponível |
+| `/match` | Partie solo | Seis rondas de Letras/Números, placar acumulado, retoma e final |
 | `/letter-round` | Le mot le plus long | EN/PT-PT/FR, sorteio, léxicos locais, pontuação e soluções |
 | `/number-round` | Le compte est bon | 0–4 placas grandes, editor de operações, solver exato/aproximado, pontuação e prazo no servidor |
 | `/duel` | Les duels | Demonstração com desafio fixo |
@@ -161,6 +162,9 @@ Endpoints da API (`http://localhost:5000/api/game`):
 | POST | `/letters/draw` | Sorteia dez letras e fixa o idioma (en, pt ou fr); retorna `drawId` |
 | POST | `/letters/validate` | Valida a palavra no servidor e atribui pontos por letra se válida |
 | GET | `/letters/:drawId/solutions` | Revela as melhores palavras no léxico local após o fim da ronda |
+| POST | `/matches` | Cria uma partida a solo com língua e número de placas grandes |
+| GET | `/matches/:matchId` | Recupera ronda atual, resultados e total verificados pelo servidor |
+| POST | `/matches/:matchId/next` | Avança depois de uma ronda concluída, ou encerra a partida |
 | GET | `/numbers` | Sorteio legado, sem sessão, mantido por compatibilidade |
 | POST | `/numbers/draw` | Cria ronda de 45s e escolhe quantidade de grandes placas |
 | POST | `/numbers/validate` | Valida cálculo e atribui pontos no servidor |
@@ -206,7 +210,7 @@ A melhor solução é calculada **dentro da lista instalada**, não necessariame
 a melhor palavra existente no idioma. Consultar a
 [proveniência e licenças dos léxicos](server/data/LEXICON-SOURCES.md).
 
-**Limitações:** faltam léxicos integrais de competição, regras finais e pontuação agregada de partida. O servidor verifica o limite de tempo da ronda de Letras,
+**Limitações:** faltam léxicos integrais de competição, regras finais e modos completos de duelos/final. O servidor verifica o limite de tempo da ronda de Letras,
 mas a sessão está em memória e deve migrar para armazenamento persistente. O Rive é decorativo: as regras
 não devem depender da animação.
 
@@ -255,7 +259,54 @@ Para deployment com múltiplas instâncias serão necessários armazenamento
 persistente e sincronização de tempo. Consulte
 [Regras e endpoints do M3](docs/NUMBER-RULES.md).
 
-## 7. Problemas comuns
+## 7. Partida a solo (primeiro incremento M4)
+
+Na página **http://localhost:3000/match**, selecione o idioma de Letras
+(EN, PT-PT ou FR) e a quantidade de placas grandes para Números (0–4).
+Carregue em **Commencer la partie**. A partida decorre em seis rondas:
+
+```text
+Letras → Números → Letras → Números → Letras → Números → Resultado final
+```
+
+A partida utiliza os mesmos validadores e solver do backend já usados
+pelas modalidades isoladas; **não aceita pontos enviados pelo cliente**.
+Em Letras, cada sorteio utiliza automaticamente cinco vogais e cinco
+consoantes. Em Números, a modalidade de partida oferece a entrada manual
+de expressão; o construtor de operações por etapas permanece na modalidade
+isolada.
+
+Cada ronda exige resposta antes do prazo do servidor. As soluções só
+aparecem quando a ronda termina. O botão **Épreuve suivante** fica disponível
+depois de responder ou deixar esgotar o tempo. A última ronda abre o painel
+de pontuação final e a lista das seis respostas.
+
+O identificador da partida é guardado no `localStorage`; a página pode ser
+recarregada sem reiniciar o cronómetro. Os dados completos da partida
+permanecem apenas **na memória do processo Express durante uma hora**
+(incluindo após abandono); reiniciar ou escalar a API sem afinidade de sessão
+perde a partida. Para a V1 será necessário persistir o estado.
+
+Exemplos de API:
+
+```bash
+curl -X POST http://localhost:5000/api/game/matches \
+  -H 'Content-Type: application/json' \
+  -d '{"language":"pt","largeCount":2}'
+
+# Insira o matchId devolvido pela chamada acima
+curl http://localhost:5000/api/game/matches/<matchId>
+
+# Avança apenas depois de terminar a ronda atual
+curl -X POST http://localhost:5000/api/game/matches/<matchId>/next
+```
+
+**Escopo atual:** partida a solo de seis rondas Letras/Números; ainda
+**não** inclui duelos verdadeiros nem a final de oito tiragens. A soma usa
+os barèmes **provisórios** dos dois motores. Consulte
+[Arquitetura e limitações do modo solo](docs/SOLO-MATCH.md).
+
+## 8. Problemas comuns
 
 - **Dicionário local indisponível:** confirme que os ficheiros
   `server/data/dictionaries/{en,pt,fr}.txt` estão presentes no servidor.
