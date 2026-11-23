@@ -47,7 +47,7 @@ is supplied, the game screens fire the `draw` and `success` triggers.
 ## Running locally
 
 ```sh
-cd server && yarn && yarn start
+cd server && yarn && yarn dev
 # in a second terminal
 cd client && yarn && yarn start
 ```

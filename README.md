@@ -1,5 +1,7 @@
 # Des Chiffres et Des Lettres Game
 
+> **Studio UI (2026):** A responsive, television-inspired interface, animated CSS fallback and optional [Rive integration](docs/STUDIO-AND-RIVE.md) are now available in the new frontend. Start the backend with `cd server && yarn && yarn dev` and the frontend with `cd client && yarn && yarn start`. The Rive `.riv` asset and dictionary validation remain future work.
+
 Welcome to the **Des Chiffres et Des Lettres Game**, a modern web application inspired by the classic French television game show. This project aims to bring the excitement and educational value of the show to the digital world, allowing users to test their numeracy and vocabulary skills.
 
 ## Table of Contents
