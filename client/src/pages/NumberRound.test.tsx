@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import NumberRound from './NumberRound';
 import {
@@ -42,7 +42,7 @@ test('selects the count of large plates before draw and displays the target', as
   });
   fireEvent.click(screen.getByRole('button', { name: 'Lancer le tirage' }));
   await waitFor(() => expect(mockedDraw).toHaveBeenCalledWith(4));
-  expect(screen.getByText('117')).toBeInTheDocument();
+  expect(await screen.findByText('117')).toBeInTheDocument();
 });
 
 test('builds a valid operation and can undo it', async () => {
@@ -77,7 +77,7 @@ test('backend alone awards scores and reveals the numerical best solution', asyn
   });
   fireEvent.click(screen.getByRole('button', { name: 'Valider' }));
   await waitFor(() => expect(mockedValidate).toHaveBeenCalledWith('sample-round', '(10 + 5) * 8 - 3'));
-  expect(screen.getByText('10 points')).toBeInTheDocument();
+  expect(await screen.findByText('10 points')).toBeInTheDocument();
   expect(screen.getByText(/Meilleur résultat trouvé/)).toBeInTheDocument();
   expect(screen.getByText('10 + 5 = 15')).toBeInTheDocument();
   expect(screen.getByRole('textbox', { name: /Votre expression/ })).toBeDisabled();
