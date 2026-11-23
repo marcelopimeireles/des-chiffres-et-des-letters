@@ -20,8 +20,8 @@
 | Sorteio de seis placas e solver | ✅ Implementado | 0–4 placas grandes e alvo 101–999; solver exato ou melhor aproximação |
 | Sorteio de letras interativo | 🟡 Em evolução | EN/PT-PT/FR, léxicos locais, prazo no servidor, pontos provisórios e solver; falta regras oficiais e persistência |
 | Integração Rive por máquina `Studio` / `intro, draw, success` | 🟡 Ponte de código | **Ainda não existe asset `.riv`** |
-| Duels / Final Words | 🟡 Ecrãs demonstrativos | Dados fixos/provisórios no backend |
-| Pontuação, progressão de partida, regras de tempo | 🟡 Em evolução | M4: seis rondas solo, placar acumulado, retoma e resultado final (sem duelos/final) |
+| Duels / Final Words | 🟡 MVP jogável | Dois duelos validados no servidor e final 8×10 letras / 120s; regras provisórias |
+| Pontuação, progressão de partida, regras de tempo | 🟡 Em evolução | M4: nove etapas (6 clássicas + 2 duelos + final), placar e retoma sem persistência de DB |
 | CI com testes e build do cliente | ✅ Implementado | Ampliar cobertura |
 
 ## 2. Entregas por versão
@@ -118,18 +118,18 @@ reprodutíveis com um `seed` de sorteio.
       guardar dados determinísticos da ronda no domínio/servidor.
 - [x] Configuração inicial a solo de idioma e número de grandes placas, com seis rondas alternadas.
 - [ ] Adicionar nomes, seleção de variantes oficiais, dificuldade e sequências personalizáveis.
-- [ ] Implementar pelo menos dois duelos reais com geração e solução
-      verificáveis, substituindo o desafio estático existente.
-- [ ] Implementar a final com oito tiragens, tempo global, validação de
-      dicionário e pontuação própria.
+- [x] Duelo de anagrama e cálculo mental com resposta verificada no backend, sorteio e deadline.
+- [ ] Evoluir duelos conforme o formato oficial escolhido.
+- [x] Final de oito anagramas completos, 120s globais, validação no léxico e 10 pontos por palavra.
+- [ ] Ajustar a final ao formato e às regras de competição selecionados.
 - [x] Criar placar acumulado, histórico de respostas e ecrã de resultado final do modo solo.
 - [ ] Acrescentar transições Rive reais entre provas e apresentação oficial.
 - [x] Guardar `matchId` no localStorage e retomar estado e deadline reais no servidor após refresh.
 - [ ] Persistir rondas/partidas no backend além da memória para sobreviver a deploy e várias instâncias.
 
-**Aceitação parcial (M4 MVP):** jogador conclui seis rondas alternadas com
-soma de pontuação validada pelo servidor. O formato de concurso completo,
-duelos e final, sem barème provisório, ainda está pendente.
+**Aceitação parcial (M4 MVP):** jogador conclui nove etapas (6 clássicas,
+2 duelos, final 8×10 letras) com soma validada no servidor. Regras oficiais,
+barème definitivo, persistência e transições Rive ainda estão pendentes.
 
 ### M5 — Qualidade, distribuição e observabilidade [P1]
 
@@ -291,3 +291,13 @@ Documentação complementar: [Studio e Rive](docs/STUDIO-AND-RIVE.md).
 **Próximos passos:** criar pelo menos dois duelos realmente jogáveis, a final
 de oito palavras e regras de campeonato; guardar partidas em base de dados
 ou Redis antes de publicar um serviço multi-instância; criar assets Rive.
+
+
+## 11. Incremento M4 — Duelos e final (branch `feat/duels-final-m4-20261123`)
+
+- [x] Duelo de anagrama 6–8 letras com palavra verificada no léxico escolhido.
+- [x] Duelo de cálculo mental (+, −, ×) validado no backend, sem fornecer resposta no sorteio.
+- [x] Final 8×10 letras, cada tiragem com pelo menos uma solução no léxico, prazo global de 120s.
+- [x] Endpoints de início, submissão, passar a palavra, consulta e solução protegida após término.
+- [x] Integrar os duelos e a final na sequência da partida solo e no placar autoritativo.
+- [ ] Concluir definição da edição oficial, revisão de dicionários, persistência multi-instância e animações Rive.

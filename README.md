@@ -6,7 +6,7 @@ visual de estúdio e integração opcional com [Rive](https://rive.app).
 **Estado:** protótipo ativo. A interface das quatro modalidades já existe.
 A rodada de Letras permite escolher vogais e consoantes, revelar as peças e
 jogar contra o relógio. A validação lexical funciona **offline**, com listas locais de inglês, português de Portugal e francês.
-As modalidades Letras e Números já validam respostas no servidor e revelam soluções. O **modo Partida solo** agora reúne seis rondas alternadas com pontuação acumulada e resultado final. Os duelos e a final televisiva continuam protótipos.
+As modalidades Letras e Números já validam respostas no servidor e revelam soluções. O **modo Partida solo** agora reúne seis rondas alternadas com pontuação acumulada e resultado final. Dois duelos jogáveis e a final com oito anagramas também têm verificação no servidor.
 
 - [Roadmap de desenvolvimento](ROADMAP.md)
 - [Guia do estúdio e das animações Rive](docs/STUDIO-AND-RIVE.md)
@@ -148,11 +148,11 @@ O GitHub Actions também executa testes e builds após alterações relevantes.
 | Rota da interface | Modalidade | Estado |
 | --- | --- | --- |
 | `/` | Estúdio / seleção | Interface disponível |
-| `/match` | Partie solo | Seis rondas de Letras/Números, placar acumulado, retoma e final |
+| `/match` | Partie solo | Seis rondas de Letras/Números, dois duelos, final de oito palavras e placar |
 | `/letter-round` | Le mot le plus long | EN/PT-PT/FR, sorteio, léxicos locais, pontuação e soluções |
 | `/number-round` | Le compte est bon | 0–4 placas grandes, editor de operações, solver exato/aproximado, pontuação e prazo no servidor |
-| `/duel` | Les duels | Demonstração com desafio fixo |
-| `/final-words` | Les mots de la fin | Demonstração com conjunto fixo |
+| `/duel` | Les duels | Anagrama ou cálculo mental, temporizado e validado pelo servidor |
+| `/final-words` | Les mots de la fin | Oito anagramas de dez letras em 120 segundos |
 
 Endpoints da API (`http://localhost:5000/api/game`):
 
@@ -169,8 +169,17 @@ Endpoints da API (`http://localhost:5000/api/game`):
 | POST | `/numbers/draw` | Cria ronda de 45s e escolhe quantidade de grandes placas |
 | POST | `/numbers/validate` | Valida cálculo e atribui pontos no servidor |
 | GET | `/numbers/:drawId/solutions` | Revela melhor solução após resposta ou expiração |
-| GET | `/duel` | Desafio demonstrativo |
-| GET | `/final` | Conjuntos demonstrativos |
+| GET | `/duel` | Endpoint legado demonstrativo |
+| POST | `/duels/draw` | Cria duelo de anagrama ou cálculo mental |
+| POST | `/duels/validate` | Confirma resposta de duelo e atribui 8 pontos |
+| GET | `/duels/:drawId` | Estado público e prazo do duelo |
+| GET | `/duels/:drawId/solution` | Revela solução após fim do duelo |
+| GET | `/final` | Endpoint legado demonstrativo |
+| POST | `/finale/draw` | Cria final com oito anagramas de dez letras |
+| POST | `/finale/validate` | Valida palavra por índice (10 pontos) |
+| POST | `/finale/skip` | Passa palavra sem pontos |
+| GET | `/finale/:drawId` | Estado atual da final sem revelar soluções |
+| GET | `/finale/:drawId/solutions` | Soluções após a final terminar |
 
 Exemplo do corpo de `POST /letters/draw`:
 
@@ -263,10 +272,11 @@ persistente e sincronização de tempo. Consulte
 
 Na página **http://localhost:3000/match**, selecione o idioma de Letras
 (EN, PT-PT ou FR) e a quantidade de placas grandes para Números (0–4).
-Carregue em **Commencer la partie**. A partida decorre em seis rondas:
+Carregue em **Commencer la partie**. A partida decorre em nove etapas:
 
 ```text
-Letras → Números → Letras → Números → Letras → Números → Resultado final
+Letras → Números → Letras → Números → Letras → Números
+→ Duelo anagrama → Duelo cálculo mental → Final (8 palavras) → Resultado
 ```
 
 A partida utiliza os mesmos validadores e solver do backend já usados
@@ -301,8 +311,9 @@ curl http://localhost:5000/api/game/matches/<matchId>
 curl -X POST http://localhost:5000/api/game/matches/<matchId>/next
 ```
 
-**Escopo atual:** partida a solo de seis rondas Letras/Números; ainda
-**não** inclui duelos verdadeiros nem a final de oito tiragens. A soma usa
+**Escopo atual:** partida solo de nove etapas, com dois duelos (30s cada,
+8 pontos por resposta correta) e uma final de oito anagramas de dez letras
+(120s globais, 10 pontos por palavra). As regras são originais e provisórias. A soma usa
 os barèmes **provisórios** dos dois motores. Consulte
 [Arquitetura e limitações do modo solo](docs/SOLO-MATCH.md).
 
@@ -326,3 +337,18 @@ estão detalhadas em [ROADMAP.md](ROADMAP.md).
 
 A interface é uma interpretação original inspirada em jogos televisivos.
 Não estão incluídos grafismos, músicas ou animações oficiais licenciadas.
+
+## Duelos e final — regras do protótipo
+
+As provas individuais podem ser iniciadas em `/duel` e `/final-words`.
+A API gera desafios sem enviar a resposta esperada; as soluções só ficam
+disponíveis após responder corretamente ou terminar o prazo.
+
+Os duelos atuais são um **anagrama de 6–8 letras** e um **cálculo mental
+com +, − ou ×**, ambos de 30 segundos e 8 pontos por resposta correta.
+A final seleciona oito palavras de **10 letras**, garantindo pelo menos
+uma resposta no léxico local para cada tiragem. O participante dispõe de
+120 segundos globais, podendo acertar cada palavra (+10) ou passar (+0).
+Não são uma implementação fiel de uma edição oficial, e a curadoria do
+léxico continua limitada à base atualmente instalada. Consultar
+[regras dos desafios](docs/CHALLENGES.md).

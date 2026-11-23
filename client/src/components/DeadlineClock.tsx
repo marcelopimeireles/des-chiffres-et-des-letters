@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 
 interface DeadlineClockProps {
   deadlineAt: number;
+  totalSeconds?: number;
   running: boolean;
   onExpire: () => void;
 }
 
 /** Absolute server deadline: a browser refresh cannot restart the countdown. */
-const DeadlineClock: React.FC<DeadlineClockProps> = ({ deadlineAt, running, onExpire }) => {
+const DeadlineClock: React.FC<DeadlineClockProps> = ({ deadlineAt, running, onExpire, totalSeconds = 45 }) => {
   const remainingAt = () => Math.max(0, Math.ceil((deadlineAt - Date.now()) / 1000));
   const [remaining, setRemaining] = useState(remainingAt);
   const called = useRef(false);
@@ -33,7 +34,7 @@ const DeadlineClock: React.FC<DeadlineClockProps> = ({ deadlineAt, running, onEx
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deadlineAt, running]);
 
-  const angle = Math.min(360, Math.round((remaining / 45) * 360));
+  const angle = Math.min(360, Math.round((remaining / totalSeconds) * 360));
   return (
     <div className={`countdown ${remaining <= 10 ? 'countdown--urgent' : ''}`}
       role="timer" aria-label={`Temps restant : ${remaining} secondes`}>

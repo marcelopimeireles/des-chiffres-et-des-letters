@@ -1,8 +1,7 @@
 # Solo match (M4 slice)
 
-This iteration introduces a **six-round solo match** alternating
-Letters and Numbers. It deliberately does **not** present the static
-`/duel` and `/final-words` demos as competition-ready formats.
+This iteration introduces a **nine-stage solo match** with six rounds alternating
+Letters and Numbers, followed by two real duels and an eight-anagram finale. These are provisional game rules, not official television competition formats.
 
 ## State transitions
 
@@ -13,12 +12,14 @@ configuration
     → playing numbers (45s)
     → review
     → letters → numbers → letters → numbers
-    → finished (total + six-entry history)
+    → duel anagram (30s) → duel mental (30s)
+    → final (8 words / 120s total)
+    → finished (total + nine-entry history)
 ```
 
 The player cannot advance while the current round is active. A valid
 answer ends the round immediately, and a timeout ends it with zero points.
-A wrong/invalid answer can be retried while the round is still active.
+A wrong/invalid answer can be retried while the round is still active. The finale also allows skipping each word with zero points.
 A repeated valid answer cannot score twice.
 
 The language and large-tile count are set at match creation. Letter draws

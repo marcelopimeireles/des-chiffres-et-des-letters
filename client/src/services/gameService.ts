@@ -121,7 +121,7 @@ export const fetchFinalWords = async (): Promise<FinalGame> =>
   (await axios.get<FinalGame>(`${API_URL}/final`)).data;
 
 /** A match links only server-created/validated letter and number rounds. */
-export type SoloMatchRoundKind = 'letters' | 'numbers';
+export type SoloMatchRoundKind = 'letters' | 'numbers' | 'duel' | 'final';
 
 export interface SoloMatchRound {
   kind: SoloMatchRoundKind;
@@ -131,6 +131,11 @@ export interface SoloMatchRound {
   letters?: string[];
   numbers?: number[];
   targetNumber?: number;
+  duelKind?: DuelKind;
+  challenge?: string;
+  finaleIndex?: number;
+  finaleTotal?: number;
+  finaleScore?: number;
 }
 
 export interface SoloMatchResult {
@@ -163,3 +168,69 @@ export const fetchSoloMatch = async (id: string): Promise<SoloMatch> =>
 
 export const nextSoloRound = async (id: string): Promise<SoloMatch> =>
   (await axios.post<SoloMatch>(`${API_URL}/matches/${encodeURIComponent(id)}/next`)).data;
+
+/** Real playable challenges. The server does not send secret words before completion. */
+export type DuelKind = 'anagram' | 'mental';
+export interface DuelRound {
+  drawId: string;
+  kind: DuelKind;
+  language: WordLanguage;
+  challenge: string;
+  letters?: string[];
+  operands?: number[];
+  operator?: '+' | '-' | '*';
+  deadlineAt: number;
+  finished: boolean;
+  score: number;
+}
+export interface DuelAttempt {
+  valid: boolean;
+  reason: 'accepted' | 'wrong_answer' | 'invalid_format';
+  score: number;
+}
+export interface DuelSolution { answer: string; score: number }
+
+export interface FinaleRound {
+  drawId: string;
+  language: WordLanguage;
+  deadlineAt: number;
+  totalItems: number;
+  currentIndex: number;
+  score: number;
+  finished: boolean;
+  current: { index: number; letters: string[] } | null;
+}
+export interface FinaleAttempt {
+  valid: boolean;
+  reason: 'accepted' | 'invalid_format' | 'letters_mismatch' | 'not_in_dictionary';
+  score: number;
+  currentIndex: number;
+  finished: boolean;
+  round: FinaleRound;
+}
+export interface FinaleSolutions {
+  score: number;
+  words: Array<{ target: string; answer: string | null; score: number }>;
+}
+
+export const createDuelDraw = async (kind: DuelKind, language: WordLanguage): Promise<DuelRound> =>
+  (await axios.post<DuelRound>(`${API_URL}/duels/draw`, { kind, language })).data;
+export const fetchDuelDraw = async (id: string): Promise<DuelRound> =>
+  (await axios.get<DuelRound>(`${API_URL}/duels/${encodeURIComponent(id)}`)).data;
+export const validateDuelAnswer = async (drawId: string, answer: string): Promise<DuelAttempt> =>
+  (await axios.post<DuelAttempt>(`${API_URL}/duels/validate`, { drawId, answer })).data;
+export const fetchDuelSolution = async (id: string): Promise<DuelSolution> =>
+  (await axios.get<DuelSolution>(`${API_URL}/duels/${encodeURIComponent(id)}/solution`)).data;
+
+export const createFinaleDraw = async (language: WordLanguage): Promise<FinaleRound> =>
+  (await axios.post<FinaleRound>(`${API_URL}/finale/draw`, { language })).data;
+export const fetchFinaleDraw = async (id: string): Promise<FinaleRound> =>
+  (await axios.get<FinaleRound>(`${API_URL}/finale/${encodeURIComponent(id)}`)).data;
+export const validateFinaleWord = async (
+  drawId: string, index: number, word: string
+): Promise<FinaleAttempt> =>
+  (await axios.post<FinaleAttempt>(`${API_URL}/finale/validate`, { drawId, index, word })).data;
+export const skipFinaleWord = async (drawId: string, index: number): Promise<FinaleRound> =>
+  (await axios.post<FinaleRound>(`${API_URL}/finale/skip`, { drawId, index })).data;
+export const fetchFinaleSolutions = async (id: string): Promise<FinaleSolutions> =>
+  (await axios.get<FinaleSolutions>(`${API_URL}/finale/${encodeURIComponent(id)}/solutions`)).data;
