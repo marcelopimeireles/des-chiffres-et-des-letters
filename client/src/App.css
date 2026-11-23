@@ -315,3 +315,32 @@
 .round-rive-badge { width: 174px; height: 126px; flex: 0 0 174px; pointer-events: none; }
 .studio-visual--compact { height: 100%; min-height: 0; }
 @media (max-width: 760px) { .round-rive-badge { display: none; } }
+
+/* Letter drawing controls and unrevealed tiles. */
+.game-tile--placeholder {
+  animation: none;
+  background: rgba(210, 226, 255, .08) !important;
+  color: rgba(204, 216, 247, .35) !important;
+  box-shadow: inset 0 0 0 2px rgba(179, 204, 255, .22) !important;
+  border: 1px dashed rgba(179, 204, 255, .35);
+}
+.letter-status { color: #aabde5; font-size: 13px; line-height: 1.6; margin: -8px 0 25px; min-height: 22px; }
+.letter-choices-header { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.letter-choices-header strong { font-size: 15px; }
+.letter-choices-header span { font-size: 12px; color: var(--accent-soft); font-weight: 900; letter-spacing: 1px; }
+.letter-choice-history { display: flex; flex-wrap: wrap; gap: 7px; min-height: 36px; margin-bottom: 15px; }
+.choice-chip {
+  display: grid; place-items: center; width: 32px; height: 32px;
+  border: 1px solid rgba(179,204,255,.35); border-radius: 5px;
+  font-size: 13px; font-weight: 900;
+}
+.choice-chip--vowel { background: #304b8c; color: #fff; }
+.choice-chip--consonant { background: #653d58; color: #ffe4c8; }
+.letter-choice-controls, .letter-draw-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.letter-choice-controls .button { min-width: 128px; }
+.letter-choice-controls .text-button, .letter-draw-controls .text-button { margin: 0; }
+.letter-draw-controls { margin: 20px 0; }
+@media (max-width: 520px) {
+  .letter-choice-controls .button { min-width: 0; flex: 1; }
+  .letter-draw-controls .button { width: 100%; }
+}
