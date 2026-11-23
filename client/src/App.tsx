@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import store from './redux/store';
 import Home from './pages/Home';
+import SoloMatch from './pages/SoloMatch';
 import NumberRound from './pages/NumberRound';
 import LetterRound from './pages/LetterRound';
 import Duel from './pages/Duel';
@@ -11,6 +12,7 @@ import './App.css';
 
 const navigation = [
   { to: '/', label: 'Accueil', end: true },
+  { to: '/match', label: 'Partie solo' },
   { to: '/letter-round', label: 'Les lettres' },
   { to: '/number-round', label: 'Les chiffres' },
   { to: '/duel', label: 'Duels' },
@@ -39,6 +41,7 @@ const App: React.FC = () => (
         <main className="site-main" id="main">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/match" element={<SoloMatch />} />
             <Route path="/letter-round" element={<LetterRound />} />
             <Route path="/number-round" element={<NumberRound />} />
             <Route path="/duel" element={<Duel />} />

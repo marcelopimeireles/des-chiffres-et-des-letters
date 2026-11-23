@@ -32,10 +32,10 @@ const Home: React.FC = () => (
           Dix lettres, six nombres, une seule mission : trouver la bonne réponse.
         </p>
         <div className="hero-actions">
-          <Link to="/letter-round" className="button button--primary">Commencer à jouer <span aria-hidden="true">→</span></Link>
-          <Link to="/number-round" className="button button--outline">Jouer avec les chiffres</Link>
+          <Link to="/match" className="button button--primary">Jouer une partie <span aria-hidden="true">→</span></Link>
+          <Link to="/letter-round" className="button button--outline">Jouer avec les lettres</Link>
         </div>
-        <div className="hero-footnote"><span className="hero-line" /> À VOTRE RYTHME · DIRECTEMENT DANS VOTRE NAVIGATEUR</div>
+        <div className="hero-footnote"><span className="hero-line" /> MODE SOLO : SIX ÉPREUVES · DIRECTEMENT DANS VOTRE NAVIGATEUR</div>
       </div>
       <div className="hero-art"><RiveScene cue="intro" /></div>
     </section>
