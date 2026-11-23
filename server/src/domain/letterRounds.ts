@@ -1,17 +1,23 @@
 import { randomUUID } from 'node:crypto';
 import { drawLetters, LetterKind, WordLanguage } from './letters';
 
+export const LETTER_REVEAL_MS = 230 * 10;
+export const LETTER_PLAY_SECONDS = 30;
+
 export interface LetterRound {
   drawId: string;
   letters: string[];
   choices: LetterKind[];
   language: WordLanguage;
   createdAt: number;
+  deadlineAt: number;
+  answer?: { word: string; score: number };
 }
 
 /**
- * In-memory, short-lived source of truth for draw tiles and chosen language.
- * This isn't durable persistence or a server-authoritative match clock yet.
+ * MVP store: server holds the drawn tiles, language, answer, and deadline.
+ * Sessions are memory-only, expire after 5 minutes, and are not shared between
+ * server replicas. A persistent store is needed before scaling horizontally.
  */
 export class LetterRoundStore {
   private rounds = new Map<string, LetterRound>();
@@ -25,17 +31,16 @@ export class LetterRoundStore {
     for (const [id, round] of this.rounds) {
       if (this.now() - round.createdAt > this.ttlMs) this.rounds.delete(id);
     }
-    // Bound memory even if clients create many rounds.
     if (this.rounds.size >= 500) {
       const oldest = this.rounds.keys().next().value;
       if (oldest) this.rounds.delete(oldest);
     }
+    const createdAt = this.now();
     const round: LetterRound = {
-      drawId: randomUUID(),
-      choices: [...choices],
-      language,
+      drawId: randomUUID(), choices: [...choices], language,
       letters: drawLetters(choices, Math.random, language),
-      createdAt: this.now()
+      createdAt,
+      deadlineAt: createdAt + LETTER_REVEAL_MS + LETTER_PLAY_SECONDS * 1000
     };
     this.rounds.set(round.drawId, round);
     return round;
@@ -49,6 +54,16 @@ export class LetterRoundStore {
       return undefined;
     }
     return round;
+  }
+
+  isFinished(round: LetterRound): boolean {
+    return Boolean(round.answer) || this.now() >= round.deadlineAt;
+  }
+
+  complete(round: LetterRound, word: string, score: number): boolean {
+    if (this.isFinished(round)) return false;
+    round.answer = { word, score };
+    return true;
   }
 }
 
