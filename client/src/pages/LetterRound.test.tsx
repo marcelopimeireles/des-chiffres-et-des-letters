@@ -61,7 +61,9 @@ test('a valid English word is only accepted after server dictionary validation',
     fireEvent.click(screen.getByRole('button', { name: 'Tirage automatique (5 V / 5 C)' }));
     fireEvent.click(screen.getByRole('button', { name: 'Lancer le tirage' }));
     await act(async () => { await Promise.resolve(); });
-    await act(async () => { jest.advanceTimersByTime(3000); });
+    for (let i = 0; i < 10; i++) {
+      await act(async () => { jest.advanceTimersByTime(240); });
+    }
     const answer = screen.getByRole('textbox', { name: 'Votre mot en English' });
     fireEvent.change(answer, { target: { value: 'cat' } });
     fireEvent.click(screen.getByRole('button', { name: 'Valider' }));

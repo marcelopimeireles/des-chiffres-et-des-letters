@@ -18,7 +18,7 @@
 | Tabuleiros e cronómetros | 🟡 Em evolução | Letras: escolha, revelação e prazo de resposta; outras rondas ainda só visual |
 | Parser matemático seguro; impede reutilização de placa | ✅ Implementado | Não equivale a validar todas as regras da modalidade |
 | Sorteio de seis placas com placas grandes | ✅ Implementado | Alvo aleatório pode não ter solução exata |
-| Sorteio de letras interativo | 🟡 Incremento implementado | V/C individuais + sorteio automático 5/5; falta léxico e sorteio reproduzível |
+| Sorteio de letras interativo | 🟡 Em evolução | Escolha de língua en/pt/fr, dicionário remoto e `drawId`; falta fonte licenciada definitiva, pontos e solução |
 | Integração Rive por máquina `Studio` / `intro, draw, success` | 🟡 Ponte de código | **Ainda não existe asset `.riv`** |
 | Duels / Final Words | 🟡 Ecrãs demonstrativos | Dados fixos/provisórios no backend |
 | Pontuação, progressão de partida, regras de tempo | ❌ Pendente | Não existe motor de partida completo |
@@ -72,10 +72,13 @@ licença compatível (uso comercial/redistribuição, se aplicável).
 
 - [x] Permitir escolher vogal ou consoante dez vezes e oferecer tiragem automática de 5/5.
 - [x] Validar no servidor a sequência de dez escolhas e revelar as letras por ordem.
-- [ ] Adicionar `seed` de sorteio e persistência de sessão para auditabilidade e segurança.
-- [ ] Integrar léxico francês indexado (normalização Unicode, acentos,
-      plurais/flexões segundo a regra escolhida); excluir palavras não admitidas.
-- [ ] Validar no **servidor** existência no léxico e multiplicidade das letras.
+- [x] Guardar temporariamente sorteio e idioma no servidor usando `drawId` (5 minutos, em memória).
+- [ ] Adicionar `seed` e armazenamento persistente para auditabilidade/reinício do servidor.
+- [x] Adicionar seletor de língua (en, pt-BR, fr) e consulta lexical no servidor via API remota (primeira versão).
+- [ ] Adotar léxicos completos por língua (preferir pt-PT para Portugal), documentar licenças,
+      normalização Unicode, flexões e lista de palavras admitidas nas regras finais.
+- [x] Validar no **servidor** o idioma do sorteio, as letras utilizadas e existência no dicionário remoto.
+- [ ] Adicionar cache, quotas e serviço lexical local/sem rede quando a versão de concurso for fechada.
 - [ ] Calcular tamanho, melhor palavra possível e exemplos de soluções
       após a revelação (não antes).
 - [x] Impedir submissão após os 30 segundos de uma ronda de Letras (validação no cliente, ainda não autoritativa).
@@ -245,6 +248,7 @@ Uma issue funcional está concluída apenas quando:
 **Concluído nesta branch:**
 
 - Escolha manual de 10 vogais/consoantes, desfazer, escolha automática (5 V / 5 C).
+- Escolha de English, Português (Brasil) ou Français ANTES do sorteio; consulta de dicionário e composição no backend.
 - `POST /api/game/letters/draw` valida o padrão e sorteia as letras no servidor.
 - Animação CSS de revelação sequencial de cada peça, com ponte Rive `draw` preservada.
 - Cronómetro de 30 s começa depois da última peça e termina a rodada; a entrada de
@@ -253,9 +257,9 @@ Uma issue funcional está concluída apenas quando:
 
 **Ainda não concluído / bloqueadores para a primeira vertical slice:**
 
-1. Escolher lexicon francês, regras oficiais e licença; validação por dicionário no servidor.
+1. Substituir o dicionário remoto provisório por léxicos licenciados e reproduzíveis para EN, PT (incluindo pt-PT) e FR.
 2. Criar e exportar os assets reais `.riv` para `Studio` e placas.
-3. Persistir sorteios e relógio no servidor e tornar a partida verificável.
+3. Persistir sorteios e relógio no servidor e tornar a partida verificável (o `drawId` atual vive só em memória).
 4. Somar pontos válidos, apresentar soluções e testar a experiência integral.
 
 A interface **não atribui pontos** por palavras apenas formáveis. As animações

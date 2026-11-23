@@ -5,8 +5,8 @@ visual de estúdio e integração opcional com [Rive](https://rive.app).
 
 **Estado:** protótipo ativo. A interface das quatro modalidades já existe.
 A rodada de Letras permite escolher vogais e consoantes, revelar as peças e
-jogar contra o relógio. O dicionário francês, a pontuação completa, os duelos
-e a final ainda não estão implementados como partidas completas.
+jogar contra o relógio. A validação lexical por idioma já funciona via API pública (requer internet).
+A pontuação completa, os duelos e a final ainda não estão implementados como partidas completas.
 
 - [Roadmap de desenvolvimento](ROADMAP.md)
 - [Guia do estúdio e das animações Rive](docs/STUDIO-AND-RIVE.md)
@@ -148,7 +148,7 @@ O GitHub Actions também executa testes e builds após alterações relevantes.
 | Rota da interface | Modalidade | Estado |
 | --- | --- | --- |
 | `/` | Estúdio / seleção | Interface disponível |
-| `/letter-round` | Le mot le plus long | Sorteio manual/automático, relógio e verificação de composição |
+| `/letter-round` | Le mot le plus long | Idiomas EN/PT/FR, sorteio e validação lexical via servidor |
 | `/number-round` | Le compte est bon | Sorteio, calculadora segura e comparação com o alvo |
 | `/duel` | Les duels | Demonstração com desafio fixo |
 | `/final-words` | Les mots de la fin | Demonstração com conjunto fixo |
@@ -158,7 +158,8 @@ Endpoints da API (`http://localhost:5000/api/game`):
 | Método | Endpoint | Descrição |
 | --- | --- | --- |
 | GET | `/letters` | Tiragem automática simples (compatibilidade) |
-| POST | `/letters/draw` | Sorteia a partir de dez escolhas `vowel`/`consonant` |
+| POST | `/letters/draw` | Sorteia dez letras e fixa o idioma (en, pt ou fr); retorna `drawId` |
+| POST | `/letters/validate` | Valida palavra no dicionário e nas letras do sorteio identificado |
 | GET | `/numbers` | Sorteia seis placas e o alvo |
 | GET | `/duel` | Desafio demonstrativo |
 | GET | `/final` | Conjuntos demonstrativos |
@@ -167,6 +168,7 @@ Exemplo do corpo de `POST /letters/draw`:
 
 ```json
 {
+  "language": "fr",
   "choices": [
     "vowel", "consonant", "vowel", "consonant", "vowel",
     "consonant", "vowel", "consonant", "vowel", "consonant"
@@ -174,13 +176,33 @@ Exemplo do corpo de `POST /letters/draw`:
 }
 ```
 
-**Limitações:** ainda não existe validação por dicionário, geração de melhor
-solução ou pontuação completa; os tempos são controlados pelo cliente e o
-backend ainda não guarda uma sessão de jogo. O Rive é decorativo: as regras
+Exemplo de validação (substitua o UUID pelo `drawId` recebido):
+
+```json
+{ "drawId": "00000000-0000-4000-8000-000000000000", "word": "bonjour" }
+```
+
+O backend guarda temporariamente o sorteio e o idioma; **não** aceita letras
+escolhidas pelo cliente durante a validação. Os sorteios ficam em memória por
+até cinco minutos e são perdidos se o servidor reiniciar.
+
+**Dicionários por idioma:** English usa `en`, Français usa `fr` e
+Português usa a fonte `pt-BR` (Brasil) da
+[Free Dictionary API](https://dictionaryapi.dev/). A consulta exige internet
+no **backend**; indisponibilidade ou limite de chamadas gera HTTP 503,
+não uma falsa resposta "palavra inválida". Nem todas as flexões e palavras
+admitidas em concursos televisivos estão cobertas por essa fonte, e português
+europeu ainda exige um léxico `pt-PT` próprio.
+
+**Limitações:** faltam melhor solução, pontuação e regras de um concurso
+completo; os tempos são controlados pelo cliente e o backend só guarda
+sorteios temporários. O Rive é decorativo: as regras
 não devem depender da animação.
 
 ## 7. Problemas comuns
 
+- **Validação de palavra falha:** o backend precisa de acesso a `api.dictionaryapi.dev`;
+  verifique a ligação de rede. Se receber HTTP 503, repita a consulta.
 - **Letras ou números não carregam:** confirme que o servidor está em execução
   e que a URL em `REACT_APP_API_URL` aponta para `/api/game`.
 - **Porta ocupada:** altere `PORT` na API ou liberte a porta 3000 do cliente.
