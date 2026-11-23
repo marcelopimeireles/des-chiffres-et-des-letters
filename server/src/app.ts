@@ -5,16 +5,20 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import gameRoutes from './routes/gameRoutes';
 import { saveGameStateIfEnabled } from './services/gameStatePersistence';
+import { vercelRedisMiddleware } from './services/vercelRedisState';
 
 const app = express();
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use(cors());
+// A configured CORS_ORIGIN restricts browsers to the published frontend.
+const allowedOrigins = process.env.CORS_ORIGIN?.split(',').map(x => x.trim()).filter(Boolean);
+app.use(cors(allowedOrigins?.length ? { origin: allowedOrigins } : {}));
 app.use(bodyParser.json());
 
 // Persist the entire authoritative state before confirming successful mutations.
 // On disk failure, return an error rather than claiming the action is durable.
+app.use('/api/game', vercelRedisMiddleware);
 app.use('/api/game', (_req, res, next) => {
   if (_req.method === 'POST') {
     const sendJson = res.json.bind(res);

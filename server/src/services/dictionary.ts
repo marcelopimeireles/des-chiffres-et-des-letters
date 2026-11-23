@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import {
   canMakeWordFromTiles, normalizeCandidate, tileLetters, WordLanguage
@@ -43,7 +43,11 @@ export function buildLexicon(entries: Iterable<string>): Lexicon {
 export function getLexicon(language: WordLanguage): Lexicon {
   let dictionary = cache.get(language);
   if (!dictionary) {
-    const file = resolve(__dirname, '../../data/dictionaries', language + '.txt');
+    // Vercel bundles dictionary assets under the function's working directory.
+    // Local ts-node/tsc continues to work through the source/dist path.
+    const bundled = resolve(process.cwd(), 'data/dictionaries', language + '.txt');
+    const source = resolve(__dirname, '../../data/dictionaries', language + '.txt');
+    const file = existsSync(bundled) ? bundled : source;
     const contents = readFileSync(file, 'utf8');
     dictionary = buildLexicon(contents.split(/\r?\n/));
     if (dictionary.words.length === 0) throw new Error('Empty local lexicon for ' + language);

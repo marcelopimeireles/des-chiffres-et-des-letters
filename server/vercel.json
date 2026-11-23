@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "express",
+  "functions": {
+    "src/app.ts": {
+      "includeFiles": "data/dictionaries/**",
+      "maxDuration": 30
+    }
+  }
+}
