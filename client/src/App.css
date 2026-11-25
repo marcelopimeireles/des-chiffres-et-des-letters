@@ -464,3 +464,27 @@
 .challenge-answers li { margin-bottom: 7px; }
 .challenge-answers li span { display: block; color: #c3d0ef; font-size: 13px; }
 @media(max-width:560px) { .challenge-setup .button { width: 100%; } }
+
+.rive-game {
+  width: min(100%, 600px);
+  margin-inline: auto;
+}
+
+.rive-game canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 600 / 774;
+  touch-action: manipulation;
+}
+
+.rive-game canvas:focus-visible {
+  outline: 2px solid #ffd984;
+  outline-offset: 3px;
+}
+
+.rive-studio {
+  min-height: 100dvh;
+  padding: clamp(0px, 2vw, 16px);
+  background: #071524;
+}

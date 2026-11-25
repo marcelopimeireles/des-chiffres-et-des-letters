@@ -1924,6 +1924,11 @@
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.17.0.tgz#fbb0add487478ef42247d5942e7a5d8a2e20095f"
   integrity sha512-2D6XaHEVvkCn682XBnipbJjgZUU7xjLtA4dGJRBVUKpEaDYOZMENZoZjAOSb7qirxt5RupjzZxz4fK2FO+EFPw==
 
+"@rive-app/canvas@2.55.1":
+  version "2.55.1"
+  resolved "https://registry.npmjs.org/@rive-app/canvas/-/canvas-2.55.1.tgz#5cdb929bdfe357625696abb0920b653a8ce33afd"
+  integrity sha512-COPV4JYoE41v0t5sYh5b03LqseIFfbqVtCStBQq20oITZQj76JE0/5C2H00XeSsRLHQmq+bSfWIpPb1J8mcKKQ==
+
 "@rollup/plugin-babel@^5.2.0":
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-babel/-/plugin-babel-5.3.1.tgz#04bc0608f4aa4b2e4b1aebf284344d0f68fda283"

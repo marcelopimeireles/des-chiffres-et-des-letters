@@ -10,6 +10,8 @@ import {
   LetterSolutions, NumbersSolution, FinaleSolutions, SoloMatch as SoloMatchData, WordLanguage
 } from '../services/gameService';
 
+const RiveMatchBoard = React.lazy(() => import('../components/RiveMatchBoard'));
+
 const STORAGE_KEY = 'des-chiffres-et-des-lettres:solo-match';
 const LANGUAGE_NAMES: Record<WordLanguage, string> = {
   fr: 'Français', pt: 'Português (Portugal)', en: 'English'
@@ -21,7 +23,7 @@ const RoundLabel: React.FC<{ kind: 'letters' | 'numbers' | 'duel' | 'final' }> =
     kind === 'duel' ? 'Les duels' : 'Les mots de la fin'}</>
 );
 
-const SoloMatch: React.FC = () => {
+const SoloMatch: React.FC<{ presentation?: 'classic' | 'rive' }> = ({ presentation = 'classic' }) => {
   const [match, setMatch] = useState<SoloMatchData | null>(null);
   const [language, setLanguage] = useState<WordLanguage>('fr');
   const [largeCount, setLargeCount] = useState(2);
@@ -106,8 +108,8 @@ const SoloMatch: React.FC = () => {
     setNumberSolution(null);
   };
 
-  const submit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const submit = async (event?: React.FormEvent) => {
+    event?.preventDefault();
     if (!match?.current || match.status !== 'playing' || busy || !answer.trim()) return;
     setBusy(true);
     setFeedback('');
@@ -219,6 +221,21 @@ const SoloMatch: React.FC = () => {
   const round = match?.current;
   const last = match?.history.find(item => item.index === round?.index);
   const finished = match?.status === 'finished';
+
+  if (presentation === 'rive') {
+    const solution = letterSolutions?.bestWords.slice(0, 4).join(' · ') ||
+      (numberSolution && `${numberSolution.expression} = ${numberSolution.value}`) ||
+      duelSolution ||
+      finaleSolutions?.words.map(item => item.target).join(' · ') || '';
+    return <RiveMatchBoard
+      match={match} language={language} largeCount={largeCount} answer={answer}
+      feedback={feedback} solution={solution} busy={busy} restoring={restoring}
+      onLanguage={setLanguage} onLargeCount={setLargeCount} onAnswer={setAnswer}
+      onStart={() => void start()} onSubmit={() => void submit()}
+      onNext={() => void next()} onReset={reset} onSkip={() => void skipFinalWord()}
+      onRefresh={() => { if (match) void load(match.matchId); }}
+    />;
+  }
 
   return (
     <StudioRound number="00" title="La partie solo" animationCue={match?.status === 'review' && (last?.score || 0) > 0 ? 'success' : 'draw'}
