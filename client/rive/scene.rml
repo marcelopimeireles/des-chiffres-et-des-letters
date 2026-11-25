@@ -1,0 +1,1342 @@
+<Rive version="1" kind="fragment">
+    <FontAsset file="DejaVuSans-Bold.ttf" name="DejaVu Sans Bold" id="0:1"/>
+    <Artboard name="Game Board" id="0:2" width="600" height="774" defaultStateMachineId="0:3" viewModelId="0:10">
+        <Fill><SolidColor colorValue="FF071524"/></Fill>
+        <Text name="masthead" x="28" y="19" width="350" height="24"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="left" verticalAlignValue="middle">
+            <TextStylePaint id="0:100" fontSize="13" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFFFD984"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:100" text="DES CHIFFRES ET DES LETTRES"></TextValueRun>
+        </Text>
+        <Text name="progress" x="396" y="19" width="176" height="24"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="right" verticalAlignValue="middle">
+            <TextStylePaint id="0:101" fontSize="13" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FF9BB0C8"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:101" text="PARTIE SOLO"><DataBindContext sourcePathIds="0:10-0:102" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Text name="heading" x="28" y="60" width="544" height="52"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="left" verticalAlignValue="middle">
+            <TextStylePaint id="0:103" fontSize="31" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:103" text="La partie solo"><DataBindContext sourcePathIds="0:10-0:104" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Text name="caption" x="28" y="114" width="544" height="36"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="left" verticalAlignValue="middle">
+            <TextStylePaint id="0:105" fontSize="15" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFB9CDE1"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:105" text="Neuf épreuves, du premier tirage à la finale."><DataBindContext sourcePathIds="0:10-0:106" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Text name="clock" x="32" y="167" width="250" height="40"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:107" fontSize="24" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFFFD984"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:107" text="—"><DataBindContext sourcePathIds="0:10-0:108" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Text name="score" x="318" y="167" width="250" height="40"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:109" fontSize="24" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FF8BEBDA"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:109" text="0 point"><DataBindContext sourcePathIds="0:10-0:110" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="Clock panel" x="28" y="165">
+            <Rectangle width="260" height="45" originX="0" originY="0" cornerRadiusTL="12"/>
+            <Fill><SolidColor colorValue="FF102A40"/></Fill>
+        </Shape>
+        <Shape name="Score panel" x="312" y="165">
+            <Rectangle width="260" height="45" originX="0" originY="0" cornerRadiusTL="12"/>
+            <Fill><SolidColor colorValue="FF102A40"/></Fill>
+        </Shape>
+        <Node name="Tile Rack" id="0:20"><Text name="tile0" x="28" y="231" width="49" height="53"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:111" fontSize="23" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FF072236"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:111" text="·"><DataBindContext sourcePathIds="0:10-0:112" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="Tile 1" x="28" y="231">
+            <Rectangle width="49" height="53" originX="0" originY="0" cornerRadiusTL="7"/>
+            <Fill><SolidColor colorValue="FFB8ECF1"/></Fill>
+        </Shape>
+        <Text name="tile1" x="83" y="231" width="49" height="53"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:113" fontSize="23" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FF072236"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:113" text="·"><DataBindContext sourcePathIds="0:10-0:114" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="Tile 2" x="83" y="231">
+            <Rectangle width="49" height="53" originX="0" originY="0" cornerRadiusTL="7"/>
+            <Fill><SolidColor colorValue="FFB8ECF1"/></Fill>
+        </Shape>
+        <Text name="tile2" x="138" y="231" width="49" height="53"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:115" fontSize="23" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FF072236"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:115" text="·"><DataBindContext sourcePathIds="0:10-0:116" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="Tile 3" x="138" y="231">
+            <Rectangle width="49" height="53" originX="0" originY="0" cornerRadiusTL="7"/>
+            <Fill><SolidColor colorValue="FFB8ECF1"/></Fill>
+        </Shape>
+        <Text name="tile3" x="193" y="231" width="49" height="53"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:117" fontSize="23" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FF072236"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:117" text="·"><DataBindContext sourcePathIds="0:10-0:118" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="Tile 4" x="193" y="231">
+            <Rectangle width="49" height="53" originX="0" originY="0" cornerRadiusTL="7"/>
+            <Fill><SolidColor colorValue="FFB8ECF1"/></Fill>
+        </Shape>
+        <Text name="tile4" x="248" y="231" width="49" height="53"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:119" fontSize="23" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FF072236"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:119" text="·"><DataBindContext sourcePathIds="0:10-0:120" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="Tile 5" x="248" y="231">
+            <Rectangle width="49" height="53" originX="0" originY="0" cornerRadiusTL="7"/>
+            <Fill><SolidColor colorValue="FFB8ECF1"/></Fill>
+        </Shape>
+        <Text name="tile5" x="303" y="231" width="49" height="53"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:121" fontSize="23" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FF072236"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:121" text="·"><DataBindContext sourcePathIds="0:10-0:122" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="Tile 6" x="303" y="231">
+            <Rectangle width="49" height="53" originX="0" originY="0" cornerRadiusTL="7"/>
+            <Fill><SolidColor colorValue="FFB8ECF1"/></Fill>
+        </Shape>
+        <Text name="tile6" x="358" y="231" width="49" height="53"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:123" fontSize="23" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FF072236"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:123" text="·"><DataBindContext sourcePathIds="0:10-0:124" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="Tile 7" x="358" y="231">
+            <Rectangle width="49" height="53" originX="0" originY="0" cornerRadiusTL="7"/>
+            <Fill><SolidColor colorValue="FFB8ECF1"/></Fill>
+        </Shape>
+        <Text name="tile7" x="413" y="231" width="49" height="53"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:125" fontSize="23" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FF072236"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:125" text="·"><DataBindContext sourcePathIds="0:10-0:126" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="Tile 8" x="413" y="231">
+            <Rectangle width="49" height="53" originX="0" originY="0" cornerRadiusTL="7"/>
+            <Fill><SolidColor colorValue="FFB8ECF1"/></Fill>
+        </Shape>
+        <Text name="tile8" x="468" y="231" width="49" height="53"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:127" fontSize="23" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FF072236"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:127" text="·"><DataBindContext sourcePathIds="0:10-0:128" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="Tile 9" x="468" y="231">
+            <Rectangle width="49" height="53" originX="0" originY="0" cornerRadiusTL="7"/>
+            <Fill><SolidColor colorValue="FFB8ECF1"/></Fill>
+        </Shape>
+        <Text name="tile9" x="523" y="231" width="49" height="53"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:129" fontSize="23" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FF072236"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:129" text="·"><DataBindContext sourcePathIds="0:10-0:130" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="Tile 10" x="523" y="231">
+            <Rectangle width="49" height="53" originX="0" originY="0" cornerRadiusTL="7"/>
+            <Fill><SolidColor colorValue="FFB8ECF1"/></Fill>
+        </Shape></Node>
+        <Text name="answer" x="42" y="303" width="516" height="48"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="left" verticalAlignValue="middle">
+            <TextStylePaint id="0:131" fontSize="24" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:131" text=""><DataBindContext sourcePathIds="0:10-0:132" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="Answer panel" x="28" y="302">
+            <Rectangle width="544" height="50" originX="0" originY="0" cornerRadiusTL="12"/>
+            <Fill><SolidColor colorValue="FF071D31"/></Fill>
+        </Shape>
+        <Text name="feedback" x="32" y="363" width="536" height="53"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="left" verticalAlignValue="middle">
+            <TextStylePaint id="0:133" fontSize="16" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFBAE4FA"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:133" text=""><DataBindContext sourcePathIds="0:10-0:134" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Node name="Keyboard" opacity="0"><DataBindContext sourcePathIds="0:10-0:22" propertyKey="18"/><Text name="key0Label" x="32" y="424" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:137" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:137" text="A"></TextValueRun>
+        </Text>
+        <Shape name="key0" x="28" y="424" id="0:135">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key1Label" x="87" y="424" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:140" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:140" text="Z"></TextValueRun>
+        </Text>
+        <Shape name="key1" x="83" y="424" id="0:138">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key2Label" x="142" y="424" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:143" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:143" text="E"></TextValueRun>
+        </Text>
+        <Shape name="key2" x="138" y="424" id="0:141">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key3Label" x="197" y="424" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:146" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:146" text="R"></TextValueRun>
+        </Text>
+        <Shape name="key3" x="193" y="424" id="0:144">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key4Label" x="252" y="424" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:149" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:149" text="T"></TextValueRun>
+        </Text>
+        <Shape name="key4" x="248" y="424" id="0:147">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key5Label" x="307" y="424" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:152" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:152" text="Y"></TextValueRun>
+        </Text>
+        <Shape name="key5" x="303" y="424" id="0:150">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key6Label" x="362" y="424" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:155" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:155" text="U"></TextValueRun>
+        </Text>
+        <Shape name="key6" x="358" y="424" id="0:153">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key7Label" x="417" y="424" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:158" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:158" text="I"></TextValueRun>
+        </Text>
+        <Shape name="key7" x="413" y="424" id="0:156">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key8Label" x="472" y="424" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:161" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:161" text="O"></TextValueRun>
+        </Text>
+        <Shape name="key8" x="468" y="424" id="0:159">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key9Label" x="527" y="424" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:164" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:164" text="P"></TextValueRun>
+        </Text>
+        <Shape name="key9" x="523" y="424" id="0:162">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key10Label" x="32" y="469" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:167" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:167" text="Q"></TextValueRun>
+        </Text>
+        <Shape name="key10" x="28" y="469" id="0:165">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key11Label" x="87" y="469" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:170" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:170" text="S"></TextValueRun>
+        </Text>
+        <Shape name="key11" x="83" y="469" id="0:168">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key12Label" x="142" y="469" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:173" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:173" text="D"></TextValueRun>
+        </Text>
+        <Shape name="key12" x="138" y="469" id="0:171">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key13Label" x="197" y="469" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:176" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:176" text="F"></TextValueRun>
+        </Text>
+        <Shape name="key13" x="193" y="469" id="0:174">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key14Label" x="252" y="469" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:179" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:179" text="G"></TextValueRun>
+        </Text>
+        <Shape name="key14" x="248" y="469" id="0:177">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key15Label" x="307" y="469" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:182" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:182" text="H"></TextValueRun>
+        </Text>
+        <Shape name="key15" x="303" y="469" id="0:180">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key16Label" x="362" y="469" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:185" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:185" text="J"></TextValueRun>
+        </Text>
+        <Shape name="key16" x="358" y="469" id="0:183">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key17Label" x="417" y="469" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:188" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:188" text="K"></TextValueRun>
+        </Text>
+        <Shape name="key17" x="413" y="469" id="0:186">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key18Label" x="472" y="469" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:191" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:191" text="L"></TextValueRun>
+        </Text>
+        <Shape name="key18" x="468" y="469" id="0:189">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key19Label" x="527" y="469" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:194" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:194" text="M"></TextValueRun>
+        </Text>
+        <Shape name="key19" x="523" y="469" id="0:192">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key20Label" x="32" y="514" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:197" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:197" text="W"></TextValueRun>
+        </Text>
+        <Shape name="key20" x="28" y="514" id="0:195">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key21Label" x="87" y="514" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:200" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:200" text="X"></TextValueRun>
+        </Text>
+        <Shape name="key21" x="83" y="514" id="0:198">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key22Label" x="142" y="514" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:203" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:203" text="C"></TextValueRun>
+        </Text>
+        <Shape name="key22" x="138" y="514" id="0:201">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key23Label" x="197" y="514" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:206" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:206" text="V"></TextValueRun>
+        </Text>
+        <Shape name="key23" x="193" y="514" id="0:204">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key24Label" x="252" y="514" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:209" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:209" text="B"></TextValueRun>
+        </Text>
+        <Shape name="key24" x="248" y="514" id="0:207">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key25Label" x="307" y="514" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:212" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:212" text="N"></TextValueRun>
+        </Text>
+        <Shape name="key25" x="303" y="514" id="0:210">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key26Label" x="362" y="514" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:215" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:215" text="É"></TextValueRun>
+        </Text>
+        <Shape name="key26" x="358" y="514" id="0:213">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key27Label" x="417" y="514" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:218" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:218" text="È"></TextValueRun>
+        </Text>
+        <Shape name="key27" x="413" y="514" id="0:216">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key28Label" x="472" y="514" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:221" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:221" text="Ç"></TextValueRun>
+        </Text>
+        <Shape name="key28" x="468" y="514" id="0:219">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key29Label" x="527" y="514" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:224" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:224" text="À"></TextValueRun>
+        </Text>
+        <Shape name="key29" x="523" y="514" id="0:222">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF17405B"/></Fill>
+        </Shape>
+        <Text name="key30Label" x="32" y="559" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:227" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:227" text="1"></TextValueRun>
+        </Text>
+        <Shape name="key30" x="28" y="559" id="0:225">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key31Label" x="87" y="559" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:230" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:230" text="2"></TextValueRun>
+        </Text>
+        <Shape name="key31" x="83" y="559" id="0:228">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key32Label" x="142" y="559" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:233" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:233" text="3"></TextValueRun>
+        </Text>
+        <Shape name="key32" x="138" y="559" id="0:231">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key33Label" x="197" y="559" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:236" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:236" text="4"></TextValueRun>
+        </Text>
+        <Shape name="key33" x="193" y="559" id="0:234">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key34Label" x="252" y="559" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:239" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:239" text="5"></TextValueRun>
+        </Text>
+        <Shape name="key34" x="248" y="559" id="0:237">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key35Label" x="307" y="559" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:242" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:242" text="6"></TextValueRun>
+        </Text>
+        <Shape name="key35" x="303" y="559" id="0:240">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key36Label" x="362" y="559" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:245" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:245" text="7"></TextValueRun>
+        </Text>
+        <Shape name="key36" x="358" y="559" id="0:243">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key37Label" x="417" y="559" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:248" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:248" text="8"></TextValueRun>
+        </Text>
+        <Shape name="key37" x="413" y="559" id="0:246">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key38Label" x="472" y="559" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:251" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:251" text="9"></TextValueRun>
+        </Text>
+        <Shape name="key38" x="468" y="559" id="0:249">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key39Label" x="527" y="559" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:254" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:254" text="0"></TextValueRun>
+        </Text>
+        <Shape name="key39" x="523" y="559" id="0:252">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key40Label" x="32" y="604" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:257" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:257" text="+"></TextValueRun>
+        </Text>
+        <Shape name="key40" x="28" y="604" id="0:255">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key41Label" x="87" y="604" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:260" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:260" text="-"></TextValueRun>
+        </Text>
+        <Shape name="key41" x="83" y="604" id="0:258">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key42Label" x="142" y="604" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:263" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:263" text="*"></TextValueRun>
+        </Text>
+        <Shape name="key42" x="138" y="604" id="0:261">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key43Label" x="197" y="604" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:266" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:266" text="/"></TextValueRun>
+        </Text>
+        <Shape name="key43" x="193" y="604" id="0:264">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key44Label" x="252" y="604" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:269" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:269" text="("></TextValueRun>
+        </Text>
+        <Shape name="key44" x="248" y="604" id="0:267">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key45Label" x="307" y="604" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:272" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:272" text=")"></TextValueRun>
+        </Text>
+        <Shape name="key45" x="303" y="604" id="0:270">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key46Label" x="362" y="604" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:275" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:275" text="Ê"></TextValueRun>
+        </Text>
+        <Shape name="key46" x="358" y="604" id="0:273">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key47Label" x="417" y="604" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:278" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:278" text="Ù"></TextValueRun>
+        </Text>
+        <Shape name="key47" x="413" y="604" id="0:276">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key48Label" x="472" y="604" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:281" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:281" text="Ô"></TextValueRun>
+        </Text>
+        <Shape name="key48" x="468" y="604" id="0:279">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape>
+        <Text name="key49Label" x="527" y="604" width="41" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:284" fontSize="19" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:284" text="Î"></TextValueRun>
+        </Text>
+        <Shape name="key49" x="523" y="604" id="0:282">
+            <Rectangle width="49" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF25364F"/></Fill>
+        </Shape></Node>
+        <Text name="primaryLabel" x="32" y="660" width="256" height="42"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:287" fontSize="15" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FF142635"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:287" text="Commencer"><DataBindContext sourcePathIds="0:10-0:288" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="primary" x="28" y="660" id="0:285">
+            <Rectangle width="264" height="42" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FFFFD984"/></Fill>
+        </Shape>
+        <Text name="secondaryLabel" x="311" y="660" width="257" height="42"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:291" fontSize="15" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:291" text="Langue"><DataBindContext sourcePathIds="0:10-0:292" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="secondary" x="307" y="660" id="0:289">
+            <Rectangle width="265" height="42" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF173049"/></Fill>
+        </Shape>
+        <Text name="backspaceLabel" x="32" y="710" width="118" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:295" fontSize="15" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:295" text="Effacer"><DataBindContext sourcePathIds="0:10-0:296" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="backspace" x="28" y="710" id="0:293">
+            <Rectangle width="126" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF173049"/></Fill>
+        </Shape>
+        <Text name="auxiliaryLabel" x="170" y="710" width="118" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:299" fontSize="15" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:299" text="Plaques"><DataBindContext sourcePathIds="0:10-0:300" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="auxiliary" x="166" y="710" id="0:297">
+            <Rectangle width="126" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF173049"/></Fill>
+        </Shape>
+        <Text name="refreshLabel" x="311" y="710" width="118" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:303" fontSize="15" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:303" text="Actualiser"><DataBindContext sourcePathIds="0:10-0:304" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="refresh" x="307" y="710" id="0:301">
+            <Rectangle width="126" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF173049"/></Fill>
+        </Shape>
+        <Text name="resetLabel" x="449" y="710" width="119" height="39"
+              sizingValue="fixed" overflowValue="fitFontSize" alignValue="center" verticalAlignValue="middle">
+            <TextStylePaint id="0:307" fontSize="15" fontAssetId="0:1">
+                <Fill><SolidColor colorValue="FFF2F6FF"/></Fill>
+            </TextStylePaint>
+            <TextValueRun styleId="0:307" text="Quitter"><DataBindContext sourcePathIds="0:10-0:308" propertyKey="268"/></TextValueRun>
+        </Text>
+        <Shape name="reset" x="445" y="710" id="0:305">
+            <Rectangle width="127" height="39" originX="0" originY="0" cornerRadiusTL="9"/>
+            <Fill><SolidColor colorValue="FF173049"/></Fill>
+        </Shape>
+        <Shape name="Studio border" x="12" y="12">
+            <Rectangle width="576" height="750" originX="0" originY="0" cornerRadiusTL="20"/>
+            <Fill><SolidColor colorValue="FF102337"/></Fill>
+        </Shape>
+        <StateMachine name="Game" id="0:3">
+            <StateMachineLayer name="Controls">
+                <EntryState>
+                    <StateTransition stateToId="0:24"/>
+                </EntryState>
+                <AnyState x="0" y="-120">
+                    <StateTransition stateToId="0:25">
+                        <TransitionViewModelCondition>
+                            <TransitionPropertyViewModelComparator>
+                                <BindablePropertyTrigger>
+                                    <DataBindContext sourcePathIds="0:10-0:21" propertyKey="686"/>
+                                </BindablePropertyTrigger>
+                            </TransitionPropertyViewModelComparator>
+                            <TransitionValueTriggerComparator/>
+                        </TransitionViewModelCondition>
+                    </StateTransition>
+                </AnyState>
+                <ExitState x="480"/>
+                <AnimationState x="160" animationId="0:26" id="0:24"/>
+                <AnimationState x="320" animationId="0:27" id="0:25" reset="true">
+                    <StateTransition stateToId="0:24" enableExitTime="true" exitTimeIsPercetange="true" exitTime="100"/>
+                </AnimationState>
+            </StateMachineLayer>
+            <StateMachineListenerSingle name="key0" targetId="0:135" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:136" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key1" targetId="0:138" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:139" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key2" targetId="0:141" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:142" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key3" targetId="0:144" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:145" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key4" targetId="0:147" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:148" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key5" targetId="0:150" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:151" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key6" targetId="0:153" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:154" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key7" targetId="0:156" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:157" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key8" targetId="0:159" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:160" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key9" targetId="0:162" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:163" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key10" targetId="0:165" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:166" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key11" targetId="0:168" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:169" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key12" targetId="0:171" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:172" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key13" targetId="0:174" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:175" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key14" targetId="0:177" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:178" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key15" targetId="0:180" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:181" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key16" targetId="0:183" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:184" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key17" targetId="0:186" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:187" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key18" targetId="0:189" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:190" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key19" targetId="0:192" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:193" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key20" targetId="0:195" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:196" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key21" targetId="0:198" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:199" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key22" targetId="0:201" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:202" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key23" targetId="0:204" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:205" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key24" targetId="0:207" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:208" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key25" targetId="0:210" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:211" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key26" targetId="0:213" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:214" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key27" targetId="0:216" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:217" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key28" targetId="0:219" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:220" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key29" targetId="0:222" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:223" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key30" targetId="0:225" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:226" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key31" targetId="0:228" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:229" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key32" targetId="0:231" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:232" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key33" targetId="0:234" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:235" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key34" targetId="0:237" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:238" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key35" targetId="0:240" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:241" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key36" targetId="0:243" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:244" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key37" targetId="0:246" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:247" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key38" targetId="0:249" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:250" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key39" targetId="0:252" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:253" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key40" targetId="0:255" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:256" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key41" targetId="0:258" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:259" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key42" targetId="0:261" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:262" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key43" targetId="0:264" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:265" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key44" targetId="0:267" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:268" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key45" targetId="0:270" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:271" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key46" targetId="0:273" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:274" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key47" targetId="0:276" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:277" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key48" targetId="0:279" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:280" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="key49" targetId="0:282" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:283" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="primary" targetId="0:285" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:286" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="secondary" targetId="0:289" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:290" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="backspace" targetId="0:293" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:294" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="auxiliary" targetId="0:297" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:298" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="refresh" targetId="0:301" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:302" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle name="reset" targetId="0:305" listenerTypeValue="click">
+                <ListenerViewModelChange>
+                    <BindablePropertyTrigger propertyValue="1">
+                        <DataBindContext sourcePathIds="0:10-0:306" propertyKey="686" direction="true"/>
+                    </BindablePropertyTrigger>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+        </StateMachine>
+        <LinearAnimation name="Idle" id="0:26" duration="1"/>
+        <LinearAnimation name="Reveal Tiles" id="0:27" duration="22">
+            <KeyedObject objectId="0:20">
+                <KeyedProperty property="opacity">
+                    <KeyFrameDouble value="0.25" interpolationType="linear"/>
+                    <KeyFrameDouble frame="22" value="1"/>
+                </KeyedProperty>
+                <KeyedProperty property="y">
+                    <KeyFrameDouble value="14" interpolationType="linear"/>
+                    <KeyFrameDouble frame="22" value="0"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+    </Artboard>
+    <ViewModel name="Game" id="0:10" defaultInstanceId="0:11">
+        <ViewModelPropertyTrigger name="reveal" id="0:21"/>
+        <ViewModelPropertyNumber name="keyboardOpacity" id="0:22"/>
+        <ViewModelPropertyString name="progress" id="0:102"/>
+        <ViewModelPropertyString name="heading" id="0:104"/>
+        <ViewModelPropertyString name="caption" id="0:106"/>
+        <ViewModelPropertyString name="clock" id="0:108"/>
+        <ViewModelPropertyString name="score" id="0:110"/>
+        <ViewModelPropertyString name="tile0" id="0:112"/>
+        <ViewModelPropertyString name="tile1" id="0:114"/>
+        <ViewModelPropertyString name="tile2" id="0:116"/>
+        <ViewModelPropertyString name="tile3" id="0:118"/>
+        <ViewModelPropertyString name="tile4" id="0:120"/>
+        <ViewModelPropertyString name="tile5" id="0:122"/>
+        <ViewModelPropertyString name="tile6" id="0:124"/>
+        <ViewModelPropertyString name="tile7" id="0:126"/>
+        <ViewModelPropertyString name="tile8" id="0:128"/>
+        <ViewModelPropertyString name="tile9" id="0:130"/>
+        <ViewModelPropertyString name="answer" id="0:132"/>
+        <ViewModelPropertyString name="feedback" id="0:134"/>
+        <ViewModelPropertyTrigger name="key0" id="0:136"/>
+        <ViewModelPropertyTrigger name="key1" id="0:139"/>
+        <ViewModelPropertyTrigger name="key2" id="0:142"/>
+        <ViewModelPropertyTrigger name="key3" id="0:145"/>
+        <ViewModelPropertyTrigger name="key4" id="0:148"/>
+        <ViewModelPropertyTrigger name="key5" id="0:151"/>
+        <ViewModelPropertyTrigger name="key6" id="0:154"/>
+        <ViewModelPropertyTrigger name="key7" id="0:157"/>
+        <ViewModelPropertyTrigger name="key8" id="0:160"/>
+        <ViewModelPropertyTrigger name="key9" id="0:163"/>
+        <ViewModelPropertyTrigger name="key10" id="0:166"/>
+        <ViewModelPropertyTrigger name="key11" id="0:169"/>
+        <ViewModelPropertyTrigger name="key12" id="0:172"/>
+        <ViewModelPropertyTrigger name="key13" id="0:175"/>
+        <ViewModelPropertyTrigger name="key14" id="0:178"/>
+        <ViewModelPropertyTrigger name="key15" id="0:181"/>
+        <ViewModelPropertyTrigger name="key16" id="0:184"/>
+        <ViewModelPropertyTrigger name="key17" id="0:187"/>
+        <ViewModelPropertyTrigger name="key18" id="0:190"/>
+        <ViewModelPropertyTrigger name="key19" id="0:193"/>
+        <ViewModelPropertyTrigger name="key20" id="0:196"/>
+        <ViewModelPropertyTrigger name="key21" id="0:199"/>
+        <ViewModelPropertyTrigger name="key22" id="0:202"/>
+        <ViewModelPropertyTrigger name="key23" id="0:205"/>
+        <ViewModelPropertyTrigger name="key24" id="0:208"/>
+        <ViewModelPropertyTrigger name="key25" id="0:211"/>
+        <ViewModelPropertyTrigger name="key26" id="0:214"/>
+        <ViewModelPropertyTrigger name="key27" id="0:217"/>
+        <ViewModelPropertyTrigger name="key28" id="0:220"/>
+        <ViewModelPropertyTrigger name="key29" id="0:223"/>
+        <ViewModelPropertyTrigger name="key30" id="0:226"/>
+        <ViewModelPropertyTrigger name="key31" id="0:229"/>
+        <ViewModelPropertyTrigger name="key32" id="0:232"/>
+        <ViewModelPropertyTrigger name="key33" id="0:235"/>
+        <ViewModelPropertyTrigger name="key34" id="0:238"/>
+        <ViewModelPropertyTrigger name="key35" id="0:241"/>
+        <ViewModelPropertyTrigger name="key36" id="0:244"/>
+        <ViewModelPropertyTrigger name="key37" id="0:247"/>
+        <ViewModelPropertyTrigger name="key38" id="0:250"/>
+        <ViewModelPropertyTrigger name="key39" id="0:253"/>
+        <ViewModelPropertyTrigger name="key40" id="0:256"/>
+        <ViewModelPropertyTrigger name="key41" id="0:259"/>
+        <ViewModelPropertyTrigger name="key42" id="0:262"/>
+        <ViewModelPropertyTrigger name="key43" id="0:265"/>
+        <ViewModelPropertyTrigger name="key44" id="0:268"/>
+        <ViewModelPropertyTrigger name="key45" id="0:271"/>
+        <ViewModelPropertyTrigger name="key46" id="0:274"/>
+        <ViewModelPropertyTrigger name="key47" id="0:277"/>
+        <ViewModelPropertyTrigger name="key48" id="0:280"/>
+        <ViewModelPropertyTrigger name="key49" id="0:283"/>
+        <ViewModelPropertyTrigger name="primary" id="0:286"/>
+        <ViewModelPropertyString name="primaryLabel" id="0:288"/>
+        <ViewModelPropertyTrigger name="secondary" id="0:290"/>
+        <ViewModelPropertyString name="secondaryLabel" id="0:292"/>
+        <ViewModelPropertyTrigger name="backspace" id="0:294"/>
+        <ViewModelPropertyString name="backspaceLabel" id="0:296"/>
+        <ViewModelPropertyTrigger name="auxiliary" id="0:298"/>
+        <ViewModelPropertyString name="auxiliaryLabel" id="0:300"/>
+        <ViewModelPropertyTrigger name="refresh" id="0:302"/>
+        <ViewModelPropertyString name="refreshLabel" id="0:304"/>
+        <ViewModelPropertyTrigger name="reset" id="0:306"/>
+        <ViewModelPropertyString name="resetLabel" id="0:308"/>
+        <ViewModelInstance name="Default" id="0:11" exports="true">
+            <ViewModelInstanceNumber viewModelPropertyId="0:22" propertyValue="0"/>
+            <ViewModelInstanceString viewModelPropertyId="0:102" propertyValue="PARTIE SOLO"/>
+            <ViewModelInstanceString viewModelPropertyId="0:104" propertyValue="La partie solo"/>
+            <ViewModelInstanceString viewModelPropertyId="0:106" propertyValue="Neuf épreuves, du premier tirage à la finale."/>
+            <ViewModelInstanceString viewModelPropertyId="0:108" propertyValue="—"/>
+            <ViewModelInstanceString viewModelPropertyId="0:110" propertyValue="0 point"/>
+            <ViewModelInstanceString viewModelPropertyId="0:112" propertyValue="·"/>
+            <ViewModelInstanceString viewModelPropertyId="0:114" propertyValue="·"/>
+            <ViewModelInstanceString viewModelPropertyId="0:116" propertyValue="·"/>
+            <ViewModelInstanceString viewModelPropertyId="0:118" propertyValue="·"/>
+            <ViewModelInstanceString viewModelPropertyId="0:120" propertyValue="·"/>
+            <ViewModelInstanceString viewModelPropertyId="0:122" propertyValue="·"/>
+            <ViewModelInstanceString viewModelPropertyId="0:124" propertyValue="·"/>
+            <ViewModelInstanceString viewModelPropertyId="0:126" propertyValue="·"/>
+            <ViewModelInstanceString viewModelPropertyId="0:128" propertyValue="·"/>
+            <ViewModelInstanceString viewModelPropertyId="0:130" propertyValue="·"/>
+            <ViewModelInstanceString viewModelPropertyId="0:132" propertyValue=""/>
+            <ViewModelInstanceString viewModelPropertyId="0:134" propertyValue=""/>
+            <ViewModelInstanceString viewModelPropertyId="0:288" propertyValue="Commencer"/>
+            <ViewModelInstanceString viewModelPropertyId="0:292" propertyValue="Langue"/>
+            <ViewModelInstanceString viewModelPropertyId="0:296" propertyValue="Effacer"/>
+            <ViewModelInstanceString viewModelPropertyId="0:300" propertyValue="Plaques"/>
+            <ViewModelInstanceString viewModelPropertyId="0:304" propertyValue="Actualiser"/>
+            <ViewModelInstanceString viewModelPropertyId="0:308" propertyValue="Quitter"/>
+        </ViewModelInstance>
+    </ViewModel>
+</Rive>
