@@ -116,8 +116,14 @@ function runtimeRedisKey(): string {
 function redisInstance(): RedisGameState | null {
   const url = process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
-  if (!url || !token) return null;
-  return new RedisGameState(makeUpstashCommand(url, token), runtimeRedisKey());
+  if (url && token) {
+    return new RedisGameState(makeUpstashCommand(url, token), runtimeRedisKey());
+  }
+
+  const integrationUrl = process.env.KV_REST_API_URL;
+  const integrationToken = process.env.KV_REST_API_TOKEN;
+  if (!integrationUrl || !integrationToken) return null;
+  return new RedisGameState(makeUpstashCommand(integrationUrl, integrationToken), runtimeRedisKey());
 }
 
 /**
@@ -134,7 +140,7 @@ export function vercelRedisMiddleware(req: Request, res: Response, next: NextFun
   if (!storage) {
     res.status(503).json({
       code: 'storage_unconfigured',
-      error: 'Configure UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN on Vercel.'
+      error: 'Connect Upstash Redis or configure UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN on Vercel.'
     });
     return;
   }
