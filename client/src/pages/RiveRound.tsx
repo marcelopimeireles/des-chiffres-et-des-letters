@@ -1,3 +1,4 @@
+import { useTranslation } from '../i18n';
 import React, { useEffect, useRef, useState } from 'react';
 import { useGameLanguage } from '../i18n';
 import { useNavigate } from 'react-router-dom';
@@ -28,6 +29,7 @@ const LANGUAGE_NAMES: Record<WordLanguage, string> = { fr: 'Français', pt: 'Por
 const BALANCED_DRAW: LetterKind[] = Array.from({ length: 10 }, (_, i) => i % 2 ? 'consonant' : 'vowel');
 
 const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
+  const t = useTranslation();
   const navigate = useNavigate();
   const [round, setRound] = useState<Round | null>(null);
   const language = useGameLanguage();
@@ -52,7 +54,7 @@ const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
     try {
       await operation();
     } catch {
-      setFeedback('Action indisponible. Réessayez ou consultez le résultat.');
+      setFeedback(t("Action indisponible. Réessayez ou consultez le résultat.", "Action unavailable. Try again or check the result.", "Ação indisponível. Tente novamente ou consulte o resultado."));
     } finally {
       pending.current = false;
       setBusy(false);
@@ -100,14 +102,14 @@ const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
       if (round.mode === 'final') {
         const result = await validateFinaleWord(round.draw.drawId, round.draw.currentIndex, answer);
         if (!result.valid) {
-          setFeedback('Mot refusé. Essayez un autre anagramme.');
+          setFeedback(t("Mot refusé. Essayez un autre anagramme.", "Word rejected. Try another anagram.", "Palavra recusada. Tente outro anagrama."));
           return;
         }
         setRound({ mode: 'final', draw: result.round });
         setScore(result.round.score);
         setFinished(result.finished);
         setAnswer('');
-        setFeedback('Mot accepté.');
+        setFeedback(t("Mot accepté.", "Word accepted.", "Palavra aceite."));
         return;
       }
 
@@ -115,7 +117,7 @@ const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
         round.mode === 'numbers' ? await validateNumbersAnswer(round.draw.drawId, answer) :
           await validateDuelAnswer(round.draw.drawId, answer);
       if (!result.valid) {
-        setFeedback('Proposition refusée. Essayez une autre réponse.');
+        setFeedback(t("Proposition refusée. Essayez une autre réponse.", "Answer rejected. Try another answer.", "Resposta recusada. Tente outra resposta."));
         return;
       }
       setScore(result.score);
@@ -157,13 +159,13 @@ const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
       setFinished(updated.finished);
       setScore(updated.score);
       setAnswer('');
-      setFeedback('Tirage passé.');
+      setFeedback(t("Tirage passé.", "Draw skipped.", "Sorteio ignorado."));
     });
   };
 
   useEffect(() => {
-    if (round && !finished && seconds === 0) setFeedback('Temps écoulé.');
-  }, [round, finished, seconds]);
+    if (round && !finished && seconds === 0) setFeedback(t("Temps écoulé.", "Time is up.", "Tempo esgotado."));
+  }, [round, finished, seconds, t]);
 
   const action = (name: BoardAction) => {
     if (pending.current) return;
@@ -204,7 +206,7 @@ const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
     caption = `Cible : ${round.draw.targetNumber} · Saisissez un calcul.`;
   } else if (round?.mode === 'duel') {
     tiles = round.draw.letters ?? [];
-    caption = round.draw.kind === 'mental' ? round.draw.challenge : 'Retrouvez le mot de l’anagramme.';
+    caption = round.draw.kind === 'mental' ? round.draw.challenge : t("Retrouvez le mot de l’anagramme.", "Find the anagram word.", "Encontre a palavra do anagrama.");
   } else if (round?.mode === 'final') {
     tiles = round.draw.current?.letters ?? [];
     caption = `Mot ${Math.min(round.draw.currentIndex + 1, round.draw.totalItems)} / ${round.draw.totalItems}`;
@@ -215,19 +217,19 @@ const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
   return <RiveGameBoard
     text={{
       heading: MODE_NAMES[mode],
-      progress: 'ENTRAÎNEMENT',
+      progress: t("ENTRAÎNEMENT", "PRACTICE", "TREINO"),
       caption,
       clock: round ? `${seconds} s` : '—',
       score: `${score} points`,
-      answer: answer || (playing ? numeric ? 'Votre calcul…' : 'Votre mot…' : ''),
-      feedback: busy ? 'Veuillez patienter…' : [feedback, revealed].filter(Boolean).join('\n'),
-      primaryLabel: !round ? 'Tirer' : playing ? 'Valider' : 'Nouveau tirage',
-      secondaryLabel: !round ? { letters: 'Voyelle', numbers: 'Nombre de grandes', duel: 'Type de duel', final: '' }[mode] :
-        playing ? mode === 'final' ? 'Passer ce mot' : '' : 'Voir la solution',
-      auxiliaryLabel: !round && mode === 'letters' ? 'Consonne' : '',
-      backspaceLabel: playing || (!round && mode === 'letters') ? 'Effacer' : '',
+      answer: answer || (playing ? numeric ? t("Votre calcul…", "Your calculation…", "O seu cálculo…") : t("Votre mot…", "Your word…", "A sua palavra…") : ''),
+      feedback: busy ? t("Veuillez patienter…", "Please wait…", "Aguarde…") : [feedback, revealed].filter(Boolean).join('\n'),
+      primaryLabel: !round ? t("Tirer", "Draw", "Sortear") : playing ? t("Valider", "Submit", "Validar") : t("Nouveau tirage", "New draw", "Novo sorteio"),
+      secondaryLabel: !round ? { letters: t("Voyelle", "Vowel", "Vogal"), numbers: t("Nombre de grandes", "Large tiles", "Peças grandes"), duel: t("Type de duel", "Duel type", "Tipo de duelo"), final: '' }[mode] :
+        playing ? mode === 'final' ? t("Passer ce mot", "Skip word", "Ignorar palavra") : '' : t("Voir la solution", "Show solution", "Ver solução"),
+      auxiliaryLabel: !round && mode === 'letters' ? t("Consonne", "Consonant", "Consoante") : '',
+      backspaceLabel: playing || (!round && mode === 'letters') ? t("Effacer", "Delete", "Apagar") : '',
       refreshLabel: '',
-      resetLabel: round ? 'Quitter' : 'Menu'
+      resetLabel: round ? t("Quitter", "Quit", "Sair") : t("Menu", "Menu", "Menu")
     }}
     tiles={tiles}
     keyboardVisible={playing}
