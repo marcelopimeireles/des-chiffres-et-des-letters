@@ -2,16 +2,8 @@ name: Application CI
 
 on:
   pull_request:
-    paths:
-      - 'client/**'
-      - 'server/**'
-      - '.github/workflows/client-ci.yml'
   push:
     branches: [master]
-    paths:
-      - 'client/**'
-      - 'server/**'
-      - '.github/workflows/client-ci.yml'
 
 jobs:
   client:
@@ -27,7 +19,12 @@ jobs:
           cache: yarn
           cache-dependency-path: client/yarn.lock
       - run: yarn install --frozen-lockfile --non-interactive
-      - run: CI=true yarn test --watchAll=false
+      - run: CI=true yarn test:coverage
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: frontend-coverage
+          path: client/coverage/
       - run: yarn build
 
   server:
@@ -43,4 +40,11 @@ jobs:
           cache: yarn
           cache-dependency-path: server/yarn.lock
       - run: yarn install --frozen-lockfile --non-interactive
-      - run: yarn test
+      - run: |
+          set -o pipefail
+          yarn test:coverage | tee coverage.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backend-coverage
+          path: server/coverage.txt
