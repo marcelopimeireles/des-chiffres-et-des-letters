@@ -29,6 +29,7 @@
     "start": "react-scripts start",
     "build": "node scripts/check-vercel-env.cjs && react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --watchAll=false --coverage --coverageReporters=text --coverageReporters=lcov --coverageReporters=json-summary --collectCoverageFrom=src/**/*.{ts,tsx} --collectCoverageFrom=!src/**/*.d.ts",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
