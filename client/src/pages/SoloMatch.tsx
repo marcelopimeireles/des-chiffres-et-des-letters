@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation, useGameLanguage } from '../i18n';
 import StudioRound from '../components/StudioRound';
 import InteractiveTiles from '../components/InteractiveTiles';
+import NumberTileBuilder from '../components/NumberTileBuilder';
 import TileRack from '../components/TileRack';
 import DeadlineClock from '../components/DeadlineClock';
 import {
@@ -310,6 +311,7 @@ const SoloMatch: React.FC<{ presentation?: 'classic' | 'rive' }> = ({ presentati
           <InteractiveTiles key={`${round.drawId}:${round.finaleIndex ?? 0}`} tiles={round.letters || []}
             disabled={busy} onCompose={values => setAnswer(values.join(''))} />}
 
+        {match.status === 'playing' && round.kind === 'numbers' && <NumberTileBuilder key={round.drawId} numbers={round.numbers || []} disabled={busy} onCompose={setAnswer} />}
         {match.status === 'playing' && <form className="answer-form" onSubmit={event => void submit(event)}>
           <label htmlFor="match-answer">{round.kind === 'numbers' ? t("Votre calcul", "Your calculation", "O seu cálculo") :
             round.kind === 'duel' && round.duelKind === 'mental' ? t("Votre résultat", "Your result", "O seu resultado") : t("Votre mot", "Your word", "A sua palavra")}</label>
