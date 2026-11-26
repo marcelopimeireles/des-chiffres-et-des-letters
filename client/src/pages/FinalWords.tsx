@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from '../i18n';
+import { useTranslation, useGameLanguage } from '../i18n';
 import DeadlineClock from '../components/DeadlineClock';
 import StudioRound from '../components/StudioRound';
 import TileRack from '../components/TileRack';
 import {
   createFinaleDraw, fetchFinaleDraw, fetchFinaleSolutions,
-  skipFinaleWord, validateFinaleWord, FinaleRound, FinaleSolutions, WordLanguage
+  skipFinaleWord, validateFinaleWord, FinaleRound, FinaleSolutions
 } from '../services/gameService';
 
 const FinalWords: React.FC = () => {
   const t = useTranslation();
-  const [language, setLanguage] = useState<WordLanguage>('fr');
+  const language = useGameLanguage();
   const [round, setRound] = useState<FinaleRound | null>(null);
   const [answers, setAnswers] = useState<FinaleSolutions | null>(null);
   const [word, setWord] = useState('');
@@ -80,13 +80,6 @@ const FinalWords: React.FC = () => {
         running={!round.finished} onExpire={() => void refresh(round.drawId)} />
         <p className="aside-note">{t("Le temps continue entre les huit tirages et après un rechargement.", "The timer continues between all eight draws and after reloading.", "O tempo continua entre os oito sorteios e após recarregar a página.")}</p></>}>
       {!round && <section className="challenge-setup">
-        <label htmlFor="final-language">{t("Langue du lexique", "Dictionary language", "Idioma do dicionário")}
-          <select id="final-language" value={language}
-            onChange={event => setLanguage(event.target.value as WordLanguage)}>
-            <option value="fr">Français</option><option value="pt">Português (Portugal)</option>
-            <option value="en">English</option>
-          </select>
-        </label>
         <button className="button button--primary" type="button"
           disabled={busy} onClick={() => void start()}>{t("Commencer la finale", "Start final", "Iniciar final")}</button>
       </section>}
