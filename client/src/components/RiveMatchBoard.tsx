@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useRiveClock } from './useRiveClock';
 import { SoloMatch, WordLanguage } from '../services/gameService';
 
-const LANGUAGES: WordLanguage[] = ['fr', 'pt', 'en'];
 const LANGUAGE_NAMES: Record<WordLanguage, string> = { fr: 'Français', pt: 'Português', en: 'English' };
 const ROUND_NAMES = {
   letters: 'Le mot le plus long',
@@ -22,7 +21,6 @@ interface Props {
   solution: string;
   busy: boolean;
   restoring: boolean;
-  onLanguage: (language: WordLanguage) => void;
   onLargeCount: (count: number) => void;
   onAnswer: (answer: string | ((previous: string) => string)) => void;
   onStart: () => void;
@@ -35,7 +33,7 @@ interface Props {
 
 const RiveMatchBoard: React.FC<Props> = ({
   match, language, largeCount, answer, feedback, solution, busy, restoring,
-  onLanguage, onLargeCount, onAnswer, onStart, onSubmit, onSkip, onNext, onReset, onRefresh
+  onLargeCount, onAnswer, onStart, onSubmit, onSkip, onNext, onReset, onRefresh
 }) => {
   const navigate = useNavigate();
   const round = match?.current;
@@ -60,8 +58,7 @@ const RiveMatchBoard: React.FC<Props> = ({
         else if (playing) onSubmit();
         break;
       case 'secondary':
-        if (!match) onLanguage(LANGUAGES[(LANGUAGES.indexOf(language) + 1) % LANGUAGES.length]);
-        else if (playing && round?.kind === 'final') onSkip();
+        if (playing && round?.kind === 'final') onSkip();
         break;
       case 'auxiliary':
         if (!match) onLargeCount((largeCount + 1) % 5);
@@ -102,7 +99,7 @@ const RiveMatchBoard: React.FC<Props> = ({
       answer: answer || (playing ? numeric ? 'Votre calcul…' : 'Votre mot…' : ''),
       feedback: restoring ? 'Récupération de votre partie…' : busy ? 'Veuillez patienter…' : [feedback, solution].filter(Boolean).join('\n'),
       primaryLabel: !match ? 'Commencer' : match.status === 'review' ? 'Épreuve suivante' : match.status === 'finished' ? 'Nouvelle partie' : 'Valider',
-      secondaryLabel: !match ? LANGUAGE_NAMES[language] : playing && round?.kind === 'final' ? 'Passer ce mot' : '',
+      secondaryLabel: playing && round?.kind === 'final' ? 'Passer ce mot' : '',
       auxiliaryLabel: !match ? `${largeCount} grandes` : '',
       backspaceLabel: playing ? 'Effacer' : '',
       refreshLabel: match ? 'Actualiser' : '',
