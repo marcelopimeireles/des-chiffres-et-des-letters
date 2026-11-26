@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from '../i18n';
 import { Link } from 'react-router-dom';
 import RiveScene from './RiveScene';
 
@@ -12,15 +13,17 @@ interface StudioRoundProps {
   animationRevision?: number;
 }
 
-const StudioRound: React.FC<StudioRoundProps> = ({ number, title, description, children, aside, animationCue = 'draw', animationRevision = 0 }) => (
+const StudioRound: React.FC<StudioRoundProps> = ({ number, title, description, children, aside, animationCue = 'draw', animationRevision = 0 }) => {
+  const t = useTranslation();
+  return (
   <div className="round-page">
     <div className="round-topline">
-      <Link to="/" className="back-link">← Retour au studio</Link>
+      <Link to="/" className="back-link">{t("← Retour au studio", "← Back to studio", "← Voltar ao estúdio")}</Link>
       <span className="eyebrow">ÉPREUVE {number} / LE JEU</span>
     </div>
     <div className="round-intro">
       <div>
-        <p className="eyebrow">À VOUS DE JOUER</p>
+        <p className="eyebrow">{t("À VOUS DE JOUER", "YOUR TURN", "É A SUA VEZ")}</p>
         <h1>{title}</h1>
         <p className="round-description">{description}</p>
       </div>
@@ -39,6 +42,7 @@ const StudioRound: React.FC<StudioRoundProps> = ({ number, title, description, c
       </div>
     </section>
   </div>
-);
+  );
+};
 
 export default StudioRound;
