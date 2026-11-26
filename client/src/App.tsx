@@ -29,7 +29,7 @@ const labels = {
 };
 const ClassicApp: React.FC = () => {
   const [language, setLanguage] = React.useState<UiLanguage>(() => {
-    const saved = localStorage.getItem('ui-language');
+    const saved = localStorage.getItem('ui-language')?.split('-')[0] ?? null;
     return isUiLanguage(saved) ? saved : 'fr';
   });
   React.useEffect(() => {
