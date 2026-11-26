@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import CountdownClock from '../components/CountdownClock';
 import StudioRound from '../components/StudioRound';
 import TileRack from '../components/TileRack';
+import InteractiveTiles from '../components/InteractiveTiles';
 import {
   fetchLettersDraw, fetchLettersSolutions, LetterKind, LetterSolutions,
   WordLanguage, validateLettersWord, WordValidationReason
@@ -245,6 +246,7 @@ const LetterRound: React.FC = () => {
       </>}
 
       {(phase === 'playing' || phase === 'checking' || phase === 'finished') && <>
+        <InteractiveTiles key={drawId} tiles={letters} disabled={phase !== 'playing'} onCompose={values => setWord(values.join(''))} />
         <form className="answer-form" onSubmit={event => void submit(event)}>
           <label htmlFor="letter-answer">Votre mot en {languageLabel[language]}</label>
           <div className="answer-row">
