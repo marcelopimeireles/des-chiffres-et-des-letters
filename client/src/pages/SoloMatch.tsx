@@ -1,3 +1,4 @@
+import ShareResult from '../components/ShareResult';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation, useGameLanguage } from '../i18n';
 import StudioRound from '../components/StudioRound';
@@ -232,14 +233,14 @@ const SoloMatch: React.FC<{ presentation?: 'classic' | 'rive' }> = ({ presentati
       (numberSolution && `${numberSolution.expression} = ${numberSolution.value}`) ||
       duelSolution ||
       finaleSolutions?.words.map(item => item.target).join(' · ') || '';
-    return <RiveMatchBoard
+    return <><RiveMatchBoard
       match={match} language={language} largeCount={largeCount} answer={answer}
       feedback={feedback} solution={solution} busy={busy} restoring={restoring}
       onLargeCount={setLargeCount} onAnswer={setAnswer}
       onStart={() => void start()} onSubmit={() => void submit()}
       onNext={() => void next()} onReset={reset} onSkip={() => void skipFinalWord()}
       onRefresh={() => { if (match) void load(match.matchId); }}
-    />;
+    />{match && finished && <ShareResult score={match.totalScore} />}</>;
   }
 
   return (
@@ -360,6 +361,7 @@ const SoloMatch: React.FC<{ presentation?: 'classic' | 'rive' }> = ({ presentati
         <p className="eyebrow">{t("PARTIE TERMINÉE", "MATCH FINISHED", "PARTIDA TERMINADA")}</p>
         <h2>{t("Votre résultat", "Your result", "O seu resultado")} final</h2>
         <p className="match-total">{match.totalScore} <span>{t('points','points','pontos')}</span></p>
+        <ShareResult score={match.totalScore} />
         <p>{t("Neuf épreuves terminées, dont deux duels et une finale de huit mots. Tous les points sont validés par le serveur.", "Nine rounds completed, including two duels and an eight-word final. All points are validated by the server.", "Nove provas concluídas, incluindo dois duelos e uma final de oito palavras. Todos os pontos são validados pelo servidor.")}</p>
         <button className="button button--primary" type="button" onClick={reset}>{t("Nouvelle partie", "New match", "Nova partida")}</button>
       </section>}
