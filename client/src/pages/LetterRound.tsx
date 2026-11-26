@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from '../i18n';
 import CountdownClock from '../components/CountdownClock';
 import StudioRound from '../components/StudioRound';
 import TileRack from '../components/TileRack';
@@ -28,6 +29,7 @@ const languageLabel: Record<WordLanguage, string> = {
 };
 
 const LetterRound: React.FC = () => {
+  const t = useTranslation();
   const [language, setLanguage] = useState<WordLanguage>('fr');
   const [choices, setChoices] = useState<LetterKind[]>([]);
   const [letters, setLetters] = useState<string[]>([]);
@@ -183,25 +185,25 @@ const LetterRound: React.FC = () => {
   };
 
   const status = {
-    select: 'Choisissez dix fois Voyelle ou Consonne, puis lancez le tirage.',
-    loading: 'Le serveur prépare votre tirage…',
+    select: t("Choisissez dix fois Voyelle ou Consonne, puis lancez le tirage.","Choose vowel or consonant ten times, then start the draw.","Escolha dez vezes vogal ou consoante e inicie o sorteio."),
+    loading: t("Le serveur prépare votre tirage…","The server is preparing your draw…","O servidor está a preparar o sorteio…"),
     revealing: `Révélation des lettres : ${visibleLetters} / ${LETTER_COUNT}`,
-    playing: 'Le chrono tourne ! Composez votre mot.',
-    checking: 'Le lexique vérifie votre proposition…',
-    finished: 'La ronde est terminée.'
+    playing: t("Le chrono tourne ! Composez votre mot.","The clock is running! Build your word.","O tempo está a contar! Componha a palavra."),
+    checking: t("Le lexique vérifie votre proposition…","Checking your word against the dictionary…","A verificar a palavra no dicionário…"),
+    finished: t("La ronde est terminée.","The round is over.","A ronda terminou.")
   }[phase];
 
   return (
-    <StudioRound number="01" title="Le mot le plus long"
+    <StudioRound number="01" title={t("Le mot le plus long","Longest word","Palavra mais longa")}
       animationCue={validated ? 'success' : 'draw'} animationRevision={round}
-      description="Choisissez la langue et les lettres, puis trouvez le plus long mot possible."
+      description={t("Choisissez la langue et les lettres, puis trouvez le plus long mot possible.","Choose the language and letters, then find the longest word possible.","Escolha o idioma e as letras e encontre a palavra mais longa possível.")}
       aside={<>
         <CountdownClock seconds={ROUND_SECONDS} resetKey={round}
           running={phase === 'playing'} onExpire={expire} />
-        <p className="aside-note">Le chronomètre commence après la dernière lettre. Le serveur vérifie également le délai.</p>
+        <p className="aside-note">{t("Le chronomètre commence après la dernière lettre. Le serveur vérifie également le délai.","The timer starts after the last letter. The server also checks the deadline.","O cronómetro começa após a última letra. O servidor também verifica o prazo.")}</p>
       </>}>
       <div className="language-selector">
-        <label htmlFor="word-language">Langue du dictionnaire</label>
+        <label htmlFor="word-language">{t("Langue du dictionnaire","Dictionary language","Idioma do dicionário")}</label>
         <select id="word-language" value={language} disabled={phase !== 'select'}
           onChange={event => setLanguage(event.target.value as WordLanguage)}>
           <option value="fr">Français</option>
@@ -209,52 +211,52 @@ const LetterRound: React.FC = () => {
           <option value="pt">Português (Portugal)</option>
         </select>
         <span className="language-selector-hint">
-          {phase === 'select' ? 'À choisir avant le tirage.' : `Tirage en ${languageLabel[language]}`}
+          {phase === 'select' ? t("À choisir avant le tirage.","Choose before the draw.","Escolha antes do sorteio.") : `Tirage en ${languageLabel[language]}`}
         </span>
       </div>
 
-      <div className="puzzle-label">VOTRE TIRAGE DE DIX LETTRES</div>
+      <div className="puzzle-label">{t("VOTRE TIRAGE DE DIX LETTRES","YOUR TEN LETTERS","AS SUAS DEZ LETRAS")}</div>
       <TileRack tiles={letters} variant="letters" totalSlots={LETTER_COUNT} revealedCount={visibleLetters} />
       <p className="letter-status" role="status">{status}</p>
 
       {phase === 'select' && <>
         <div className="letter-choices-header">
-          <strong>Composez votre tirage</strong>
+          <strong>{t("Composez votre tirage","Choose your draw","Componha o sorteio")}</strong>
           <span>{choices.length} / {LETTER_COUNT} choix</span>
         </div>
         <div className="letter-choice-history" aria-label="Choix effectués">
           {choices.map((kind, index) => (
             <span key={index} className={`choice-chip choice-chip--${kind}`}
-              aria-label={kind === 'vowel' ? 'Voyelle' : 'Consonne'}>
+              aria-label={kind === 'vowel' ? t("Voyelle","Vowel","Vogal") : t("Consonne","Consonant","Consoante")}>
               {kind === 'vowel' ? 'V' : 'C'}
             </span>
           ))}
         </div>
         <div className="letter-choice-controls">
           <button type="button" className="button button--outline" disabled={choices.length >= LETTER_COUNT}
-            onClick={() => choose('vowel')}>Voyelle</button>
+            onClick={() => choose('vowel')}>{t("Voyelle","Vowel","Vogal")}</button>
           <button type="button" className="button button--outline" disabled={choices.length >= LETTER_COUNT}
-            onClick={() => choose('consonant')}>Consonne</button>
+            onClick={() => choose('consonant')}>{t("Consonne","Consonant","Consoante")}</button>
           <button type="button" className="text-button" onClick={() => setChoices(current => current.slice(0, -1))}
-            disabled={choices.length === 0}>Annuler un choix</button>
+            disabled={choices.length === 0}>{t("Annuler un choix","Undo choice","Desfazer escolha")}</button>
         </div>
         <div className="letter-draw-controls">
           <button className="button button--primary" type="button" onClick={() => void beginDraw()}
-            disabled={choices.length !== LETTER_COUNT}>Lancer le tirage</button>
-          <button className="text-button" type="button" onClick={autoChoose}>Tirage automatique (5 V / 5 C)</button>
+            disabled={choices.length !== LETTER_COUNT}>{t("Lancer le tirage","Start draw","Iniciar sorteio")}</button>
+          <button className="text-button" type="button" onClick={autoChoose}>{t("Tirage automatique (5 V / 5 C)","Automatic draw (5 V / 5 C)","Sorteio automático (5 V / 5 C)")}</button>
         </div>
       </>}
 
       {(phase === 'playing' || phase === 'checking' || phase === 'finished') && <>
         <InteractiveTiles key={drawId} tiles={letters} disabled={phase !== 'playing'} onCompose={values => setWord(values.join(''))} />
         <form className="answer-form" onSubmit={event => void submit(event)}>
-          <label htmlFor="letter-answer">Votre mot en {languageLabel[language]}</label>
+          <label htmlFor="letter-answer">{t('Votre mot en','Your word in','A sua palavra em')} {languageLabel[language]}</label>
           <div className="answer-row">
             <input id="letter-answer" value={word} onChange={event => setWord(event.target.value)}
-              placeholder="Composez votre mot…" autoComplete="off"
+              placeholder={t("Composez votre mot…","Build your word…","Componha a sua palavra…")} autoComplete="off"
               maxLength={LETTER_COUNT} disabled={phase !== 'playing'} required />
             <button className="button button--primary" type="submit" disabled={phase !== 'playing'}>
-              {phase === 'checking' ? 'Vérification…' : 'Valider'}
+              {phase === 'checking' ? t("Vérification…","Checking…","A verificar…") : t("Valider","Submit","Validar")}
             </button>
           </div>
         </form>
@@ -263,19 +265,19 @@ const LetterRound: React.FC = () => {
       {feedback && <p className={`answer-feedback ${validated ? 'answer-feedback--success' : ''}`} role="status">{feedback}</p>}
 
       {phase === 'finished' && <section className="letter-results" aria-label="Résultat de la ronde">
-        <h2>Résultat du tirage</h2>
+        <h2>{t("Résultat du tirage","Round result","Resultado da ronda")}</h2>
         <p className="letter-score">Votre score : <strong>{score} points</strong></p>
         {solutions ? <>
-          <p>Meilleure longueur du lexique local : <strong>{solutions.bestLength} lettres</strong></p>
-          <p className="letter-solutions-label">Exemples de mots trouvés :</p>
+          <p>{t('Meilleure longueur du lexique local :','Longest word in the local dictionary:','Maior comprimento no dicionário local:')} <strong>{solutions.bestLength} lettres</strong></p>
+          <p className="letter-solutions-label">{t("Exemples de mots trouvés :","Examples of words found:","Exemplos de palavras encontradas:")}</p>
           {solutions.bestWords.length
             ? <div className="letter-solution-list">{solutions.bestWords.map(item => <span key={item}>{item}</span>)}</div>
-            : <p>Aucun mot répertorié pour ce tirage.</p>}
+            : <p>{t("Aucun mot répertorié pour ce tirage.","No words found for this draw.","Nenhuma palavra encontrada neste sorteio.")}</p>}
           <p className="letter-data-note">Solutions limitées aux {solutions.lexiconEntries.toLocaleString('fr')} mots du lexique local provisoire. Le barème appliqué est d'un point par lettre.</p>
-        </> : <p className="letter-data-note">Chargement des solutions…</p>}
+        </> : <p className="letter-data-note">{t("Chargement des solutions…","Loading solutions…","A carregar soluções…")}</p>}
       </section>}
 
-      <button type="button" className="text-button" onClick={reset}>↻ Nouveau tirage</button>
+      <button type="button" className="text-button" onClick={reset}>{t("↻ Nouveau tirage","↻ New draw","↻ Novo sorteio")}</button>
     </StudioRound>
   );
 };
