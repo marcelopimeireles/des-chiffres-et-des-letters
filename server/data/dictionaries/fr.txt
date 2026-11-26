@@ -8118,7 +8118,6 @@ queue
 queux
 qui
 quiche
-quick
 quiet
 quilt
 quine
