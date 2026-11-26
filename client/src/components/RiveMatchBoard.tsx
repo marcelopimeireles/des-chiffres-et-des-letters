@@ -1,5 +1,7 @@
 import { useTranslation } from '../i18n';
 import React, { useEffect } from 'react';
+import InteractiveTiles from './InteractiveTiles';
+import NumberTileBuilder from './NumberTileBuilder';
 import RiveGameBoard, { BoardAction } from './RiveGameBoard';
 import { useNavigate } from 'react-router-dom';
 import { useRiveClock } from './useRiveClock';
@@ -86,7 +88,7 @@ const RiveMatchBoard: React.FC<Props> = ({
   if (round?.kind === 'duel') caption = round.duelKind === 'mental' ? round.challenge ?? '' : t("Retrouvez le mot de l’anagramme.", "Find the anagram word.", "Encontre a palavra do anagrama.");
   if (round?.kind === 'final') caption = `Mot ${(round.finaleIndex ?? 0) + 1} / ${round.finaleTotal ?? 8}     ·     ${round.finaleScore ?? 0} points en finale`;
 
-  return <RiveGameBoard
+  return <div className="rive-interactive-board"><RiveGameBoard
     text={{
       heading: match?.status === 'finished' ? t("Résultat final", "Final result", "Resultado final") : round ? ROUND_NAMES[round.kind] : t("La partie solo", "Solo match", "Partida individual"),
       progress: match ? `${Math.min(match.currentIndex + 1, match.totalRounds)} / ${match.totalRounds}` : t("PARTIE SOLO", "SOLO MATCH", "PARTIDA INDIVIDUAL"),
@@ -107,7 +109,13 @@ const RiveMatchBoard: React.FC<Props> = ({
     tiles={round?.letters ?? round?.numbers ?? []}
     onAction={action}
     onKey={type}
-  />;
+  />
+    {playing && round && <div style={{maxWidth:600,margin:'0 auto',padding:12}}>
+      {round.kind === 'numbers' ? <NumberTileBuilder key={round.drawId} numbers={round.numbers ?? []} disabled={busy} onCompose={onAnswer} /> :
+        !numeric && <InteractiveTiles key={`${round.drawId}:${round.finaleIndex ?? 0}`} tiles={round.letters ?? []} disabled={busy} onCompose={values => onAnswer(values.join(''))} />}
+      {!numeric || round.kind === 'numbers' ? <button type="button" className="button button--primary" disabled={busy || !answer.trim()} onClick={onSubmit}>{t('Valider','Submit','Validar')}</button> : null}
+    </div>}
+  </div>;
 };
 
 export default RiveMatchBoard;
