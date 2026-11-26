@@ -21,7 +21,23 @@ const navigation = [
 
 const RiveStudio = React.lazy(() => import('./pages/RiveStudio'));
 
-const ClassicApp: React.FC = () => (
+const labels = {
+  fr: ['Accueil','Partie solo','Les lettres','Les chiffres','Duels','La finale','ÉDITION WEB','Un jeu de lettres, de chiffres et de réflexion.','Langue de l’interface'],
+  en: ['Home','Solo match','Letters','Numbers','Duels','Final','WEB EDITION','A game of letters, numbers and thinking.','Interface language'],
+  pt: ['Início','Partida individual','Letras','Números','Duelos','Final','EDIÇÃO WEB','Um jogo de letras, números e raciocínio.','Idioma da interface']
+};
+type UiLanguage = keyof typeof labels;
+const ClassicApp: React.FC = () => {
+  const [language, setLanguage] = React.useState<UiLanguage>(() => {
+    const saved = localStorage.getItem('ui-language');
+    return saved === 'en' || saved === 'pt' ? saved : 'fr';
+  });
+  React.useEffect(() => {
+    localStorage.setItem('ui-language', language);
+    document.documentElement.lang = language;
+  }, [language]);
+  const t = labels[language];
+  return (
   <div className="show-app">
     <header className="site-header">
       <NavLink to="/" className="brand" aria-label="Des chiffres et des lettres — accueil">
@@ -29,14 +45,22 @@ const ClassicApp: React.FC = () => (
         <span className="brand-name">DES CHIFFRES <small>ET DES</small> LETTRES</span>
       </NavLink>
       <nav className="main-nav" aria-label="Navigation principale">
-        {navigation.map(({ to, label, end }) => (
+        {navigation.map(({ to, end }, index) => (
           <NavLink key={to} to={to} end={end}
             className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
-            {label}
+            {t[index]}
           </NavLink>
         ))}
       </nav>
-      <span className="site-edition"><span className="status-dot" /> ÉDITION WEB</span>
+      <label style={{display:'flex',alignItems:'center',gap:8}}>
+        <span>{t[8]}</span>
+        <select value={language} onChange={e => setLanguage(e.target.value as UiLanguage)}>
+          <option value="pt">Português</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+        </select>
+      </label>
+      <span className="site-edition"><span className="status-dot" /> {t[6]}</span>
     </header>
     <main className="site-main" id="main">
       <Routes>
@@ -51,10 +75,11 @@ const ClassicApp: React.FC = () => (
     </main>
     <footer className="site-footer">
       <span>DES CHIFFRES ET DES LETTRES · VERSION WEB</span>
-      <span>Un jeu de lettres, de chiffres et de réflexion.</span>
+      <span>{t[7]}</span>
     </footer>
   </div>
-);
+  );
+};
 
 const App: React.FC = () => (
   <Provider store={store}>
