@@ -1,4 +1,5 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
+import { useTranslation } from '../i18n';
 import CountdownClock from '../components/CountdownClock';
 import StudioRound from '../components/StudioRound';
 import TileRack from '../components/TileRack';
@@ -16,6 +17,7 @@ interface WorkTerm {
 }
 
 const NumberRound: React.FC = () => {
+  const t = useTranslation();
   const [largeCount, setLargeCount] = useState(2);
   const [phase, setPhase] = useState<Phase>('select');
   const [drawId, setDrawId] = useState('');
@@ -196,61 +198,61 @@ const NumberRound: React.FC = () => {
   };
 
   return (
-    <StudioRound number="02" title="Le compte est bon"
+    <StudioRound number="02" title={t("Le compte est bon","Numbers challenge","Desafio dos números")}
       animationCue={success ? 'success' : 'draw'} animationRevision={round}
-      description="Six plaques et quatre opérations. Les résultats intermédiaires doivent être positifs, entiers et les divisions exactes."
+      description={t("Six plaques et quatre opérations. Les résultats intermédiaires doivent être positifs, entiers et les divisions exactes.","Six tiles and four operations. Intermediate results must be positive integers and divisions exact.","Seis peças e quatro operações. Os resultados intermédios devem ser inteiros positivos e as divisões exatas.")}
       aside={<>
         <CountdownClock seconds={45} resetKey={round}
           running={phase === 'playing'} onExpire={finishByTime} />
-        <p className="aside-note">Le serveur vérifie également le délai de 45 secondes et interdit d’utiliser une plaque deux fois.</p>
+        <p className="aside-note">{t("Le serveur vérifie également le délai de 45 secondes et interdit d’utiliser une plaque deux fois.","The server also enforces the 45-second deadline and prevents reuse of tiles.","O servidor também verifica o limite de 45 segundos e impede a reutilização de peças.")}</p>
       </>}>
       {phase === 'select' && <section className="number-setup">
-        <label htmlFor="large-count">Nombre de grandes plaques</label>
+        <label htmlFor="large-count">{t("Nombre de grandes plaques","Number of large tiles","Número de peças grandes")}</label>
         <select id="large-count" value={largeCount}
           onChange={event => setLargeCount(Number(event.target.value))}>
           {[0, 1, 2, 3, 4].map(count => (
-            <option key={count} value={count}>{count} grande{count !== 1 ? 's' : ''}</option>
+            <option key={count} value={count}>{count} {t(count === 1 ? 'grande' : 'grandes', count === 1 ? 'large tile' : 'large tiles', count === 1 ? 'peça grande' : 'peças grandes')}</option>
           ))}
         </select>
         <button className="button button--primary" type="button"
-          onClick={() => void startDraw()}>Lancer le tirage</button>
+          onClick={() => void startDraw()}>{t("Lancer le tirage","Start draw","Iniciar sorteio")}</button>
       </section>}
 
       {phase !== 'select' && <>
-        <div className="puzzle-label">LE NOMBRE À ATTEINDRE</div>
+        <div className="puzzle-label">{t("LE NOMBRE À ATTEINDRE","TARGET NUMBER","NÚMERO ALVO")}</div>
         <div className="target-display">{phase === 'loading' ? '···' : target}</div>
-        <div className="puzzle-label">LES SIX PLAQUES</div>
+        <div className="puzzle-label">{t("LES SIX PLAQUES","THE SIX TILES","AS SEIS PEÇAS")}</div>
         <TileRack tiles={numbers} variant="numbers" totalSlots={6} />
       </>}
 
       {(phase === 'playing' || phase === 'checking' || phase === 'finished') && <>
-        <section className="number-builder" aria-label="Calcul par étapes">
-          <h2>Construire le calcul</h2>
-          <p>Choisissez deux termes et une opération. Le résultat devient une nouvelle plaque utilisable.</p>
+        <section className="number-builder" aria-label={t("Calcul par étapes","Step-by-step calculation","Cálculo por etapas")}>
+          <h2>{t("Construire le calcul","Build the calculation","Construir o cálculo")}</h2>
+          <p>{t("Choisissez deux termes et une opération. Le résultat devient une nouvelle plaque utilisable.","Choose two terms and an operation. The result becomes a reusable tile.","Escolha dois termos e uma operação. O resultado torna-se uma nova peça utilizável.")}</p>
           <div className="number-available">
             {available.map(item =>
               <span key={item.id} className="number-available-tile">{item.value}</span>
             )}
           </div>
           <div className="number-step-controls">
-            <label>Premier terme
-              <select aria-label="Premier terme" value={leftId} disabled={phase !== 'playing'}
+            <label>{t("Premier terme","First term","Primeiro termo")}
+              <select aria-label={t("Premier terme","First term","Primeiro termo")} value={leftId} disabled={phase !== 'playing'}
                 onChange={event => setLeftId(event.target.value)}>
-                <option value="">Choisir…</option>
+                <option value="">{t("Choisir…","Choose…","Escolher…")}</option>
                 {available.map(item => <option key={item.id} value={item.id}>{item.value}</option>)}
               </select>
             </label>
-            <label>Opération
-              <select aria-label="Opération" value={operator} disabled={phase !== 'playing'}
+            <label>{t("Opération","Operation","Operação")}
+              <select aria-label={t("Opération","Operation","Operação")} value={operator} disabled={phase !== 'playing'}
                 onChange={event => setOperator(event.target.value as NumberOperator)}>
                 <option value="+">+</option><option value="-">−</option>
                 <option value="*">×</option><option value="/">÷</option>
               </select>
             </label>
-            <label>Second terme
-              <select aria-label="Second terme" value={rightId} disabled={phase !== 'playing'}
+            <label>{t("Second terme","Second term","Segundo termo")}
+              <select aria-label={t("Second terme","Second term","Segundo termo")} value={rightId} disabled={phase !== 'playing'}
                 onChange={event => setRightId(event.target.value)}>
-                <option value="">Choisir…</option>
+                <option value="">{t("Choisir…","Choose…","Escolher…")}</option>
                 {available.map(item => <option key={item.id} value={item.id}>{item.value}</option>)}
               </select>
             </label>
@@ -258,11 +260,11 @@ const NumberRound: React.FC = () => {
           <div className="number-builder-actions">
             <button type="button" className="button button--outline"
               onClick={addStep} disabled={phase !== 'playing' || available.length < 2}>
-              Ajouter une étape
+              {t("Ajouter une étape","Add step","Adicionar etapa")}
             </button>
             <button type="button" className="text-button"
               onClick={undoStep} disabled={phase !== 'playing' || snapshots.length === 0}>
-              Annuler l’étape
+              {t("Annuler l’étape","Undo step","Desfazer etapa")}
             </button>
           </div>
           {steps.length > 0 && <ol className="number-steps">
@@ -271,14 +273,14 @@ const NumberRound: React.FC = () => {
         </section>
 
         <form className="answer-form" onSubmit={event => void submit(event)}>
-          <label htmlFor="number-answer">Votre expression (ou saisie libre)</label>
+          <label htmlFor="number-answer">{t("Votre expression (ou saisie libre)","Your expression (or free input)","A sua expressão (ou introdução livre)")}</label>
           <div className="answer-row">
             <input id="number-answer" value={expression}
               onChange={event => setExpression(event.target.value)}
               placeholder="(10 + 5) × 8 - 3" autoComplete="off"
               maxLength={180} disabled={phase !== 'playing'} required />
             <button className="button button--primary" type="submit"
-              disabled={phase !== 'playing'}>Valider</button>
+              disabled={phase !== 'playing'}>{t("Valider","Submit","Validar")}</button>
           </div>
         </form>
       </>}
@@ -286,13 +288,13 @@ const NumberRound: React.FC = () => {
       {message && <p className={`answer-feedback ${success ? 'answer-feedback--success' : ''}`}
         role="status">{message}</p>}
 
-      {phase === 'finished' && <section className="letter-results" aria-label="Résultat du compte">
-        <h2>Résultat du compte</h2>
-        <p className="letter-score">Votre score : <strong>{score} points</strong></p>
-        {resultValue !== null && <p>Votre résultat : <strong>{resultValue}</strong> (cible {target})</p>}
+      {phase === 'finished' && <section className="letter-results" aria-label={t("Résultat du compte","Calculation result","Resultado do cálculo")}>
+        <h2>{t("Résultat du compte","Calculation result","Resultado do cálculo")}</h2>
+        <p className="letter-score">{t("Votre score :","Your score:","A sua pontuação:")} <strong>{score} {t('points','points','pontos')}</strong></p>
+        {resultValue !== null && <p>{t("Votre résultat :","Your result:","O seu resultado:")} <strong>{resultValue}</strong> ({t('cible','target','alvo')} {target})</p>}
         {solution ? <>
-          <p>Meilleur résultat trouvé : <strong>{solution.value}</strong>
-            {' '}— écart de <strong>{solution.distance}</strong>
+          <p>{t("Meilleur résultat trouvé :","Best result found:","Melhor resultado encontrado:")} <strong>{solution.value}</strong>
+            {' '}— {t('écart de','difference of','diferença de')} <strong>{solution.distance}</strong>
           </p>
           <p className="number-solution-expression">{solution.expression}</p>
           <ol className="number-solution-steps">
@@ -300,12 +302,12 @@ const NumberRound: React.FC = () => {
               <li key={index}>{step.left} {step.operator} {step.right} = {step.result}</li>
             ))}
           </ol>
-          <p className="letter-data-note">Barème provisoire : 10 points exact, 7 points pour un écart de 1 à 5, 5 points pour 6 à 10, sinon 0.</p>
-        </> : <p className="letter-data-note">Chargement de la meilleure solution…</p>}
+          <p className="letter-data-note">{t("Barème provisoire : 10 points exact, 7 points pour un écart de 1 à 5, 5 points pour 6 à 10, sinon 0.","Provisional scoring: 10 points for exact, 7 for a difference of 1–5, 5 for 6–10, otherwise 0.","Pontuação provisória: 10 pontos para resultado exato, 7 para diferença de 1 a 5, 5 para 6 a 10, caso contrário 0.")}</p>
+        </> : <p className="letter-data-note">{t("Chargement de la meilleure solution…","Loading best solution…","A carregar a melhor solução…")}</p>}
       </section>}
 
       <button type="button" className="text-button" onClick={reset}
-        disabled={phase === 'loading'}>↻ Nouveau tirage</button>
+        disabled={phase === 'loading'}>{t("↻ Nouveau tirage","↻ New draw","↻ Novo sorteio")}</button>
     </StudioRound>
   );
 };
