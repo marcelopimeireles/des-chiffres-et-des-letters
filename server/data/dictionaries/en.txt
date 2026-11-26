@@ -99,6 +99,7 @@ advice
 advise
 advocate
 aerial
+aeroplane
 affair
 affect
 affected
@@ -123,6 +124,7 @@ agitation
 agree
 agreeable
 agreement
+airplane
 airy
 alarm
 albumin
@@ -256,6 +258,7 @@ artificial
 artillery
 artist
 artless
+arvo
 ascend
 ascending
 ascent
@@ -337,6 +340,7 @@ backward
 baggage
 bail
 bait
+bakkie
 balance
 ball
 ballast
@@ -587,6 +591,8 @@ calyx
 camp
 camphor
 canal
+canceled
+cancelled
 cancer
 candidate
 cane
@@ -651,6 +657,7 @@ cement
 censure
 center
 central
+centre
 century
 ceremony
 certain
@@ -790,6 +797,7 @@ color
 colored
 coloring
 colorless
+colour
 column
 comb
 combat
@@ -1084,6 +1092,7 @@ default
 defeat
 defect
 defective
+defence
 defend
 defendant
 defense
@@ -1339,6 +1348,7 @@ duck
 ductile
 dull
 dullness
+dunny
 duplicate
 durable
 duration
@@ -1645,6 +1655,7 @@ fault
 favor
 favorable
 favorite
+favour
 fear
 feast
 feather
@@ -1761,6 +1772,7 @@ fool
 foolish
 foot
 footing
+footpath
 for
 forbear
 forbid
@@ -2099,6 +2111,7 @@ honey
 honor
 honorable
 honorary
+honour
 hood
 hook
 hooked
@@ -2347,6 +2360,7 @@ itself
 ivory
 jack
 jacket
+jandals
 jaundice
 jerk
 join
@@ -2520,6 +2534,7 @@ loop
 loose
 loosen
 lord
+lorry
 lose
 loss
 lost
@@ -3884,6 +3899,7 @@ sick
 sickly
 sickness
 side
+sidewalk
 sight
 sign
 signal
@@ -4356,6 +4372,8 @@ textile
 texture
 than
 that
+theater
+theatre
 their
 theme
 themselves
@@ -4462,6 +4480,8 @@ transverse
 trap
 travel
 traveler
+traveling
+travelling
 traverse
 tread
 treason
@@ -4537,6 +4557,7 @@ tympanum
 type
 typical
 tyrant
+tyre
 ulcer
 ultimate
 umbilicus
