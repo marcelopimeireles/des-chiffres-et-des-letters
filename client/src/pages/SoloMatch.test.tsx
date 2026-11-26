@@ -2,6 +2,7 @@ import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import SoloMatch from './SoloMatch';
+import { UiLanguageContext } from '../i18n';
 import {
   createSoloMatch, fetchSoloMatch, nextSoloRound, validateLettersWord,
   fetchLettersSolutions, fetchNumbersSolutions, SoloMatch as MatchData,
@@ -69,15 +70,14 @@ beforeEach(() => {
 });
 
 test('creates a nine-stage solo game and persists match ID', async () => {
-  render(<MemoryRouter><SoloMatch /></MemoryRouter>);
-  await screen.findByText('Nouvelle partie');
-  fireEvent.change(screen.getByRole('combobox', { name: 'Langue des lettres' }), {
-    target: { value: 'pt' }
-  });
-  fireEvent.click(screen.getByRole('button', { name: 'Commencer la partie' }));
+  create.mockResolvedValue({...playing, language: 'pt'});
+  render(<UiLanguageContext.Provider value="pt"><MemoryRouter><SoloMatch /></MemoryRouter></UiLanguageContext.Provider>);
+  await screen.findByText('Nova partida');
+  expect(screen.queryByRole('combobox', { name: 'Idioma' })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Iniciar partida' }));
   await waitFor(() => expect(create).toHaveBeenCalledWith('pt', 2));
   await waitFor(() => expect(window.localStorage.getItem('des-chiffres-et-des-lettres:solo-match')).toBe('match-test'));
-  expect(screen.getByRole('textbox', { name: 'Votre mot' })).toBeInTheDocument();
+  expect(await screen.findByRole('textbox', { name: 'A sua palavra' })).toBeInTheDocument();
 });
 
 test('only the server supplies cumulative scores, then the next round starts', async () => {

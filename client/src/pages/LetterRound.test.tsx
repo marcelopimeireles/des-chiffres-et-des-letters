@@ -60,7 +60,7 @@ test('a valid English word is only accepted after server dictionary validation',
     });
     render(<UiLanguageContext.Provider value="en"><MemoryRouter><LetterRound /></MemoryRouter></UiLanguageContext.Provider>);
     fireEvent.click(screen.getByRole('button', { name: 'Automatic draw (5 V / 5 C)' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Lancer le tirage' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Start draw' }));
     await act(async () => { await Promise.resolve(); });
     for (let i = 0; i < 10; i++) {
       await act(async () => { jest.advanceTimersByTime(240); });
