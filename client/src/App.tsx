@@ -27,18 +27,9 @@ const labels = {
   en: ['Home','Solo match','Letters','Numbers','Duels','Final','WEB EDITION','A game of letters, numbers and thinking.','Interface language'],
   pt: ['Início','Partida individual','Letras','Números','Duelos','Final','EDIÇÃO WEB','Um jogo de letras, números e raciocínio.','Idioma da interface']
 };
-const ClassicApp: React.FC = () => {
-  const [language, setLanguage] = React.useState<UiLanguage>(() => {
-    const saved = localStorage.getItem('ui-language')?.split('-')[0] ?? null;
-    return isUiLanguage(saved) ? saved : 'fr';
-  });
-  React.useEffect(() => {
-    localStorage.setItem('ui-language', language);
-    document.documentElement.lang = language;
-  }, [language]);
+const ClassicApp: React.FC<{language: UiLanguage; setLanguage: (value: UiLanguage) => void}> = ({language, setLanguage}) => {
   const t = labels[baseLanguage(language)];
   return (
-  <UiLanguageContext.Provider value={language}>
   <div className="show-app">
     <header className="site-header">
       <NavLink to="/" className="brand" aria-label="Des chiffres et des lettres — accueil">
@@ -56,11 +47,7 @@ const ClassicApp: React.FC = () => {
       <label style={{display:'flex',alignItems:'center',gap:8}}>
         <span>{t[8]}</span>
         <select value={language} onChange={e => setLanguage(e.target.value as UiLanguage)}>
-          {(['pt', 'en', 'fr'] as const).map(base => (
-            <optgroup key={base} label={UI_LOCALES[base]}>
-              {(Object.keys(UI_LOCALES) as UiLanguage[]).filter(locale => baseLanguage(locale) === base).map(locale => (
-                <option key={locale} value={locale}>{UI_LOCALES[locale]}</option>
-              ))}
+          {(Object.keys(UI_LOCALES) as UiLanguage[]).map(locale => <option key={locale} value={locale}>{UI_LOCALES[locale]}</option>)}
             </optgroup>
           ))}
         </select>
@@ -83,11 +70,20 @@ const ClassicApp: React.FC = () => {
       <span>{t[7]}</span>
     </footer>
   </div>
-  </UiLanguageContext.Provider>
   );
 };
 
-const App: React.FC = () => (
+const App: React.FC = () => {
+  const [language, setLanguage] = React.useState<UiLanguage>(() => {
+    const saved = localStorage.getItem('ui-language')?.split('-')[0] ?? null;
+    return isUiLanguage(saved) ? saved : 'fr';
+  });
+  React.useEffect(() => {
+    localStorage.setItem('ui-language', language);
+    document.documentElement.lang = language;
+  }, [language]);
+  return (
+  <UiLanguageContext.Provider value={language}>
   <Provider store={store}>
     <BrowserRouter>
       <Routes>
@@ -96,10 +92,12 @@ const App: React.FC = () => (
             <RiveStudio />
           </React.Suspense>
         } />
-        <Route path="*" element={<ClassicApp />} />
+        <Route path="*" element={<ClassicApp language={language} setLanguage={setLanguage} />} />
       </Routes>
     </BrowserRouter>
   </Provider>
-);
+  </UiLanguageContext.Provider>
+  );
+};
 
 export default App;
