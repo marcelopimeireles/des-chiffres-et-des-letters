@@ -353,12 +353,10 @@ autenticação, migração automática de schemas e backups distribuídos.
       escaláveis, se necessário para maior tráfego.
 
 
-## P0 — Regional language variants
+## P0 — Inclusive language dictionaries
 
-- [ ] Separate interface locale (BCP 47) from dictionary language and regional variant.
-- [ ] Support Portuguese, English and French regional locales, including pt-PT, pt-BR, en-GB, en-US, en-CA, en-AU, fr-FR, fr-CA, fr-BE, fr-CH; extend to other documented regional varieties as reliable resources become available.
-- [ ] Offer an all-variants dictionary mode per language (union of verified regional lexicons), as well as individual regional dictionaries.
-- [ ] Use base-language UI fallback when regional translations are unavailable; never silently substitute a regional dictionary.
-- [ ] Audit dictionary provenance, licensing, regional coverage, inflections and cross-language contamination; keep server validation, solutions, anagrams and match generation consistent with selected variant.
-- [ ] Persist UI locale and dictionary preference independently; migrate existing fr/en/pt selections without breaking saved matches.
-- [ ] Test regional spelling acceptance, language isolation, union mode and locale fallback. Clearly identify unavailable regional dictionaries rather than claiming unsupported coverage.
+- [ ] One global language selector in the main navigation: Portuguese, English, French only. Interface and new games share this preference.
+- [ ] Remove per-mode and regional selectors; retain the language of an already started match.
+- [ ] Merge verified regional lexicons inclusively per language, with no regional exclusions. Audit provenance, licensing and cross-language contamination.
+- [ ] Use the same inclusive dictionary for validation, solutions and anagram generation; test regional spellings and language isolation.
+- [ ] Migrate saved regional UI preferences to their base language; cover classic and Rive presentations.
