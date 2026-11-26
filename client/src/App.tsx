@@ -9,6 +9,7 @@ import LetterRound from './pages/LetterRound';
 import Duel from './pages/Duel';
 import FinalWords from './pages/FinalWords';
 import './App.css';
+import { UiLanguageContext } from './i18n';
 
 const navigation = [
   { to: '/', label: 'Accueil', end: true },
@@ -38,6 +39,7 @@ const ClassicApp: React.FC = () => {
   }, [language]);
   const t = labels[language];
   return (
+  <UiLanguageContext.Provider value={language}>
   <div className="show-app">
     <header className="site-header">
       <NavLink to="/" className="brand" aria-label="Des chiffres et des lettres — accueil">
@@ -78,6 +80,7 @@ const ClassicApp: React.FC = () => {
       <span>{t[7]}</span>
     </footer>
   </div>
+  </UiLanguageContext.Provider>
   );
 };
 
