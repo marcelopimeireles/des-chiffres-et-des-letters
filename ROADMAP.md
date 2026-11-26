@@ -42,6 +42,20 @@ M4 + M5. Não antecipar multijogador nem contas para o MVP.
 
 ## 3. Backlog executável
 
+### P0 transversal — Manipulação visual de peças (M1/M2/M3/M4)
+
+- [ ] Permitir reorganizar livremente as peças de letras e números por drag-and-drop, sem alterar o sorteio original.
+- [ ] Letras: montar e testar palavras visualmente numa área de composição; mover, retirar e reordenar peças antes da submissão.
+- [ ] Números: reorganizar placas e construir operações visualmente, incluindo resultados intermédios, respeitando as regras do motor.
+- [ ] Oferecer interação por toque, rato e seleção de duas peças; manter teclado como alternativa acessível.
+- [ ] Disponibilizar desfazer, restaurar ordem original e embaralhar sem perder o prazo da ronda.
+- [ ] Preservar identidade individual das peças repetidas e impedir reutilização indevida; manter validação e pontuação autoritativas no servidor.
+- [ ] Integrar nas modalidades isoladas e partida completa, com feedback visual e animações Rive quando disponíveis, sem dependência obrigatória do runtime.
+- [ ] Testar desktop e mobile, teclado, peças repetidas, reordenação, expiração e submissão.
+
+**Aceitação:** o jogador consegue experimentar palavras e cálculos e submeter uma resposta sem digitar no teclado. Reorganizar peças não altera o sorteio, o cronómetro ou a pontuação. Este requisito é obrigatório para o MVP público.
+
+
 ### M1 — Estúdio e Rive [P0]
 
 **Dependência:** produção/exportação de assets próprios no [Rive Editor](https://rive.app).
