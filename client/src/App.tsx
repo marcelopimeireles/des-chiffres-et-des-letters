@@ -9,7 +9,7 @@ import LetterRound from './pages/LetterRound';
 import Duel from './pages/Duel';
 import FinalWords from './pages/FinalWords';
 import './App.css';
-import { UiLanguageContext } from './i18n';
+import { UiLanguageContext, UiLanguage, UI_LOCALES, baseLanguage, isUiLanguage } from './i18n';
 
 const navigation = [
   { to: '/', label: 'Accueil', end: true },
@@ -27,17 +27,16 @@ const labels = {
   en: ['Home','Solo match','Letters','Numbers','Duels','Final','WEB EDITION','A game of letters, numbers and thinking.','Interface language'],
   pt: ['Início','Partida individual','Letras','Números','Duelos','Final','EDIÇÃO WEB','Um jogo de letras, números e raciocínio.','Idioma da interface']
 };
-type UiLanguage = keyof typeof labels;
 const ClassicApp: React.FC = () => {
   const [language, setLanguage] = React.useState<UiLanguage>(() => {
     const saved = localStorage.getItem('ui-language');
-    return saved === 'en' || saved === 'pt' ? saved : 'fr';
+    return isUiLanguage(saved) ? saved : 'fr';
   });
   React.useEffect(() => {
     localStorage.setItem('ui-language', language);
     document.documentElement.lang = language;
   }, [language]);
-  const t = labels[language];
+  const t = labels[baseLanguage(language)];
   return (
   <UiLanguageContext.Provider value={language}>
   <div className="show-app">
@@ -57,9 +56,13 @@ const ClassicApp: React.FC = () => {
       <label style={{display:'flex',alignItems:'center',gap:8}}>
         <span>{t[8]}</span>
         <select value={language} onChange={e => setLanguage(e.target.value as UiLanguage)}>
-          <option value="pt">Português</option>
-          <option value="en">English</option>
-          <option value="fr">Français</option>
+          {(['pt', 'en', 'fr'] as const).map(base => (
+            <optgroup key={base} label={UI_LOCALES[base]}>
+              {(Object.keys(UI_LOCALES) as UiLanguage[]).filter(locale => baseLanguage(locale) === base).map(locale => (
+                <option key={locale} value={locale}>{UI_LOCALES[locale]}</option>
+              ))}
+            </optgroup>
+          ))}
         </select>
       </label>
       <span className="site-edition"><span className="status-dot" /> {t[6]}</span>
