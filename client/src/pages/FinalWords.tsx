@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation, useGameLanguage } from '../i18n';
 import DeadlineClock from '../components/DeadlineClock';
 import StudioRound from '../components/StudioRound';
-import TileRack from '../components/TileRack';
+import InteractiveTiles from '../components/InteractiveTiles';
 import {
   createFinaleDraw, fetchFinaleDraw, fetchFinaleSolutions,
   skipFinaleWord, validateFinaleWord, FinaleRound, FinaleSolutions
@@ -88,7 +88,7 @@ const FinalWords: React.FC = () => {
         <p className="puzzle-label">{t('TIRAGE','DRAW','SORTEIO')} {Math.min(round.currentIndex + 1, round.totalItems)} / {round.totalItems}</p>
         <p className="challenge-total">{t('Score :','Score:','Pontuação:')} <strong>{round.score} {t('points','points','pontos')}</strong></p>
         {round.current && !round.finished && <>
-          <TileRack tiles={round.current.letters} variant="letters" totalSlots={10}/>
+          <InteractiveTiles key={`${round.drawId}:${round.current.index}`} tiles={round.current.letters} disabled={busy} onCompose={values => setWord(values.join(''))} />
           <form className="answer-form" onSubmit={event => void submit(event)}>
             <label htmlFor="final-answer">{t("Votre mot de dix lettres", "Your ten-letter word", "A sua palavra de dez letras")}</label>
             <div className="answer-row">
