@@ -6,12 +6,6 @@ import { useRiveClock } from './useRiveClock';
 import { SoloMatch, WordLanguage } from '../services/gameService';
 
 const LANGUAGE_NAMES: Record<WordLanguage, string> = { fr: 'Français', pt: 'Português', en: 'English' };
-const ROUND_NAMES = {
-  letters: 'Le mot le plus long',
-  numbers: 'Le compte est bon',
-  duel: 'Les duels',
-  final: 'Les mots de la fin'
-};
 
 interface Props {
   match: SoloMatch | null;
@@ -37,6 +31,7 @@ const RiveMatchBoard: React.FC<Props> = ({
   onLargeCount, onAnswer, onStart, onSubmit, onSkip, onNext, onReset, onRefresh
 }) => {
   const t = useTranslation();
+  const ROUND_NAMES = { letters: t('Le mot le plus long','Longest word','A palavra mais longa'), numbers: t('Le compte est bon','Numbers challenge','Desafio dos números'), duel: t('Les duels','Duels','Duelos'), final: t('Les mots de la fin','Final words','Palavras finais') };
   const navigate = useNavigate();
   const round = match?.current;
   const deadline = match?.status === 'playing' ? round?.deadlineAt : undefined;
@@ -86,8 +81,8 @@ const RiveMatchBoard: React.FC<Props> = ({
   };
 
   let caption = t("Neuf épreuves, du premier tirage à la finale.", "Nine rounds, from the first draw to the final.", "Nove provas, do primeiro sorteio à final.");
-  if (round?.kind === 'letters') caption = `Composez un mot en ${LANGUAGE_NAMES[match?.language ?? language]}.`;
-  if (round?.kind === 'numbers') caption = `Cible : ${round.targetNumber}     ·     Saisissez un calcul.`;
+  if (round?.kind === 'letters') caption = t(`Composez un mot en ${LANGUAGE_NAMES[match?.language ?? language]}.`, `Build a word in ${LANGUAGE_NAMES[match?.language ?? language]}.`, `Componha uma palavra em ${LANGUAGE_NAMES[match?.language ?? language]}.`);
+  if (round?.kind === 'numbers') caption = t(`Cible : ${round.targetNumber}     ·     Saisissez un calcul.`, `Target: ${round.targetNumber} · Enter a calculation.`, `Alvo: ${round.targetNumber} · Introduza um cálculo.`);
   if (round?.kind === 'duel') caption = round.duelKind === 'mental' ? round.challenge ?? '' : t("Retrouvez le mot de l’anagramme.", "Find the anagram word.", "Encontre a palavra do anagrama.");
   if (round?.kind === 'final') caption = `Mot ${(round.finaleIndex ?? 0) + 1} / ${round.finaleTotal ?? 8}     ·     ${round.finaleScore ?? 0} points en finale`;
 
@@ -97,12 +92,12 @@ const RiveMatchBoard: React.FC<Props> = ({
       progress: match ? `${Math.min(match.currentIndex + 1, match.totalRounds)} / ${match.totalRounds}` : t("PARTIE SOLO", "SOLO MATCH", "PARTIDA INDIVIDUAL"),
       caption,
       clock: deadline ? `${remaining} s` : '—',
-      score: `${match?.totalScore ?? 0} points`,
+      score: t(`${match?.totalScore ?? 0} points`, `${match?.totalScore ?? 0} points`, `${match?.totalScore ?? 0} pontos`),
       answer: answer || (playing ? numeric ? t("Votre calcul…", "Your calculation…", "O seu cálculo…") : t("Votre mot…", "Your word…", "A sua palavra…") : ''),
       feedback: restoring ? t("Récupération de votre partie…", "Restoring your match…", "A recuperar a partida…") : busy ? t("Veuillez patienter…", "Please wait…", "Aguarde…") : [feedback, solution].filter(Boolean).join('\n'),
       primaryLabel: !match ? t("Commencer", "Start", "Começar") : match.status === 'review' ? t("Épreuve suivante", "Next round", "Próxima prova") : match.status === 'finished' ? t("Nouvelle partie", "New match", "Nova partida") : t("Valider", "Submit", "Validar"),
       secondaryLabel: playing && round?.kind === 'final' ? t("Passer ce mot", "Skip word", "Ignorar palavra") : '',
-      auxiliaryLabel: !match ? `${largeCount} grandes` : '',
+      auxiliaryLabel: !match ? t(`${largeCount} grandes`, `${largeCount} large tiles`, `${largeCount} peças grandes`) : '',
       backspaceLabel: playing ? t("Effacer", "Delete", "Apagar") : '',
       refreshLabel: match ? t("Actualiser", "Refresh", "Atualizar") : '',
       resetLabel: match ? t("Quitter", "Quit", "Sair") : t("Menu", "Menu", "Menu")
