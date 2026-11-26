@@ -40,3 +40,12 @@ test('solver counts accents as unaccented tiles', () => {
   assert.equal(result.bestLength, 4);
   assert.deepEqual(result.bestWords, ['café']);
 });
+
+
+test('regional vocabulary is inclusive within each language', () => {
+  for (const word of ['ônibus', 'autocarro', 'facto', 'fato', 'machamba', 'cachupa']) assert.equal(lookupDictionaryWord('pt', word), word);
+  for (const word of ['colour', 'color', 'centre', 'center', 'lorry', 'truck']) assert.equal(lookupDictionaryWord('en', word), word);
+  for (const word of ['septante', 'nonante', 'courriel', 'clavardage', 'tuque']) assert.equal(lookupDictionaryWord('fr', word), word);
+  assert.equal(lookupDictionaryWord('fr', 'quick'), null);
+  assert.equal(lookupDictionaryWord('en', 'quick'), 'quick');
+});

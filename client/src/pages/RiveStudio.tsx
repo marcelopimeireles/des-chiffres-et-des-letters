@@ -1,3 +1,4 @@
+import { useTranslation } from '../i18n';
 import React from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import RiveGameBoard, { BoardAction } from '../components/RiveGameBoard';
@@ -5,6 +6,7 @@ import RiveRound from './RiveRound';
 import SoloMatch from './SoloMatch';
 
 const StudioMenu: React.FC = () => {
+  const t = useTranslation();
   const navigate = useNavigate();
   const destinations: Partial<Record<BoardAction, string>> = {
     primary: 'match',
@@ -18,16 +20,16 @@ const StudioMenu: React.FC = () => {
     text={{
       heading: 'Des chiffres et des lettres',
       progress: 'STUDIO',
-      caption: 'Jouez une partie complète ou choisissez une épreuve.',
+      caption: t("Jouez une partie complète ou choisissez une épreuve.", "Play a full match or choose a round.", "Jogue uma partida completa ou escolha uma prova."),
       clock: '—',
       score: '—',
       answer: '',
       feedback: '',
-      primaryLabel: 'Partie solo',
-      secondaryLabel: 'Les lettres',
-      backspaceLabel: 'Les chiffres',
-      auxiliaryLabel: 'Duels',
-      refreshLabel: 'La finale',
+      primaryLabel: t("Partie solo", "Solo match", "Partida individual"),
+      secondaryLabel: t("Les lettres", "Letters", "Letras"),
+      backspaceLabel: t("Les chiffres", "Numbers", "Números"),
+      auxiliaryLabel: t("Duels", "Duels", "Duelos"),
+      refreshLabel: t("La finale", "Final", "Final"),
       resetLabel: ''
     }}
     tiles={['7', 'D', 'E', 'S', '25', 'L', 'E', 'T', 'R', '3']}

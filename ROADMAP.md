@@ -351,3 +351,27 @@ autenticação, migração automática de schemas e backups distribuídos.
 - [ ] Verificar um deploy real Preview e Production e os dicionários na função.
 - [ ] Substituir o snapshot global em Redis por dados por sessão/DB mais
       escaláveis, se necessário para maior tráfego.
+
+
+## P0 — Inclusive language dictionaries
+
+- [ ] One global language selector in the main navigation: Portuguese, English, French only. Interface and new games share this preference.
+- [ ] Remove per-mode and regional selectors; retain the language of an already started match.
+- [ ] Merge verified regional lexicons inclusively per language, with no regional exclusions. Audit provenance, licensing and cross-language contamination.
+- [ ] Use the same inclusive dictionary for validation, solutions and anagram generation; test regional spellings and language isolation.
+- [ ] Migrate saved regional UI preferences to their base language; cover classic and Rive presentations.
+
+
+## P1 — Social sharing (public release)
+- [ ] Share completed match scores and round summaries via the native Web Share API, with copy-link fallback.
+- [ ] Provide WhatsApp, Facebook and X sharing links; support Instagram through shareable result images and native sharing where available.
+- [ ] Generate localized result cards (PT/EN/FR), with score, game branding and public challenge link, without exposing private identifiers or unrevealed answers.
+- [ ] Add Open Graph metadata and social preview images for public links.
+- [ ] Add unit and E2E tests for sharing, cancellation, fallback and privacy.
+
+## P4 — Social multiplayer and identity
+- [ ] Share private room invitations through messaging and social networks; use expiring/revocable invitation tokens.
+- [ ] Share public challenges that reproduce the same draw with independent scoring and deadlines.
+- [ ] Optional Google, Facebook and Apple sign-in, subject to provider setup, consent and account-linking requirements.
+- [ ] Opt-in public profiles, friend challenges and social leaderboards.
+- [ ] No automatic posting, contact importing or disclosure of personal data without explicit consent.

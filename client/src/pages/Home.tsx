@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from '../i18n';
 import { Link } from 'react-router-dom';
 import RiveScene from '../components/RiveScene';
 
@@ -17,7 +18,9 @@ const games = [
     to: '/final-words', tag: 'FINALE' },
 ];
 
-const Home: React.FC = () => (
+const Home: React.FC = () => {
+  const t = useTranslation();
+  return (
   <div className="home-page">
     <section className="hero">
       <div className="hero-copy">
@@ -28,12 +31,11 @@ const Home: React.FC = () => (
           <span><em>LETTRES</em><b>.</b></span>
         </h1>
         <p className="hero-lead">
-          Retrouvez le plaisir du célèbre jeu de réflexion.
-          Dix lettres, six nombres, une seule mission : trouver la bonne réponse.
+          {t("Retrouvez le plaisir du célèbre jeu de réflexion. Dix lettres, six nombres, une seule mission : trouver la bonne réponse.", "Rediscover the classic thinking game. Ten letters, six numbers, one mission: find the right answer.", "Redescubra o clássico jogo de raciocínio. Dez letras, seis números, uma missão: encontrar a resposta certa.")}
         </p>
         <div className="hero-actions">
-          <Link to="/match" className="button button--primary">Jouer une partie <span aria-hidden="true">→</span></Link>
-          <Link to="/letter-round" className="button button--outline">Jouer avec les lettres</Link>
+          <Link to="/match" className="button button--primary">{t("Jouer une partie", "Play a match", "Jogar uma partida")} <span aria-hidden="true">→</span></Link>
+          <Link to="/letter-round" className="button button--outline">{t("Jouer avec les lettres", "Play letters", "Jogar com letras")}</Link>
         </div>
         <div className="hero-footnote"><span className="hero-line" /> MODE SOLO : SIX ÉPREUVES · DIRECTEMENT DANS VOTRE NAVIGATEUR</div>
       </div>
@@ -42,7 +44,7 @@ const Home: React.FC = () => (
 
     <section className="game-selection" aria-labelledby="games-title">
       <div className="section-heading">
-        <div><p className="eyebrow">QUATRE FAÇONS DE JOUER</p><h2 id="games-title">Choisissez votre épreuve</h2></div>
+        <div><p className="eyebrow">{t("QUATRE FAÇONS DE JOUER", "FOUR WAYS TO PLAY", "QUATRO FORMAS DE JOGAR")}</p><h2 id="games-title">{t("Choisissez votre épreuve", "Choose your challenge", "Escolha a sua prova")}</h2></div>
         <span className="section-counter">01 — 04</span>
       </div>
       <div className="game-grid">
@@ -50,13 +52,14 @@ const Home: React.FC = () => (
           <Link className="mode-card" key={game.code} to={game.to}>
             <span className="card-overline"><span>{game.code} / ÉPREUVE</span><span>{game.tag}</span></span>
             <span className="mode-icon">{game.icon}</span>
-            <strong>{game.name}</strong>
-            <span className="mode-description">{game.text}</span>
-            <span className="card-bottom">JOUER <span aria-hidden="true">↗</span></span>
+            <strong>{t(game.name, ['Longest word','Numbers challenge','Duels','Final words'][Number(game.code)-1], ['Palavra mais longa','Desafio dos números','Duelos','Palavras finais'][Number(game.code)-1])}</strong>
+            <span className="mode-description">{t(game.text, ['Build the longest word from ten letters.','Combine six numbers to approach the target.','A speed challenge where every second counts.','The final challenge for word lovers.'][Number(game.code)-1], ['Forme a palavra mais longa com dez letras.','Combine seis números para chegar ao alvo.','Uma prova de rapidez em que cada segundo conta.','A prova final para os amantes das palavras.'][Number(game.code)-1])}</span>
+            <span className="card-bottom">{t("JOUER", "PLAY", "JOGAR")} <span aria-hidden="true">↗</span></span>
           </Link>
         ))}
       </div>
     </section>
   </div>
-);
+  );
+};
 export default Home;

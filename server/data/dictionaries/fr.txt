@@ -271,6 +271,7 @@ allier
 allié
 alloc
 allocation
+alloco
 allocution
 allumage
 allure
@@ -640,6 +641,7 @@ attelage
 attentat
 attente
 attention
+attieké
 attirance
 attitude
 attraction
@@ -1821,6 +1823,7 @@ celes
 cella
 celle
 cellier
+cellulaire
 cellule
 cellulose
 celte
@@ -1967,6 +1970,7 @@ chevron
 chevé
 chiac
 chiat
+chicon
 chics
 chien
 chier
@@ -2124,6 +2128,7 @@ classe
 classement
 clause
 clava
+clavardage
 clave
 clavicule
 clavier
@@ -3397,6 +3402,7 @@ encombre
 encor
 encours
 encre
+endive
 endos
 endroit
 enduit
@@ -3499,6 +3505,7 @@ esquive
 essai
 essayiste
 essence
+essencerie
 esses
 essieu
 essor
@@ -4796,6 +4803,7 @@ huila
 huile
 huis
 huissier
+huitante
 humai
 humanisme
 humanité
@@ -5868,6 +5876,7 @@ madère
 maestro
 mafia
 magasin
+magasiner
 magazine
 mage
 mages
@@ -6725,6 +6734,7 @@ nomination
 nomma
 nommé
 non
+nonante
 nonce
 nones
 nonne
@@ -7704,6 +7714,7 @@ pores
 porno
 port
 porta
+portable
 portage
 portail
 porte
@@ -9074,6 +9085,7 @@ sentiment
 sentinelle
 seoir
 sept
+septante
 septembre
 serai
 seran

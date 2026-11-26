@@ -7,7 +7,7 @@ words, maximum 10 Unicode characters, deduplicated and sorted, with a few
 manually curated common game words added. The code loading the lists is part
 of this project's codebase; the upstream data copyright stays with its owners.
 
-## English (`en.txt`) — 4,867 entries
+## English (`en.txt`) — 4,888 entries
 
 From [MichaelWehar/Public-Domain-Word-Lists](https://github.com/MichaelWehar/Public-Domain-Word-Lists),
 commit `e2fe9d32eeb86179b464aba0e91fa96904b8e7e8`.
@@ -15,7 +15,7 @@ Inputs: `5000-more-common.txt` and `5664-freq-treegle-may.txt`.
 The maintainer explicitly describes these as **public-domain** word lists.
 Some individual additional common words were inserted for gameplay.
 
-## Português — Portugal (`pt.txt`) — 27,248 entries
+## Português (`pt.txt`) — 27,266 entries
 
 From [Thanatos995/Public-PT-Domain-Word-Lists](https://github.com/Thanatos995/Public-PT-Domain-Word-Lists),
 commit `9d2b9eb4aaad4a8f46139268defc7b4f8a3e9323`.
@@ -28,10 +28,9 @@ rights in earlier derived resources.
 
 The list contains examples and conjugations used in Portugal and may also
 contain names or undesired entries; it is not a curated official pt-PT
-competition dictionary. The selection is now labeled Portuguese (Portugal),
-rather than the previous pt-BR dictionary API.
+competition dictionary. The game uses a single Portuguese language selection, without regional exclusions.
 
-## Français (`fr.txt`) — 11,158 entries
+## Français (`fr.txt`) — 11,169 entries
 
 Derived from [Verbarium / Mot Valide — French Word Games](https://github.com/verbarium/french-word-games),
 commit `5d43d0c681b1cb6f68ab135448603bab911f0953`.
@@ -64,3 +63,7 @@ does not turn the unrelated game source code into CC BY-SA 4.0.
 
 If any upstream licence cannot be satisfactorily confirmed for commercial
 redistribution, replace the affected asset with a suitably licensed source.
+
+## Inclusive regional vocabulary additions
+
+Manually curated individual common words and spelling variants have been added to all three lists (18 Portuguese, 21 English, 12 French new entries). These are incremental additions, not imported comprehensive regional dictionaries. French QUICK was removed as a game-list correction. The existing source licences remain applicable. Full regional coverage and linguistic review remain outstanding.
