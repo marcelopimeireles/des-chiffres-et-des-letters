@@ -15,7 +15,7 @@ const RiveMatchBoard = React.lazy(() => import('../components/RiveMatchBoard'));
 
 const STORAGE_KEY = 'des-chiffres-et-des-lettres:solo-match';
 const LANGUAGE_NAMES: Record<WordLanguage, string> = {
-  fr: 'Français', pt: 'Português (Portugal)', en: 'English'
+  fr: 'Français', pt: 'Português', en: 'English'
 };
 
 const RoundLabel: React.FC<{ kind: 'letters' | 'numbers' | 'duel' | 'final' }> = ({ kind }) => {
@@ -233,7 +233,7 @@ const SoloMatch: React.FC<{ presentation?: 'classic' | 'rive' }> = ({ presentati
     return <RiveMatchBoard
       match={match} language={language} largeCount={largeCount} answer={answer}
       feedback={feedback} solution={solution} busy={busy} restoring={restoring}
-      onLanguage={() => {}} onLargeCount={setLargeCount} onAnswer={setAnswer}
+      onLargeCount={setLargeCount} onAnswer={setAnswer}
       onStart={() => void start()} onSubmit={() => void submit()}
       onNext={() => void next()} onReset={reset} onSkip={() => void skipFinalWord()}
       onRefresh={() => { if (match) void load(match.matchId); }}
