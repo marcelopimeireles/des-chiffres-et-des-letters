@@ -2,6 +2,7 @@ aac
 aacs
 aal
 aap
+abacaxi
 abafar
 abaixo
 abala
@@ -228,6 +229,7 @@ academy
 académica
 académico
 académicos
+acadêmico
 acalmam
 acalmar
 acalmarem
@@ -1537,6 +1539,7 @@ analista
 analistas
 analogia
 analogias
+ananás
 anarquia
 anarquismo
 anarquista
@@ -2989,6 +2992,7 @@ açoriana
 açoriano
 açorianos
 açoteias
+açougue
 açucar
 ação
 açúcar
@@ -3446,6 +3450,8 @@ bergman
 bergomi
 bergres
 berimbau
+beringela
+berinjela
 berisha
 berlim
 berlin
@@ -4086,7 +4092,9 @@ cachada
 cachan
 cachimbo
 cacho
+cachupa
 cacia
+cacimbo
 cacém
 cada
 cadalora
@@ -11911,6 +11919,7 @@ fricção
 fricções
 friend
 frieza
+frigorífico
 frio
 frisa
 frisam
@@ -12008,6 +12017,7 @@ fundos
 fundou
 funerais
 funeral
+funge
 fungíveis
 funk
 funky
@@ -12258,6 +12268,7 @@ gcp
 gdansk
 gelada
 geladas
+geladeira
 gelado
 gelados
 gelatina
@@ -15868,6 +15879,7 @@ macedo
 macedónia
 macedónios
 machado
+machamba
 machete
 machico
 machine
@@ -16326,6 +16338,7 @@ massod
 master
 masters
 mata
+matabicho
 matadouro
 matadouros
 matam
@@ -17336,6 +17349,7 @@ musicais
 musical
 musicóloga
 musicólogo
+musseque
 mussorgski
 muster
 mutant
@@ -21062,6 +21076,7 @@ quietude
 quilo
 quilos
 quilómetro
+quilômetro
 quim
 quimigal
 quincey
@@ -21440,6 +21455,7 @@ receptor
 recepção
 recepções
 recessão
+receção
 recheada
 recheado
 recheio
@@ -24020,6 +24036,7 @@ sorriu
 sorte
 sorteados
 sorteio
+sorvete
 sos
 sossega
 sossegado
@@ -27236,6 +27253,7 @@ zíngaro
 óvulos
 óxido
 óxidos
+ônibus
 última
 últimas
 último
