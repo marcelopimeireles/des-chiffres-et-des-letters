@@ -1,3 +1,4 @@
+import { useTranslation } from '../i18n';
 import React, { useEffect } from 'react';
 import RiveGameBoard, { BoardAction } from './RiveGameBoard';
 import { useNavigate } from 'react-router-dom';
@@ -35,6 +36,7 @@ const RiveMatchBoard: React.FC<Props> = ({
   match, language, largeCount, answer, feedback, solution, busy, restoring,
   onLargeCount, onAnswer, onStart, onSubmit, onSkip, onNext, onReset, onRefresh
 }) => {
+  const t = useTranslation();
   const navigate = useNavigate();
   const round = match?.current;
   const deadline = match?.status === 'playing' ? round?.deadlineAt : undefined;
@@ -83,27 +85,27 @@ const RiveMatchBoard: React.FC<Props> = ({
     onAnswer(previous => (previous + key).slice(0, limit));
   };
 
-  let caption = 'Neuf épreuves, du premier tirage à la finale.';
+  let caption = t("Neuf épreuves, du premier tirage à la finale.", "Nine rounds, from the first draw to the final.", "Nove provas, do primeiro sorteio à final.");
   if (round?.kind === 'letters') caption = `Composez un mot en ${LANGUAGE_NAMES[match?.language ?? language]}.`;
   if (round?.kind === 'numbers') caption = `Cible : ${round.targetNumber}     ·     Saisissez un calcul.`;
-  if (round?.kind === 'duel') caption = round.duelKind === 'mental' ? round.challenge ?? '' : 'Retrouvez le mot de l’anagramme.';
+  if (round?.kind === 'duel') caption = round.duelKind === 'mental' ? round.challenge ?? '' : t("Retrouvez le mot de l’anagramme.", "Find the anagram word.", "Encontre a palavra do anagrama.");
   if (round?.kind === 'final') caption = `Mot ${(round.finaleIndex ?? 0) + 1} / ${round.finaleTotal ?? 8}     ·     ${round.finaleScore ?? 0} points en finale`;
 
   return <RiveGameBoard
     text={{
-      heading: match?.status === 'finished' ? 'Résultat final' : round ? ROUND_NAMES[round.kind] : 'La partie solo',
-      progress: match ? `${Math.min(match.currentIndex + 1, match.totalRounds)} / ${match.totalRounds}` : 'PARTIE SOLO',
+      heading: match?.status === 'finished' ? t("Résultat final", "Final result", "Resultado final") : round ? ROUND_NAMES[round.kind] : t("La partie solo", "Solo match", "Partida individual"),
+      progress: match ? `${Math.min(match.currentIndex + 1, match.totalRounds)} / ${match.totalRounds}` : t("PARTIE SOLO", "SOLO MATCH", "PARTIDA INDIVIDUAL"),
       caption,
       clock: deadline ? `${remaining} s` : '—',
       score: `${match?.totalScore ?? 0} points`,
-      answer: answer || (playing ? numeric ? 'Votre calcul…' : 'Votre mot…' : ''),
-      feedback: restoring ? 'Récupération de votre partie…' : busy ? 'Veuillez patienter…' : [feedback, solution].filter(Boolean).join('\n'),
-      primaryLabel: !match ? 'Commencer' : match.status === 'review' ? 'Épreuve suivante' : match.status === 'finished' ? 'Nouvelle partie' : 'Valider',
-      secondaryLabel: playing && round?.kind === 'final' ? 'Passer ce mot' : '',
+      answer: answer || (playing ? numeric ? t("Votre calcul…", "Your calculation…", "O seu cálculo…") : t("Votre mot…", "Your word…", "A sua palavra…") : ''),
+      feedback: restoring ? t("Récupération de votre partie…", "Restoring your match…", "A recuperar a partida…") : busy ? t("Veuillez patienter…", "Please wait…", "Aguarde…") : [feedback, solution].filter(Boolean).join('\n'),
+      primaryLabel: !match ? t("Commencer", "Start", "Começar") : match.status === 'review' ? t("Épreuve suivante", "Next round", "Próxima prova") : match.status === 'finished' ? t("Nouvelle partie", "New match", "Nova partida") : t("Valider", "Submit", "Validar"),
+      secondaryLabel: playing && round?.kind === 'final' ? t("Passer ce mot", "Skip word", "Ignorar palavra") : '',
       auxiliaryLabel: !match ? `${largeCount} grandes` : '',
-      backspaceLabel: playing ? 'Effacer' : '',
-      refreshLabel: match ? 'Actualiser' : '',
-      resetLabel: match ? 'Quitter' : 'Menu'
+      backspaceLabel: playing ? t("Effacer", "Delete", "Apagar") : '',
+      refreshLabel: match ? t("Actualiser", "Refresh", "Atualizar") : '',
+      resetLabel: match ? t("Quitter", "Quit", "Sair") : t("Menu", "Menu", "Menu")
     }}
     keyboardVisible={playing}
     revealKey={round ? `${round.drawId}:${round.finaleIndex ?? 0}` : undefined}
