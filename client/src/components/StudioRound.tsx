@@ -19,7 +19,7 @@ const StudioRound: React.FC<StudioRoundProps> = ({ number, title, description, c
   <div className="round-page">
     <div className="round-topline">
       <Link to="/" className="back-link">{t("← Retour au studio", "← Back to studio", "← Voltar ao estúdio")}</Link>
-      <span className="eyebrow">ÉPREUVE {number} / LE JEU</span>
+      <span className="eyebrow">{t("ÉPREUVE","ROUND","PROVA")} {number} / {t("LE JEU","THE GAME","O JOGO")}</span>
     </div>
     <div className="round-intro">
       <div>
