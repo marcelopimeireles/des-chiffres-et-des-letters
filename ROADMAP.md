@@ -351,3 +351,14 @@ autenticação, migração automática de schemas e backups distribuídos.
 - [ ] Verificar um deploy real Preview e Production e os dicionários na função.
 - [ ] Substituir o snapshot global em Redis por dados por sessão/DB mais
       escaláveis, se necessário para maior tráfego.
+
+
+## P0 — Regional language variants
+
+- [ ] Separate interface locale (BCP 47) from dictionary language and regional variant.
+- [ ] Support Portuguese, English and French regional locales, including pt-PT, pt-BR, en-GB, en-US, en-CA, en-AU, fr-FR, fr-CA, fr-BE, fr-CH; extend to other documented regional varieties as reliable resources become available.
+- [ ] Offer an all-variants dictionary mode per language (union of verified regional lexicons), as well as individual regional dictionaries.
+- [ ] Use base-language UI fallback when regional translations are unavailable; never silently substitute a regional dictionary.
+- [ ] Audit dictionary provenance, licensing, regional coverage, inflections and cross-language contamination; keep server validation, solutions, anagrams and match generation consistent with selected variant.
+- [ ] Persist UI locale and dictionary preference independently; migrate existing fr/en/pt selections without breaking saved matches.
+- [ ] Test regional spelling acceptance, language isolation, union mode and locale fallback. Clearly identify unavailable regional dictionaries rather than claiming unsupported coverage.
