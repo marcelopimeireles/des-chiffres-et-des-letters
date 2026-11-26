@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation, useGameLanguage } from '../i18n';
 import DeadlineClock from '../components/DeadlineClock';
 import StudioRound from '../components/StudioRound';
+import InteractiveTiles from '../components/InteractiveTiles';
 import TileRack from '../components/TileRack';
 import {
   createDuelDraw, fetchDuelDraw, fetchDuelSolution,
@@ -79,6 +80,7 @@ const Duel: React.FC = () => {
         {round.kind === 'anagram'
           ? <TileRack tiles={round.letters || []} variant="letters" />
           : <div className="challenge-calculation">{round.challenge}</div>}
+        {!round.finished && round.kind === 'anagram' && <InteractiveTiles key={round.drawId} tiles={round.letters || []} disabled={busy} onCompose={values => setInput(values.join(''))} />}
         {!round.finished && <form className="answer-form" onSubmit={event => void submit(event)}>
           <label htmlFor="duel-answer">{round.kind === 'anagram' ? t("Votre mot", "Your word", "A sua palavra") : t("Votre résultat", "Your result", "O seu resultado")}</label>
           <div className="answer-row">
