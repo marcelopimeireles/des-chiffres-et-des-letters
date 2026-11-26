@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from '../i18n';
 import StudioRound from '../components/StudioRound';
 import TileRack from '../components/TileRack';
 import DeadlineClock from '../components/DeadlineClock';
@@ -17,13 +18,15 @@ const LANGUAGE_NAMES: Record<WordLanguage, string> = {
   fr: 'Français', pt: 'Português (Portugal)', en: 'English'
 };
 
-const RoundLabel: React.FC<{ kind: 'letters' | 'numbers' | 'duel' | 'final' }> = ({ kind }) => (
-  <>{kind === 'letters' ? 'Le mot le plus long' :
-    kind === 'numbers' ? 'Le compte est bon' :
-    kind === 'duel' ? 'Les duels' : 'Les mots de la fin'}</>
-);
+const RoundLabel: React.FC<{ kind: 'letters' | 'numbers' | 'duel' | 'final' }> = ({ kind }) => {
+  const t = useTranslation();
+  return <>{kind === 'letters' ? t("Le mot le plus long", "Longest word", "Palavra mais longa") :
+    kind === 'numbers' ? t("Le compte est bon", "Numbers challenge", "Desafio dos números") :
+    kind === 'duel' ? t("Les duels", "Duels", "Duelos") : t("Les mots de la fin", "Final words", "Palavras finais")}</>;
+};
 
 const SoloMatch: React.FC<{ presentation?: 'classic' | 'rive' }> = ({ presentation = 'classic' }) => {
+  const t = useTranslation();
   const [match, setMatch] = useState<SoloMatchData | null>(null);
   const [language, setLanguage] = useState<WordLanguage>('fr');
   const [largeCount, setLargeCount] = useState(2);
@@ -238,23 +241,23 @@ const SoloMatch: React.FC<{ presentation?: 'classic' | 'rive' }> = ({ presentati
   }
 
   return (
-    <StudioRound number="00" title="La partie solo" animationCue={match?.status === 'review' && (last?.score || 0) > 0 ? 'success' : 'draw'}
+    <StudioRound number="00" title={t("La partie solo", "Solo match", "Partida individual")} animationCue={match?.status === 'review' && (last?.score || 0) > 0 ? 'success' : 'draw'}
       animationRevision={(match?.currentIndex || 0) + 1}
-      description="Neuf épreuves : trois lettres, trois comptes, deux duels et une finale de huit mots. Les scores viennent du serveur."
+      description={t("Neuf épreuves : trois lettres, trois comptes, deux duels et une finale de huit mots. Les scores viennent du serveur.", "Nine rounds: three letters, three numbers, two duels and an eight-word final. Scores come from the server.", "Nove provas: três de letras, três de números, dois duelos e uma final de oito palavras. As pontuações vêm do servidor.")}
       aside={round && !finished ? <>
         <DeadlineClock key={round.drawId} deadlineAt={round.deadlineAt}
           totalSeconds={round.kind === 'final' ? 120 : round.kind === 'numbers' ? 45 : round.kind === 'letters' ? 33 : 30}
           running={match?.status === 'playing'}
           onExpire={() => { if (match) void load(match.matchId); }} />
-        <p className="aside-note">Le chrono est contrôlé par le serveur. Actualiser la page ne relance pas le temps.</p>
+        <p className="aside-note">{t("Le chrono est contrôlé par le serveur. Actualiser la page ne relance pas le temps.", "The server controls the timer. Reloading does not restart it.", "O servidor controla o cronómetro. Atualizar a página não reinicia o tempo.")}</p>
       </> : undefined}>
-      {restoring && <p role="status">Récupération de votre partie…</p>}
+      {restoring && <p role="status">{t("Récupération de votre partie…", "Restoring your match…", "A recuperar a partida…")}</p>}
 
       {!restoring && !match && <section className="match-setup">
-        <h2>Nouvelle partie</h2>
-        <p>Jouez trois rondes de lettres, trois comptes, deux duels et une finale de huit mots. La partie reste disponible pendant une heure sur ce serveur.</p>
+        <h2>{t("Nouvelle partie", "New match", "Nova partida")}</h2>
+        <p>{t("Jouez trois rondes de lettres, trois comptes, deux duels et une finale de huit mots. La partie reste disponible pendant une heure sur ce serveur.", "Play three letters rounds, three numbers rounds, two duels and an eight-word final. Your match remains available for one hour.", "Jogue três rondas de letras, três de números, dois duelos e uma final de oito palavras. A partida fica disponível durante uma hora.")}</p>
         <div className="match-setup-fields">
-          <label htmlFor="match-language">Langue des lettres
+          <label htmlFor="match-language">{t("Langue des lettres", "Dictionary language", "Idioma do dicionário")}
             <select id="match-language" value={language}
               onChange={event => setLanguage(event.target.value as WordLanguage)}>
               <option value="fr">Français</option>
@@ -262,7 +265,7 @@ const SoloMatch: React.FC<{ presentation?: 'classic' | 'rive' }> = ({ presentati
               <option value="en">English</option>
             </select>
           </label>
-          <label htmlFor="match-large">Grandes plaques des comptes
+          <label htmlFor="match-large">{t("Grandes plaques des comptes", "Large number tiles", "Peças numéricas grandes")}
             <select id="match-large" value={largeCount}
               onChange={event => setLargeCount(Number(event.target.value))}>
               {[0,1,2,3,4].map(n => <option key={n} value={n}>{n}</option>)}
@@ -270,116 +273,116 @@ const SoloMatch: React.FC<{ presentation?: 'classic' | 'rive' }> = ({ presentati
           </label>
         </div>
         <button className="button button--primary" type="button"
-          onClick={() => void start()} disabled={busy}>Commencer la partie</button>
+          onClick={() => void start()} disabled={busy}>{t("Commencer la partie", "Start match", "Iniciar partida")}</button>
       </section>}
 
-      {match && <section className="match-scoreboard" aria-label="Score de la partie">
-        <div><span>PARTIE SOLO</span><strong>{match.currentIndex < match.totalRounds ? match.currentIndex + 1 : match.totalRounds} / {match.totalRounds}</strong></div>
-        <div><span>LANGUE</span><strong>{LANGUAGE_NAMES[match.language]}</strong></div>
-        <div><span>TOTAL</span><strong>{match.totalScore} points</strong></div>
+      {match && <section className="match-scoreboard" aria-label={t("Score de la partie", "Match score", "Pontuação da partida")}>
+        <div><span>{t("PARTIE SOLO", "SOLO MATCH", "PARTIDA INDIVIDUAL")}</span><strong>{match.currentIndex < match.totalRounds ? match.currentIndex + 1 : match.totalRounds} / {match.totalRounds}</strong></div>
+        <div><span>{t("LANGUE", "LANGUAGE", "IDIOMA")}</span><strong>{LANGUAGE_NAMES[match.language]}</strong></div>
+        <div><span>TOTAL</span><strong>{match.totalScore} {t('points','points','pontos')}</strong></div>
       </section>}
 
       {match && round && !finished && <>
-        <p className="puzzle-label">ÉPREUVE {round.index + 1} / {match.totalRounds}</p>
+        <p className="puzzle-label">{t('ÉPREUVE','ROUND','PROVA')} {round.index + 1} / {match.totalRounds}</p>
         <h2 className="match-round-title"><RoundLabel kind={round.kind} /></h2>
         {round.kind === 'letters' && <>
           <TileRack tiles={round.letters || []} totalSlots={10} variant="letters" />
-          <p className="match-instruction">Composez un mot en {LANGUAGE_NAMES[match.language]} avec les lettres ci-dessus.</p>
+          <p className="match-instruction">{t(`Composez un mot en ${LANGUAGE_NAMES[match.language]} avec les lettres ci-dessus.`, `Build a word in ${LANGUAGE_NAMES[match.language]} using the letters above.`, `Componha uma palavra em ${LANGUAGE_NAMES[match.language]} com as letras acima.`)}</p>
         </>}
         {round.kind === 'numbers' && <>
-          <div className="puzzle-label">LE NOMBRE À ATTEINDRE</div>
+          <div className="puzzle-label">{t("LE NOMBRE À ATTEINDRE", "TARGET NUMBER", "NÚMERO ALVO")}</div>
           <div className="target-display">{round.targetNumber}</div>
           <TileRack tiles={round.numbers || []} totalSlots={6} variant="numbers" />
-          <p className="match-instruction">Saisissez un calcul avec +, −, ×, ÷ et des parenthèses, sans réutiliser une plaque.</p>
+          <p className="match-instruction">{t("Saisissez un calcul avec +, −, ×, ÷ et des parenthèses, sans réutiliser une plaque.", "Enter a calculation using +, −, ×, ÷ and parentheses, without reusing a tile.", "Introduza um cálculo com +, −, ×, ÷ e parênteses, sem reutilizar peças.")}</p>
         </>}
         {round.kind === 'duel' && <>
-          <p className="puzzle-label">{round.duelKind === 'anagram' ? 'ANAGRAMME' : 'CALCUL MENTAL'}</p>
+          <p className="puzzle-label">{round.duelKind === 'anagram' ? t("ANAGRAMME", "ANAGRAM", "ANAGRAMA") : t("CALCUL MENTAL", "MENTAL ARITHMETIC", "CÁLCULO MENTAL")}</p>
           {round.duelKind === 'anagram'
             ? <TileRack tiles={round.letters || []} variant="letters" />
             : <div className="challenge-calculation">{round.challenge}</div>}
-          <p className="match-instruction">30 secondes pour répondre correctement. 8 points en jeu.</p>
+          <p className="match-instruction">{t("30 secondes pour répondre correctement. 8 points en jeu.", "30 seconds to answer correctly. 8 points at stake.", "30 segundos para responder corretamente. 8 pontos em jogo.")}</p>
         </>}
         {round.kind === 'final' && <>
           <p className="puzzle-label">
-            MOT {Math.min((round.finaleIndex ?? 0) + 1, round.finaleTotal ?? 8)}
+            {t('MOT','WORD','PALAVRA')} {Math.min((round.finaleIndex ?? 0) + 1, round.finaleTotal ?? 8)}
             {' / '}{round.finaleTotal ?? 8}
           </p>
-          <p className="challenge-total">Points de la finale : <strong>{round.finaleScore ?? 0}</strong></p>
+          <p className="challenge-total">{t("Points de la finale :", "Final points:", "Pontos da final:")} <strong>{round.finaleScore ?? 0}</strong></p>
           {match.status === 'playing' &&
             <TileRack tiles={round.letters || []} variant="letters" totalSlots={10} />}
-          <p className="match-instruction">Trouvez un anagramme de dix lettres. Deux minutes pour huit mots.</p>
+          <p className="match-instruction">{t("Trouvez un anagramme de dix lettres. Deux minutes pour huit mots.", "Find a ten-letter anagram. Two minutes for eight words.", "Encontre um anagrama de dez letras. Dois minutos para oito palavras.")}</p>
         </>}
 
         {match.status === 'playing' && <form className="answer-form" onSubmit={event => void submit(event)}>
-          <label htmlFor="match-answer">{round.kind === 'numbers' ? 'Votre calcul' :
-            round.kind === 'duel' && round.duelKind === 'mental' ? 'Votre résultat' : 'Votre mot'}</label>
+          <label htmlFor="match-answer">{round.kind === 'numbers' ? t("Votre calcul", "Your calculation", "O seu cálculo") :
+            round.kind === 'duel' && round.duelKind === 'mental' ? t("Votre résultat", "Your result", "O seu resultado") : t("Votre mot", "Your word", "A sua palavra")}</label>
           <div className="answer-row">
             <input id="match-answer" value={answer}
               onChange={event => setAnswer(event.target.value)}
-              placeholder={round.kind === 'numbers' ? '(10 + 5) * 8 - 3' : 'Votre réponse…'}
+              placeholder={round.kind === 'numbers' ? '(10 + 5) * 8 - 3' : t("Votre réponse…", "Your answer…", "A sua resposta…")}
               maxLength={round.kind === 'numbers' ? 180 : 40}
               autoComplete="off" disabled={busy} required />
-            <button className="button button--primary" type="submit" disabled={busy}>Valider</button>
+            <button className="button button--primary" type="submit" disabled={busy}>{t("Valider", "Submit", "Validar")}</button>
           </div>
         </form>}
         {round.kind === 'final' && match.status === 'playing' &&
           <button type="button" className="text-button" disabled={busy}
-            onClick={() => void skipFinalWord()}>Passer ce mot</button>}
+            onClick={() => void skipFinalWord()}>{t("Passer ce mot", "Skip word", "Saltar palavra")}</button>}
 
         {match.status === 'review' && <section className="match-review">
-          <h3>Ronde terminée</h3>
-          <p className="match-score-highlight">{last?.score ?? 0} points</p>
-          <p>{last?.answer ? `Votre réponse : ${last.answer}` : 'Aucune réponse validée avant la fin du temps.'}</p>
+          <h3>{t("Ronde terminée", "Round finished", "Ronda terminada")}</h3>
+          <p className="match-score-highlight">{last?.score ?? 0} {t('points','points','pontos')}</p>
+          <p>{last?.answer ? t(`Votre réponse : ${last.answer}`, `Your answer: ${last.answer}`, `A sua resposta: ${last.answer}`) : t("Aucune réponse validée avant la fin du temps.", "No answer accepted before time expired.", "Nenhuma resposta validada antes do fim do tempo.")}</p>
           {round.kind === 'letters' && letterSolutions && <>
-            <p>Meilleur mot du lexique : {letterSolutions.bestLength} lettres</p>
+            <p>{t('Meilleur mot du lexique :','Longest dictionary word:','Maior palavra do dicionário:')} {letterSolutions.bestLength} {t('lettres','letters','letras')}</p>
             <div className="letter-solution-list">{letterSolutions.bestWords.map(word => <span key={word}>{word}</span>)}</div>
           </>}
           {round.kind === 'numbers' && numberSolution && <>
-            <p>Meilleur résultat : {numberSolution.value} (écart {numberSolution.distance})</p>
+            <p>{t('Meilleur résultat :','Best result:','Melhor resultado:')} {numberSolution.value} ({t('écart','difference','diferença')} {numberSolution.distance})</p>
             <ol>{numberSolution.steps.map((step, i) => (
               <li key={i}>{step.left} {step.operator} {step.right} = {step.result}</li>
             ))}</ol>
           </>}
           {round.kind === 'duel' && duelSolution &&
-            <p>Réponse attendue : <strong>{duelSolution}</strong></p>}
+            <p>{t("Réponse attendue :", "Expected answer:", "Resposta esperada:")} <strong>{duelSolution}</strong></p>}
           {round.kind === 'final' && finaleSolutions &&
             <ol className="challenge-answers">{finaleSolutions.words.map((item, index) => (
               <li key={index}><strong>{index + 1}. {item.target}</strong>
-                <span>{item.answer || 'Non résolu'} · {item.score} points</span></li>
+                <span>{item.answer || t("Non résolu", "Unsolved", "Não resolvido")} · {item.score} {t('points','points','pontos')}</span></li>
             ))}</ol>}
           <button className="button button--primary" type="button"
             disabled={busy} onClick={() => void next()}>
-            {round.index + 1 === match.totalRounds ? 'Voir le résultat final' : 'Épreuve suivante'}
+            {round.index + 1 === match.totalRounds ? t("Voir le résultat final", "View final result", "Ver resultado final") : t("Épreuve suivante", "Next round", "Próxima prova")}
           </button>
         </section>}
       </>}
 
       {match && finished && <section className="match-final">
-        <p className="eyebrow">PARTIE TERMINÉE</p>
-        <h2>Votre résultat final</h2>
-        <p className="match-total">{match.totalScore} <span>points</span></p>
-        <p>Neuf épreuves terminées, dont deux duels et une finale de huit mots. Tous les points sont validés par le serveur.</p>
-        <button className="button button--primary" type="button" onClick={reset}>Nouvelle partie</button>
+        <p className="eyebrow">{t("PARTIE TERMINÉE", "MATCH FINISHED", "PARTIDA TERMINADA")}</p>
+        <h2>{t("Votre résultat", "Your result", "O seu resultado")} final</h2>
+        <p className="match-total">{match.totalScore} <span>{t('points','points','pontos')}</span></p>
+        <p>{t("Neuf épreuves terminées, dont deux duels et une finale de huit mots. Tous les points sont validés par le serveur.", "Nine rounds completed, including two duels and an eight-word final. All points are validated by the server.", "Nove provas concluídas, incluindo dois duelos e uma final de oito palavras. Todos os pontos são validados pelo servidor.")}</p>
+        <button className="button button--primary" type="button" onClick={reset}>{t("Nouvelle partie", "New match", "Nova partida")}</button>
       </section>}
 
-      {match && match.history.length > 0 && <section className="match-history" aria-label="Historique des rondes">
-        <h2>Tableau des scores</h2>
+      {match && match.history.length > 0 && <section className="match-history" aria-label={t("Historique des rondes", "Round history", "Histórico das rondas")}>
+        <h2>{t("Tableau des scores", "Scoreboard", "Quadro de pontuações")}</h2>
         <ol>
           {match.history.map(item => <li key={item.drawId}>
             <span>{item.index + 1}. <RoundLabel kind={item.kind} /></span>
-            <span>{item.answer || 'Temps écoulé'}</span>
+            <span>{item.answer || t("Temps écoulé", "Time expired", "Tempo esgotado")}</span>
             <strong>{item.score} pt{item.score === 1 ? '' : 's'}</strong>
           </li>)}
         </ol>
-        <div className="match-history-total"><span>TOTAL</span><strong>{match.totalScore} points</strong></div>
+        <div className="match-history-total"><span>TOTAL</span><strong>{match.totalScore} {t('points','points','pontos')}</strong></div>
       </section>}
 
       {feedback && <p className="answer-feedback" role="status">{feedback}</p>}
       {match && !finished && <div className="match-footer-actions">
         <button className="text-button" type="button"
-          disabled={busy} onClick={() => void load(match.matchId)}>Actualiser le statut</button>
+          disabled={busy} onClick={() => void load(match.matchId)}>{t("Actualiser le statut", "Refresh status", "Atualizar estado")}</button>
         <button className="text-button" type="button" disabled={busy} onClick={reset}>
-          Abandonner la partie
+          {t("Abandonner la partie", "Abandon match", "Abandonar partida")}
         </button>
       </div>}
     </StudioRound>
