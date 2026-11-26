@@ -48,8 +48,6 @@ const ClassicApp: React.FC<{language: UiLanguage; setLanguage: (value: UiLanguag
         <span>{t[8]}</span>
         <select value={language} onChange={e => setLanguage(e.target.value as UiLanguage)}>
           {(Object.keys(UI_LOCALES) as UiLanguage[]).map(locale => <option key={locale} value={locale}>{UI_LOCALES[locale]}</option>)}
-            </optgroup>
-          ))}
         </select>
       </label>
       <span className="site-edition"><span className="status-dot" /> {t[6]}</span>
