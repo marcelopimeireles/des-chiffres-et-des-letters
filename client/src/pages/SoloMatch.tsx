@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation, useGameLanguage } from '../i18n';
 import StudioRound from '../components/StudioRound';
+import InteractiveTiles from '../components/InteractiveTiles';
 import TileRack from '../components/TileRack';
 import DeadlineClock from '../components/DeadlineClock';
 import {
@@ -304,6 +305,10 @@ const SoloMatch: React.FC<{ presentation?: 'classic' | 'rive' }> = ({ presentati
             <TileRack tiles={round.letters || []} variant="letters" totalSlots={10} />}
           <p className="match-instruction">{t("Trouvez un anagramme de dix lettres. Deux minutes pour huit mots.", "Find a ten-letter anagram. Two minutes for eight words.", "Encontre um anagrama de dez letras. Dois minutos para oito palavras.")}</p>
         </>}
+
+        {match.status === 'playing' && (round.kind === 'letters' || round.kind === 'final' || (round.kind === 'duel' && round.duelKind === 'anagram')) &&
+          <InteractiveTiles key={`${round.drawId}:${round.finaleIndex ?? 0}`} tiles={round.letters || []}
+            disabled={busy} onCompose={values => setAnswer(values.join(''))} />}
 
         {match.status === 'playing' && <form className="answer-form" onSubmit={event => void submit(event)}>
           <label htmlFor="match-answer">{round.kind === 'numbers' ? t("Votre calcul", "Your calculation", "O seu cálculo") :
