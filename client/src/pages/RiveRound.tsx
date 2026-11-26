@@ -2,6 +2,8 @@ import { useTranslation } from '../i18n';
 import React, { useEffect, useRef, useState } from 'react';
 import { useGameLanguage } from '../i18n';
 import { useNavigate } from 'react-router-dom';
+import InteractiveTiles from '../components/InteractiveTiles';
+import NumberTileBuilder from '../components/NumberTileBuilder';
 import RiveGameBoard, { BoardAction } from '../components/RiveGameBoard';
 import { useRiveClock } from '../components/useRiveClock';
 import {
@@ -209,7 +211,7 @@ const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
     tiles = choices.map(choice => choice === 'vowel' ? 'V' : 'C');
   }
 
-  return <RiveGameBoard
+  return <div className="rive-interactive-board"><RiveGameBoard
     text={{
       heading: MODE_NAMES[mode],
       progress: t("ENTRAÎNEMENT", "PRACTICE", "TREINO"),
@@ -238,7 +240,13 @@ const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
         setAnswer(previous => (previous + key).slice(0, mode === 'numbers' ? 180 : 40));
       }
     }}
-  />;
+  />
+    {playing && round && <div style={{maxWidth:600,margin:'0 auto',padding:12}}>
+      {round.mode === 'numbers' ? <NumberTileBuilder key={round.draw.drawId} numbers={round.draw.numbers} disabled={busy} onCompose={setAnswer} /> :
+        !numeric && <InteractiveTiles key={`${round.draw.drawId}:${round.mode === 'final' ? round.draw.currentIndex : 0}`} tiles={tiles} disabled={busy} onCompose={values => setAnswer(values.join(''))} />}
+      {!numeric || round.mode === 'numbers' ? <button type="button" className="button button--primary" disabled={busy || !answer.trim()} onClick={submit}>{t('Valider','Submit','Validar')}</button> : null}
+    </div>}
+  </div>;
 };
 
 export default RiveRound;
