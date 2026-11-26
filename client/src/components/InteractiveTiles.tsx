@@ -19,7 +19,7 @@ export default function InteractiveTiles({ tiles, disabled = false, onCompose }:
     onCompose(nextWord.map(i => tiles[i]));
   };
   const move = (id: number, target: 'rack' | 'word', before?: number) => {
-    if (disabled || !rack.includes(id) && !word.includes(id) || id === before) return;
+    if (disabled || (!rack.includes(id) && !word.includes(id)) || id === before) return;
     const r = rack.filter(i => i !== id), w = word.filter(i => i !== id);
     const list = target === 'rack' ? r : w;
     const pos = before === undefined ? -1 : list.indexOf(before);
@@ -37,7 +37,7 @@ export default function InteractiveTiles({ tiles, disabled = false, onCompose }:
         onDrop={e => { e.preventDefault(); e.stopPropagation(); const raw = e.dataTransfer.getData('text/plain'); if (/^\\d+$/.test(raw)) move(Number(raw), target, id); }}
         onClick={() => { if (selected === null) setSelected(id); else if (selected === id) setSelected(null); else move(selected, target, id); }}
         style={{ minWidth: 44, minHeight: 44, fontSize: 22, fontWeight: 700, borderRadius: 5, border: selected === id ? '3px solid #e5b64a' : '1px solid #8294aa', background: '#edf3fa', color: '#152c49' }}>{tiles[id]}</button>)}
-      <button type="button" disabled={disabled || selected === null} onClick={() => { if (selected !== null) move(selected, target); }}>+</button>
+      <button type="button" aria-label={target === 'word' ? 'Ajouter au mot' : 'Rendre au tirage'} disabled={disabled || selected === null} onClick={() => { if (selected !== null) move(selected, target); }}>+</button>
     </div>
   );
   return <section aria-label="Composition visuelle">
