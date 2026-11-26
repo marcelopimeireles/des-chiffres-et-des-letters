@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useGameLanguage } from '../i18n';
 import { useNavigate } from 'react-router-dom';
 import RiveGameBoard, { BoardAction } from '../components/RiveGameBoard';
 import { useRiveClock } from '../components/useRiveClock';
@@ -23,14 +24,13 @@ const MODE_NAMES: Record<Mode, string> = {
   duel: 'Les duels',
   final: 'Les mots de la fin'
 };
-const LANGUAGES: WordLanguage[] = ['fr', 'pt', 'en'];
 const LANGUAGE_NAMES: Record<WordLanguage, string> = { fr: 'Français', pt: 'Português', en: 'English' };
 const BALANCED_DRAW: LetterKind[] = Array.from({ length: 10 }, (_, i) => i % 2 ? 'consonant' : 'vowel');
 
 const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
   const navigate = useNavigate();
   const [round, setRound] = useState<Round | null>(null);
-  const [language, setLanguage] = useState<WordLanguage>('fr');
+  const language = useGameLanguage();
   const [largeCount, setLargeCount] = useState(2);
   const [kind, setKind] = useState<DuelKind>('anagram');
   const [choices, setChoices] = useState<LetterKind[]>([]);
@@ -183,8 +183,7 @@ const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
       else solution();
     } else if (name === 'auxiliary' && !round && mode === 'letters') {
       choose('consonant');
-    } else if (name === 'refresh' && !round && mode !== 'numbers') {
-      setLanguage(previous => LANGUAGES[(LANGUAGES.indexOf(previous) + 1) % LANGUAGES.length]);
+
     } else if (name === 'backspace') {
       if (playing) setAnswer(previous => previous.slice(0, -1));
       else if (!round && mode === 'letters') setChoices(previous => previous.slice(0, -1));
@@ -227,7 +226,7 @@ const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
         playing ? mode === 'final' ? 'Passer ce mot' : '' : 'Voir la solution',
       auxiliaryLabel: !round && mode === 'letters' ? 'Consonne' : '',
       backspaceLabel: playing || (!round && mode === 'letters') ? 'Effacer' : '',
-      refreshLabel: !round && mode !== 'numbers' ? 'Langue' : '',
+      refreshLabel: '',
       resetLabel: round ? 'Quitter' : 'Menu'
     }}
     tiles={tiles}
