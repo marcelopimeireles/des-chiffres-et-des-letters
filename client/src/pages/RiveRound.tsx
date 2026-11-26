@@ -19,17 +19,12 @@ type Round =
   | { mode: 'duel'; draw: DuelRound }
   | { mode: 'final'; draw: FinaleRound };
 
-const MODE_NAMES: Record<Mode, string> = {
-  letters: 'Le mot le plus long',
-  numbers: 'Le compte est bon',
-  duel: 'Les duels',
-  final: 'Les mots de la fin'
-};
 const LANGUAGE_NAMES: Record<WordLanguage, string> = { fr: 'Français', pt: 'Português', en: 'English' };
 const BALANCED_DRAW: LetterKind[] = Array.from({ length: 10 }, (_, i) => i % 2 ? 'consonant' : 'vowel');
 
 const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
   const t = useTranslation();
+  const MODE_NAMES = { letters: t('Le mot le plus long','Longest word','A palavra mais longa'), numbers: t('Le compte est bon','Numbers challenge','Desafio dos números'), duel: t('Les duels','Duels','Duelos'), final: t('Les mots de la fin','Final words','Palavras finais') };
   const navigate = useNavigate();
   const [round, setRound] = useState<Round | null>(null);
   const language = useGameLanguage();
@@ -122,7 +117,7 @@ const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
       }
       setScore(result.score);
       setFinished(true);
-      setFeedback(`Réponse acceptée : ${result.score} points.`);
+      setFeedback(t(`Réponse acceptée : ${result.score} points.`, `Answer accepted: ${result.score} points.`, `Resposta aceite: ${result.score} pontos.`));
     });
   };
 
@@ -200,10 +195,10 @@ const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
 
   if (round?.mode === 'letters') {
     tiles = round.draw.letters;
-    caption = `Composez un mot en ${LANGUAGE_NAMES[language]}.`;
+    caption = t(`Composez un mot en ${LANGUAGE_NAMES[language]}.`, `Build a word in ${LANGUAGE_NAMES[language]}.`, `Componha uma palavra em ${LANGUAGE_NAMES[language]}.`);
   } else if (round?.mode === 'numbers') {
     tiles = round.draw.numbers;
-    caption = `Cible : ${round.draw.targetNumber} · Saisissez un calcul.`;
+    caption = t(`Cible : ${round.draw.targetNumber} · Saisissez un calcul.`, `Target: ${round.draw.targetNumber} · Enter a calculation.`, `Alvo: ${round.draw.targetNumber} · Introduza um cálculo.`);
   } else if (round?.mode === 'duel') {
     tiles = round.draw.letters ?? [];
     caption = round.draw.kind === 'mental' ? round.draw.challenge : t("Retrouvez le mot de l’anagramme.", "Find the anagram word.", "Encontre a palavra do anagrama.");
@@ -220,7 +215,7 @@ const RiveRound: React.FC<{ mode: Mode }> = ({ mode }) => {
       progress: t("ENTRAÎNEMENT", "PRACTICE", "TREINO"),
       caption,
       clock: round ? `${seconds} s` : '—',
-      score: `${score} points`,
+      score: t(`${score} points`, `${score} points`, `${score} pontos`),
       answer: answer || (playing ? numeric ? t("Votre calcul…", "Your calculation…", "O seu cálculo…") : t("Votre mot…", "Your word…", "A sua palavra…") : ''),
       feedback: busy ? t("Veuillez patienter…", "Please wait…", "Aguarde…") : [feedback, revealed].filter(Boolean).join('\n'),
       primaryLabel: !round ? t("Tirer", "Draw", "Sortear") : playing ? t("Valider", "Submit", "Validar") : t("Nouveau tirage", "New draw", "Novo sorteio"),
