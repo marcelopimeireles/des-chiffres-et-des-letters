@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from '../i18n';
+import { useTranslation, useGameLanguage } from '../i18n';
 import DeadlineClock from '../components/DeadlineClock';
 import StudioRound from '../components/StudioRound';
 import TileRack from '../components/TileRack';
 import {
   createDuelDraw, fetchDuelDraw, fetchDuelSolution,
-  validateDuelAnswer, DuelKind, DuelRound, WordLanguage
+  validateDuelAnswer, DuelKind, DuelRound
 } from '../services/gameService';
 
 const Duel: React.FC = () => {
   const t = useTranslation();
   const [kind, setKind] = useState<DuelKind>('anagram');
-  const [language, setLanguage] = useState<WordLanguage>('fr');
+  const language = useGameLanguage();
   const [round, setRound] = useState<DuelRound | null>(null);
   const [input, setInput] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -68,13 +68,6 @@ const Duel: React.FC = () => {
         <label htmlFor="duel-kind">{t("Type de duel", "Duel type", "Tipo de duelo")}
           <select id="duel-kind" value={kind} onChange={event => setKind(event.target.value as DuelKind)}>
             <option value="anagram">{t("Anagramme", "Anagram", "Anagrama")}</option><option value="mental">{t("Calcul mental", "Mental arithmetic", "Cálculo mental")}</option>
-          </select>
-        </label>
-        <label htmlFor="duel-language">{t("Langue", "Language", "Idioma")}
-          <select id="duel-language" value={language}
-            onChange={event => setLanguage(event.target.value as WordLanguage)}>
-            <option value="fr">Français</option><option value="pt">Português (Portugal)</option>
-            <option value="en">English</option>
           </select>
         </label>
         <button className="button button--primary" type="button" disabled={busy}
