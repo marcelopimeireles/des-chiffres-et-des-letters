@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useTranslation } from '../i18n';
+import { useTranslation, useGameLanguage } from '../i18n';
 import CountdownClock from '../components/CountdownClock';
 import StudioRound from '../components/StudioRound';
 import TileRack from '../components/TileRack';
@@ -25,12 +25,13 @@ const VALIDATION_MESSAGES: Record<WordValidationReason, string> = {
 const languageLabel: Record<WordLanguage, string> = {
   fr: 'Français',
   en: 'English',
-  pt: 'Português (Portugal)'
+  pt: 'Português'
 };
 
 const LetterRound: React.FC = () => {
   const t = useTranslation();
-  const [language, setLanguage] = useState<WordLanguage>('fr');
+  const globalLanguage = useGameLanguage();
+  const [drawLanguage, setDrawLanguage] = useState<WordLanguage>(globalLanguage);
   const [choices, setChoices] = useState<LetterKind[]>([]);
   const [letters, setLetters] = useState<string[]>([]);
   const [drawId, setDrawId] = useState('');
@@ -41,6 +42,7 @@ const LetterRound: React.FC = () => {
   const [score, setScore] = useState(0);
   const [solutions, setSolutions] = useState<LetterSolutions | null>(null);
   const [phase, setPhase] = useState<RoundPhase>('select');
+  const language = phase === 'select' ? globalLanguage : drawLanguage;
   const [round, setRound] = useState(0);
   const requestRef = useRef(0);
 
@@ -85,6 +87,7 @@ const LetterRound: React.FC = () => {
   const beginDraw = async () => {
     if (phase !== 'select' || choices.length !== LETTER_COUNT) return;
     const revision = ++requestRef.current;
+    setDrawLanguage(globalLanguage);
     setPhase('loading');
     setFeedback('');
     setValidated(false);
@@ -202,18 +205,7 @@ const LetterRound: React.FC = () => {
           running={phase === 'playing'} onExpire={expire} />
         <p className="aside-note">{t("Le chronomètre commence après la dernière lettre. Le serveur vérifie également le délai.","The timer starts after the last letter. The server also checks the deadline.","O cronómetro começa após a última letra. O servidor também verifica o prazo.")}</p>
       </>}>
-      <div className="language-selector">
-        <label htmlFor="word-language">{t("Langue du dictionnaire","Dictionary language","Idioma do dicionário")}</label>
-        <select id="word-language" value={language} disabled={phase !== 'select'}
-          onChange={event => setLanguage(event.target.value as WordLanguage)}>
-          <option value="fr">Français</option>
-          <option value="en">English</option>
-          <option value="pt">Português (Portugal)</option>
-        </select>
-        <span className="language-selector-hint">
-          {phase === 'select' ? t("À choisir avant le tirage.","Choose before the draw.","Escolha antes do sorteio.") : `Tirage en ${languageLabel[language]}`}
-        </span>
-      </div>
+      
 
       <div className="puzzle-label">{t("VOTRE TIRAGE DE DIX LETTRES","YOUR TEN LETTERS","AS SUAS DEZ LETRAS")}</div>
       <TileRack tiles={letters} variant="letters" totalSlots={LETTER_COUNT} revealedCount={visibleLetters} />
