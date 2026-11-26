@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useTranslation } from '../i18n';
+import { useTranslation, useGameLanguage } from '../i18n';
 import StudioRound from '../components/StudioRound';
 import TileRack from '../components/TileRack';
 import DeadlineClock from '../components/DeadlineClock';
@@ -28,7 +28,7 @@ const RoundLabel: React.FC<{ kind: 'letters' | 'numbers' | 'duel' | 'final' }> =
 const SoloMatch: React.FC<{ presentation?: 'classic' | 'rive' }> = ({ presentation = 'classic' }) => {
   const t = useTranslation();
   const [match, setMatch] = useState<SoloMatchData | null>(null);
-  const [language, setLanguage] = useState<WordLanguage>('fr');
+  const language = useGameLanguage();
   const [largeCount, setLargeCount] = useState(2);
   const [answer, setAnswer] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -233,7 +233,7 @@ const SoloMatch: React.FC<{ presentation?: 'classic' | 'rive' }> = ({ presentati
     return <RiveMatchBoard
       match={match} language={language} largeCount={largeCount} answer={answer}
       feedback={feedback} solution={solution} busy={busy} restoring={restoring}
-      onLanguage={setLanguage} onLargeCount={setLargeCount} onAnswer={setAnswer}
+      onLanguage={() => {}} onLargeCount={setLargeCount} onAnswer={setAnswer}
       onStart={() => void start()} onSubmit={() => void submit()}
       onNext={() => void next()} onReset={reset} onSkip={() => void skipFinalWord()}
       onRefresh={() => { if (match) void load(match.matchId); }}
@@ -257,14 +257,6 @@ const SoloMatch: React.FC<{ presentation?: 'classic' | 'rive' }> = ({ presentati
         <h2>{t("Nouvelle partie", "New match", "Nova partida")}</h2>
         <p>{t("Jouez trois rondes de lettres, trois comptes, deux duels et une finale de huit mots. La partie reste disponible pendant une heure sur ce serveur.", "Play three letters rounds, three numbers rounds, two duels and an eight-word final. Your match remains available for one hour.", "Jogue três rondas de letras, três de números, dois duelos e uma final de oito palavras. A partida fica disponível durante uma hora.")}</p>
         <div className="match-setup-fields">
-          <label htmlFor="match-language">{t("Langue des lettres", "Dictionary language", "Idioma do dicionário")}
-            <select id="match-language" value={language}
-              onChange={event => setLanguage(event.target.value as WordLanguage)}>
-              <option value="fr">Français</option>
-              <option value="pt">Português (Portugal)</option>
-              <option value="en">English</option>
-            </select>
-          </label>
           <label htmlFor="match-large">{t("Grandes plaques des comptes", "Large number tiles", "Peças numéricas grandes")}
             <select id="match-large" value={largeCount}
               onChange={event => setLargeCount(Number(event.target.value))}>
