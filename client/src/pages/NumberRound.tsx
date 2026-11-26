@@ -2,6 +2,7 @@ import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { useTranslation } from '../i18n';
 import CountdownClock from '../components/CountdownClock';
 import StudioRound from '../components/StudioRound';
+import NumberTileBuilder from '../components/NumberTileBuilder';
 import TileRack from '../components/TileRack';
 import {
   fetchNumbersDraw, fetchNumbersSolutions, NumberOperator,
@@ -226,6 +227,7 @@ const NumberRound: React.FC = () => {
       </>}
 
       {(phase === 'playing' || phase === 'checking' || phase === 'finished') && <>
+        <NumberTileBuilder key={drawId} numbers={numbers} disabled={phase !== 'playing'} onCompose={setExpression} />
         <section className="number-builder" aria-label={t("Calcul par étapes","Step-by-step calculation","Cálculo por etapas")}>
           <h2>{t("Construire le calcul","Build the calculation","Construir o cálculo")}</h2>
           <p>{t("Choisissez deux termes et une opération. Le résultat devient une nouvelle plaque utilisable.","Choose two terms and an operation. The result becomes a reusable tile.","Escolha dois termos e uma operação. O resultado torna-se uma nova peça utilizável.")}</p>
