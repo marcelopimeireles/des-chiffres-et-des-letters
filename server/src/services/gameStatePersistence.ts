@@ -188,7 +188,7 @@ export class GameStatePersistence {
     const temporary = path + '.' + process.pid + '.' + randomUUID() + '.tmp';
     try {
       writeFileSync(temporary, contents, { mode: 0o600, flag: 'wx' });
-      const fd = openSync(temporary, 'r');
+      const fd = openSync(temporary, 'r+');
       try { fsyncSync(fd); } finally { closeSync(fd); }
       renameSync(temporary, path);
     } catch (error) {
