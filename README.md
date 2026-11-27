@@ -203,6 +203,26 @@ desenvolvimento, não um servidor de produção.
 
 O GitHub Actions também executa testes e builds após alterações relevantes.
 
+### Validação local
+
+Antes de abrir um pull request, execute os testes do backend, frontend e E2E.
+O BAT de validação local pode ser executado integralmente no Windows sem
+iniciar deployments. A validação de referência passou com **81/81 testes**:
+
+- backend: 42/42
+- frontend: 33/33
+- Playwright desktop: 3/3
+- Playwright mobile emulado: 3/3
+
+O job `windows-compatibility` do GitHub Actions repete a compilação e os
+testes do backend e frontend num runner Windows. Os caminhos temporários do
+Playwright usam o diretório temporário nativo do sistema, e a persistência
+local grava o snapshot através de uma substituição atómica compatível com
+Windows.
+
+Os artefactos gerados em `server/dist`, `client/build`, relatórios E2E e
+cobertura não devem ser adicionados ao Git.
+
 ## 6. Rotas e funcionamento atual
 
 | Rota da interface | Modalidade | Estado |
