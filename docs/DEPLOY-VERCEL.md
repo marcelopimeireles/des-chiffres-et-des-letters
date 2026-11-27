@@ -181,3 +181,29 @@ e execute `vercel` dentro de `server/` ou `client/`.
 **Deploy automático não é ativado por um ficheiro de configuração:**
 é obrigatório associar o repositório à sua conta Vercel, provisionar
 Redis e definir as variáveis privadas nos projetos.
+
+## 7. Limite diário de deployments
+
+Antes de publicar manualmente, execute o guard com um token Vercel mantido
+fora do repositório:
+
+```bash
+VERCEL_TOKEN=... \
+VERCEL_TEAM_ID=team_... \
+VERCEL_DAILY_DEPLOY_LIMIT=2 \
+node scripts/check-vercel-deploy-limit.cjs
+```
+
+No PowerShell:
+
+```powershell
+$env:VERCEL_TOKEN = '...'
+$env:VERCEL_TEAM_ID = 'team_...'
+$env:VERCEL_DAILY_DEPLOY_LIMIT = '2'
+node scripts/check-vercel-deploy-limit.cjs
+```
+
+O limite padrão é de dois deployments por dia UTC. `VERCEL_PROJECT_ID` pode
+ser definido para contar apenas um projeto. O script falha fechado quando o
+token está ausente, a API não responde ou o limite já foi atingido. O token
+não deve ser colocado no Git, em logs ou em variáveis expostas ao frontend.
