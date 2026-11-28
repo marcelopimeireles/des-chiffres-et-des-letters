@@ -59,9 +59,8 @@
     "@babel/plugin-syntax-flow": "7.24.7",
     "@babel/plugin-transform-react-jsx": "7.24.7",
     "@vitejs/plugin-react": "4.3.4",
+    "@testing-library/dom": "9.3.4",
     "sass": "^1.77.6",
     "vite": "5.4.19"
-    "@testing-library/dom": "9.3.4",
-    "sass": "^1.77.6"
   }
 }
