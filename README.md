@@ -11,6 +11,7 @@ As modalidades Letras e Números já validam respostas no servidor e revelam sol
 - [Roadmap de desenvolvimento](ROADMAP.md)
 - [Guia do estúdio e das animações Rive](docs/STUDIO-AND-RIVE.md)
 - [Deploy na Vercel (React + Express + Redis)](docs/DEPLOY-VERCEL.md)
+- [Plano de migração de CRA para Vite](docs/MIGRATION-CRA-VITE.md)
 
 ## Tecnologias
 
