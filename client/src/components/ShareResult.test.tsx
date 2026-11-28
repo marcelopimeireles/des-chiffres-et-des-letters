@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { vi } from 'vitest';
 import ShareResult from './ShareResult';
 
 const originalClipboard = navigator.clipboard;
@@ -7,11 +8,11 @@ const originalShare = navigator.share;
 afterEach(() => {
   Object.defineProperty(navigator, 'clipboard', { configurable: true, value: originalClipboard });
   Object.defineProperty(navigator, 'share', { configurable: true, value: originalShare });
-  jest.restoreAllMocks();
+  vi.restoreAllMocks();
 });
 
 test('copies the localized result and exposes social links', async () => {
-  const writeText = jest.fn().mockResolvedValue(undefined);
+  const writeText = vi.fn().mockResolvedValue(undefined);
   Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } });
 
   render(<ShareResult score={42} />);
@@ -26,7 +27,7 @@ test('copies the localized result and exposes social links', async () => {
 });
 
 test('falls back to copy when native sharing is unavailable or cancelled', async () => {
-  const writeText = jest.fn().mockResolvedValue(undefined);
+  const writeText = vi.fn().mockResolvedValue(undefined);
   Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } });
   Object.defineProperty(navigator, 'share', { configurable: true, value: undefined });
 
@@ -34,7 +35,7 @@ test('falls back to copy when native sharing is unavailable or cancelled', async
   fireEvent.click(screen.getByRole('button', { name: 'Partager' }));
   await waitFor(() => expect(writeText).toHaveBeenCalled());
 
-  const share = jest.fn().mockRejectedValue(Object.assign(new Error('cancelled'), { name: 'AbortError' }));
+  const share = vi.fn().mockRejectedValue(Object.assign(new Error('cancelled'), { name: 'AbortError' }));
   Object.defineProperty(navigator, 'share', { configurable: true, value: share });
   fireEvent.click(screen.getByRole('button', { name: 'Partager' }));
   await waitFor(() => expect(share).toHaveBeenCalled());

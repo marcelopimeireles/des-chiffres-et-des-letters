@@ -1,12 +1,13 @@
 import React from 'react';
+import { vi } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { UiLanguageContext } from '../i18n';
 import RiveRound from './RiveRound';
 import { fetchLettersDraw } from '../services/gameService';
 
-jest.mock('../components/useRiveClock', () => ({ useRiveClock: () => 30 }));
-jest.mock('../components/RiveGameBoard', () => ({
+vi.mock('../components/useRiveClock', () => ({ useRiveClock: () => 30 }));
+vi.mock('../components/RiveGameBoard', () => ({
   __esModule: true,
   default: ({ text, tiles, onAction }: { text: { caption: string; primaryLabel: string }; tiles: unknown[]; onAction: (action: string) => void }) => (
     <div>
@@ -17,14 +18,14 @@ jest.mock('../components/RiveGameBoard', () => ({
     </div>
   )
 }));
-jest.mock('../components/InteractiveTiles', () => () => null);
-jest.mock('../components/NumberTileBuilder', () => () => null);
-jest.mock('../services/gameService', () => ({
-  fetchLettersDraw: jest.fn(), fetchLettersSolutions: jest.fn(), validateLettersWord: jest.fn(),
-  fetchNumbersDraw: jest.fn(), fetchNumbersSolutions: jest.fn(), validateNumbersAnswer: jest.fn(),
-  createDuelDraw: jest.fn(), fetchDuelSolution: jest.fn(), validateDuelAnswer: jest.fn(),
-  createFinaleDraw: jest.fn(), fetchFinaleSolutions: jest.fn(), validateFinaleWord: jest.fn(),
-  skipFinaleWord: jest.fn()
+vi.mock('../components/InteractiveTiles', () => ({ default: () => null }));
+vi.mock('../components/NumberTileBuilder', () => ({ default: () => null }));
+vi.mock('../services/gameService', () => ({
+  fetchLettersDraw: vi.fn(), fetchLettersSolutions: vi.fn(), validateLettersWord: vi.fn(),
+  fetchNumbersDraw: vi.fn(), fetchNumbersSolutions: vi.fn(), validateNumbersAnswer: vi.fn(),
+  createDuelDraw: vi.fn(), fetchDuelSolution: vi.fn(), validateDuelAnswer: vi.fn(),
+  createFinaleDraw: vi.fn(), fetchFinaleSolutions: vi.fn(), validateFinaleWord: vi.fn(),
+  skipFinaleWord: vi.fn()
 }));
 
 const mockedFetchLettersDraw = fetchLettersDraw as jest.MockedFunction<typeof fetchLettersDraw>;

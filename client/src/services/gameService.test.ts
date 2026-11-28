@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { vi } from 'vitest';
 import {
   createDuelDraw,
   createFinaleDraw,
@@ -16,13 +17,13 @@ import {
   validateNumbersAnswer
 } from './gameService';
 
-jest.mock('axios', () => ({
+vi.mock('axios', () => ({
   __esModule: true,
-  default: { get: jest.fn(), post: jest.fn() }
+  default: { get: vi.fn(), post: vi.fn() }
 }));
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-beforeEach(() => jest.clearAllMocks());
+beforeEach(() => vi.clearAllMocks());
 
 test('sends number and letter round requests with their payloads', async () => {
   mockedAxios.post.mockResolvedValue({ data: { drawId: 'draw' } });

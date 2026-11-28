@@ -1,10 +1,11 @@
 import React from 'react';
+import { vi } from 'vitest';
 import { render, screen, fireEvent, within } from '@testing-library/react';
 import InteractiveTiles from './InteractiveTiles';
 import { UiLanguageContext } from '../i18n';
 
 function setup(disabled = false) {
-  const onCompose = jest.fn();
+  const onCompose = vi.fn();
   render(<UiLanguageContext.Provider value="en"><InteractiveTiles tiles={['A','A','B']} disabled={disabled} onCompose={onCompose}/></UiLanguageContext.Provider>);
   const rack = screen.getByRole('group', {name:'Available letters'});
   const word = screen.getByRole('group', {name:'Composed word'});

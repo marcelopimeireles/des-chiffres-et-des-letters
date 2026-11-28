@@ -1,4 +1,5 @@
 import { act, render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 import { useRiveClock } from './useRiveClock';
 
 function ClockProbe({ deadline }: { deadline?: number }) {
@@ -7,13 +8,13 @@ function ClockProbe({ deadline }: { deadline?: number }) {
 }
 
 beforeEach(() => {
-  jest.useFakeTimers();
-  jest.spyOn(Date, 'now').mockReturnValue(100_000);
+  vi.useFakeTimers();
+  vi.spyOn(Date, 'now').mockReturnValue(100_000);
 });
 
 afterEach(() => {
-  jest.useRealTimers();
-  jest.restoreAllMocks();
+  vi.useRealTimers();
+  vi.restoreAllMocks();
 });
 
 test('returns zero without a deadline and counts down to the deadline', () => {
@@ -24,8 +25,8 @@ test('returns zero without a deadline and counts down to the deadline', () => {
   expect(screen.getByTestId('seconds')).toHaveTextContent('3');
 
   act(() => {
-    jest.spyOn(Date, 'now').mockReturnValue(101_200);
-    jest.advanceTimersByTime(200);
+    vi.spyOn(Date, 'now').mockReturnValue(101_200);
+    vi.advanceTimersByTime(200);
   });
   expect(screen.getByTestId('seconds')).toHaveTextContent('2');
 });
@@ -35,12 +36,12 @@ test('stops scheduling after expiry and clears timers on unmount', () => {
   expect(screen.getByTestId('seconds')).toHaveTextContent('1');
 
   act(() => {
-    jest.spyOn(Date, 'now').mockReturnValue(101_000);
-    jest.advanceTimersByTime(200);
+    vi.spyOn(Date, 'now').mockReturnValue(101_000);
+    vi.advanceTimersByTime(200);
   });
   expect(screen.getByTestId('seconds')).toHaveTextContent('0');
-  expect(jest.getTimerCount()).toBe(0);
+  expect(vi.getTimerCount()).toBe(0);
 
   unmount();
-  expect(jest.getTimerCount()).toBe(0);
+  expect(vi.getTimerCount()).toBe(0);
 });
