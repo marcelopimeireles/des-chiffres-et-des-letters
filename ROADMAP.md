@@ -15,7 +15,7 @@
 | --- | --- | --- |
 | React/TypeScript, Redux, Router, API Express | ✅ Implementado | Preservar e evoluir incrementalmente |
 | Home com quatro modalidades, estilo estúdio, layout responsivo | ✅ Primeira versão | Refinamento visual ainda necessário |
-| Tabuleiros e cronómetros | 🟡 Em evolução | Letras: escolha, revelação e prazo de resposta; outras rondas ainda só visual |
+| Tabuleiros e cronómetros | ✅ Implementado | Composição visual de letras e números, cronómetros e fallback sem Rive |
 | Parser matemático seguro e motor de regras | ✅ Implementado | Números: +, −, ×, ÷; inteiros positivos, divisão exata e uso único das placas |
 | Sorteio de seis placas e solver | ✅ Implementado | 0–4 placas grandes e alvo 101–999; solver exato ou melhor aproximação |
 | Sorteio de letras interativo | 🟡 Em evolução | EN/PT-PT/FR, léxicos locais, prazo no servidor, pontos provisórios e solver; falta regras oficiais e persistência |
@@ -44,14 +44,14 @@ M4 + M5. Não antecipar multijogador nem contas para o MVP.
 
 ### P0 transversal — Manipulação visual de peças (M1/M2/M3/M4)
 
-- [ ] Permitir reorganizar livremente as peças de letras e números por drag-and-drop, sem alterar o sorteio original.
-- [ ] Letras: montar e testar palavras visualmente numa área de composição; mover, retirar e reordenar peças antes da submissão.
-- [ ] Números: reorganizar placas e construir operações visualmente, incluindo resultados intermédios, respeitando as regras do motor.
-- [ ] Oferecer interação por toque, rato e seleção de duas peças; manter teclado como alternativa acessível.
-- [ ] Disponibilizar desfazer, restaurar ordem original e embaralhar sem perder o prazo da ronda.
-- [ ] Preservar identidade individual das peças repetidas e impedir reutilização indevida; manter validação e pontuação autoritativas no servidor.
-- [ ] Integrar nas modalidades isoladas e partida completa, com feedback visual e animações Rive quando disponíveis, sem dependência obrigatória do runtime.
-- [ ] Testar desktop e mobile, teclado, peças repetidas, reordenação, expiração e submissão.
+- [x] Permitir reorganizar livremente as peças de letras e números por drag-and-drop, sem alterar o sorteio original.
+- [x] Letras: montar e testar palavras visualmente numa área de composição; mover, retirar e reordenar peças antes da submissão.
+- [x] Números: reorganizar placas e construir operações visualmente, incluindo resultados intermédios, respeitando as regras do motor.
+- [x] Oferecer interação por toque, rato e seleção de duas peças; manter teclado como alternativa acessível.
+- [x] Disponibilizar desfazer, restaurar ordem original e embaralhar sem perder o prazo da ronda.
+- [x] Preservar identidade individual das peças repetidas e impedir reutilização indevida; manter validação e pontuação autoritativas no servidor.
+- [x] Integrar nas modalidades isoladas e partida completa, com feedback visual e animações Rive quando disponíveis, sem dependência obrigatória do runtime.
+- [x] Testar desktop e mobile, teclado, peças repetidas, reordenação, expiração e submissão.
 
 **Aceitação:** o jogador consegue experimentar palavras e cálculos e submeter uma resposta sem digitar no teclado. Reorganizar peças não altera o sorteio, o cronómetro ou a pontuação. Este requisito é obrigatório para o MVP público.
 
