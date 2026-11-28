@@ -33,7 +33,7 @@ const StudioRound: React.FC<StudioRoundProps> = ({ number, title, description, c
     </div>
     <section className="game-console" aria-label={title}>
       <div className="console-heading">
-        <span><span className="status-dot" /> TABLEAU DE JEU</span>
+        <span><span className="status-dot" /> {t("TABLEAU DE JEU", "GAME BOARD", "TABULEIRO DE JOGO")}</span>
         <span>DES CHIFFRES ET DES LETTRES</span>
       </div>
       <div className="console-content">

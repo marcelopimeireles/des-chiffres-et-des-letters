@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from '../i18n';
 
 interface CountdownClockProps {
   seconds: number;
@@ -11,6 +12,7 @@ interface CountdownClockProps {
 const CountdownClock: React.FC<CountdownClockProps> = ({
   seconds, resetKey, running = true, onExpire
 }) => {
+  const t = useTranslation();
   const [remaining, setRemaining] = useState(seconds);
   const expirationCallback = useRef(onExpire);
   const expired = useRef(false);
@@ -41,14 +43,14 @@ const CountdownClock: React.FC<CountdownClockProps> = ({
   const angle = Math.round((remaining / seconds) * 360);
   return (
     <div className={`countdown ${remaining <= 10 ? 'countdown--urgent' : ''}`}
-      role="timer" aria-label={`Temps restant : ${remaining} secondes`}>
+      role="timer" aria-label={t(`Temps restant : ${remaining} secondes`, `Time remaining: ${remaining} seconds`, `Tempo restante: ${remaining} segundos`)}>
       <div className="countdown-dial"
         style={{ background: `conic-gradient(var(--accent) ${angle}deg, rgba(255,255,255,.12) ${angle}deg)` }}>
         <div className="countdown-center">
-          <strong>{remaining}</strong><span>SEC</span>
+          <strong>{remaining}</strong><span>{t('SEC', 'SEC', 'SEG')}</span>
         </div>
       </div>
-      <span className="countdown-caption">{remaining === 0 ? 'TEMPS ÉCOULÉ' : 'TEMPS RESTANT'}</span>
+      <span className="countdown-caption">{remaining === 0 ? t('TEMPS ÉCOULÉ', 'TIME UP', 'TEMPO ESGOTADO') : t('TEMPS RESTANT', 'TIME LEFT', 'TEMPO RESTANTE')}</span>
     </div>
   );
 };
