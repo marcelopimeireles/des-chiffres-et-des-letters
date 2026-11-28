@@ -9,7 +9,7 @@ projetos pode ser automático em cada push/PR depois da ligação ao Git.
 
 ```text
 GitHub: des-chiffres-et-des-letters
- ├── client/    → Vercel "des-chiffres-web" (React 18, CRA)
+ ├── client/    → Vercel "des-chiffres-web" (React 18, Vite)
  │                 GET /match, /number-round, /duel, etc.
  │                 REACT_APP_API_URL → HTTPS backend
  └── server/    → Vercel "des-chiffres-api" (Express Function)
