@@ -25,7 +25,7 @@ jobs:
         with:
           name: frontend-coverage
           path: client/coverage/
-      - run: yarn build:vite
+      - run: yarn build
 
   server:
     runs-on: ubuntu-latest
@@ -76,5 +76,5 @@ jobs:
         env:
           CI: true
       - name: Build frontend with Vite
-        run: yarn build:vite
+        run: yarn build
         working-directory: client

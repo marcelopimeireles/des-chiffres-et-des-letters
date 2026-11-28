@@ -100,7 +100,7 @@ Importe **o mesmo repositório** como segundo projeto no Vercel:
 | Root Directory | `client` |
 | Framework Preset | `Vite` |
 | Install Command | `yarn install --frozen-lockfile` |
-| Build Command | `yarn build:vite` |
+| Build Command | `yarn build` |
 | Output Directory | `dist` |
 | Node.js Version | `22.x` |
 | Configuração | `client/vercel.json` |

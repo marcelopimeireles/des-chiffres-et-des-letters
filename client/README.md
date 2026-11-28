@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The frontend is built and served with [Vite](https://vitejs.dev/).
 
 ## Available Scripts
 
