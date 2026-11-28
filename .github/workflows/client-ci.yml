@@ -71,7 +71,7 @@ jobs:
         run: yarn install --frozen-lockfile --non-interactive
         working-directory: client
       - name: Run frontend tests
-        run: yarn test:coverage --watchAll=false
+        run: yarn test:coverage
         working-directory: client
         env:
           CI: true
