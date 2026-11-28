@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 /**
- * Rive is optional: without REACT_APP_RIVE_STUDIO_SRC we display a CSS
+ * Rive is optional: without VITE_RIVE_STUDIO_SRC we display a CSS
  * studio illustration. A supplied .riv file should expose a state machine
  * named "Studio" with triggers "intro", "draw", and "success".
  * Runtime is loaded on demand to keep the existing dependency lockfile intact.
@@ -45,7 +45,7 @@ function loadRuntime(): Promise<void> {
   return runtimePromise;
 }
 
-const assetUrl = process.env.REACT_APP_RIVE_STUDIO_SRC || '';
+const assetUrl = process.env.VITE_RIVE_STUDIO_SRC || '';
 
 interface RiveSceneProps {
   cue?: 'intro' | 'draw' | 'success';

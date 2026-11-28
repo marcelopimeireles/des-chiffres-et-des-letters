@@ -93,15 +93,15 @@ cp client/.env.example client/.env
 Edite `client/.env`:
 
 ```dotenv
-REACT_APP_API_URL=http://localhost:5000/api/game
-REACT_APP_RIVE_STUDIO_SRC=
+VITE_API_URL=http://localhost:5000/api/game
+VITE_RIVE_STUDIO_SRC=
 ```
 
 Para utilizar a sua animação:
 
 1. Crie uma cena no Rive Editor e exporte o ficheiro `studio.riv`.
 2. Coloque o ficheiro em `client/public/animations/studio.riv`.
-3. Defina `REACT_APP_RIVE_STUDIO_SRC=/animations/studio.riv`.
+3. Defina `VITE_RIVE_STUDIO_SRC=/animations/studio.riv`.
 4. Reinicie `yarn start` no frontend.
 
 A animação deve disponibilizar uma máquina de estados chamada `Studio` com
@@ -162,7 +162,7 @@ inicia partidas efémeras.**
 
 Antes de importar os projetos, consulte os passos completos em
 [docs/DEPLOY-VERCEL.md](docs/DEPLOY-VERCEL.md). As variáveis obrigatórias
-são `REACT_APP_API_URL` no frontend e `UPSTASH_REDIS_REST_URL` /
+são `VITE_API_URL` no frontend e `UPSTASH_REDIS_REST_URL` /
 `UPSTASH_REDIS_REST_TOKEN` no backend. Recomenda-se também
 `CORS_ORIGIN` e um `GAME_STATE_REDIS_KEY` isolado por ambiente.
 
@@ -404,7 +404,7 @@ os barèmes **provisórios** dos dois motores. Consulte
   `server/data/dictionaries/{en,pt,fr}.txt` estão presentes no servidor.
   As respostas HTTP 503 indicam erro de carregamento do léxico.
 - **Letras ou números não carregam:** confirme que o servidor está em execução
-  e que a URL em `REACT_APP_API_URL` aponta para `/api/game`.
+  e que a URL em `VITE_API_URL` aponta para `/api/game`.
 - **Porta ocupada:** altere `PORT` na API ou liberte a porta 3000 do cliente.
 - **`yarn start` falha no backend:** execute `yarn build` antes, ou utilize `yarn dev`.
 - **Rive não aparece:** confira o caminho para o `.riv`, os nomes da máquina

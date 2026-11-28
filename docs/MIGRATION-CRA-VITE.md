@@ -2,40 +2,34 @@
 
 ## Motivo
 
-O frontend ainda usa `react-scripts` 5.0.1, baseado em Create React App,
-que está descontinuado. A migração deve preservar as rotas, os testes, as
-variáveis de ambiente da Vercel e o fallback SPA.
+O frontend usa Vite. A migração preservou as rotas, os testes, as variáveis
+de ambiente da Vercel e o fallback SPA.
 
 ## Estado atual
 
 - React 18 + TypeScript 4.9.
 - Entrypoint: `client/src/index.tsx`.
-- Testes: Jest através de `react-scripts test`.
-- Build: `react-scripts build`.
-- Variável pública: `REACT_APP_API_URL`.
+- Testes: Vitest através de `yarn test`.
+- Build: Vite através de `yarn build`.
+- Variável pública: `VITE_API_URL`.
 - Assets públicos referenciados por `%PUBLIC_URL%`.
 - Vercel serve `client/dist` e aplica fallback para `index.html`.
 
 ## Plano por fases
 
-1. Adicionar Vite e `@vitejs/plugin-react`, mantendo temporariamente os
-   scripts CRA como fallback.
-2. Criar `client/vite.config.ts` com `root` em `client`, alias de `src`,
-   suporte aos assets públicos e proxy local para a API.
-3. Criar `client/index.html` equivalente ao `public/index.html` e manter
-   manifest, favicon e animações em `public/`.
-4. Migrar `REACT_APP_*` para `VITE_*` através de um adaptador de ambiente;
-   atualizar o script de validação Vercel e a documentação. O primeiro passo
-   aceita `VITE_API_URL`, `VITE_RIVE_GAME_SRC` e `VITE_RIVE_STUDIO_SRC`, com
-   fallback para os nomes CRA existentes.
-5. Migrar Jest para Vitest ou manter Jest explicitamente configurado, sem
-   reduzir os 15 suites e 44 testes atuais. O runner Vitest foi adicionado com
-   compatibilidade temporária para os mocks Jest existentes. Os scripts
-   `test`, `test:coverage`, `start`, `build` e `preview` já usam Vitest/Vite.
-6. Atualizar `client/vercel.json`, scripts E2E e workflows CI para `dist/`. Os
-   workflows passam a executar os comandos Vite.
+1. Adicionar Vite e `@vitejs/plugin-react`. Concluída.
+2. Criar `client/vite.config.ts` com suporte aos assets públicos e proxy local.
+   Concluída.
+3. Criar `client/index.html` equivalente ao `public/index.html`. Concluída.
+4. Migrar `REACT_APP_*` para `VITE_*` através de um adaptador de ambiente.
+   Concluída; `VITE_*` é o contrato oficial e `REACT_APP_*` fica apenas como
+   fallback de compatibilidade até atualizar as variáveis existentes na Vercel.
+5. Migrar Jest para Vitest sem reduzir os 15 suites e 44 testes atuais.
+   Concluída.
+6. Atualizar `client/vercel.json`, scripts E2E e workflows CI para `dist`.
+   Concluída.
 7. Remover `react-scripts`, configurações CRA e scripts temporários depois de
-   validar frontend, Windows, Playwright e dois previews Vercel.
+   validar frontend, Windows, Playwright e dois previews Vercel. Concluída.
 
 ## Critérios de aceitação
 
@@ -43,8 +37,8 @@ variáveis de ambiente da Vercel e o fallback SPA.
 - `yarn test` mantém todos os testes verdes.
 - `yarn build` produz `client/dist` sem warnings bloqueantes.
 - `/`, `/match`, `/duel` e `/final-words` funcionam após refresh direto.
-- `REACT_APP_API_URL` não é aceito silenciosamente em produção depois da
-  migração; a configuração Vercel deve usar a convenção escolhida.
+- `VITE_API_URL` é o nome oficial no deployment Vercel; o fallback legado só
+  existe para não quebrar previews com variáveis antigas.
 - Playwright desktop/mobile e o job Windows passam no CI.
 - Não há regressão no runtime Rive, nos assets públicos ou no fallback SPA.
 
