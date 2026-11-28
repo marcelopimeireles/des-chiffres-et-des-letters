@@ -1,4 +1,5 @@
 import React from 'react';
+import { vi } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import FinalWords from './FinalWords';
@@ -7,9 +8,9 @@ import {
   skipFinaleWord, validateFinaleWord
 } from '../services/gameService';
 
-jest.mock('../services/gameService', () => ({
-  createFinaleDraw: jest.fn(), fetchFinaleDraw: jest.fn(),
-  fetchFinaleSolutions: jest.fn(), skipFinaleWord: jest.fn(), validateFinaleWord: jest.fn()
+vi.mock('../services/gameService', () => ({
+  createFinaleDraw: vi.fn(), fetchFinaleDraw: vi.fn(),
+  fetchFinaleSolutions: vi.fn(), skipFinaleWord: vi.fn(), validateFinaleWord: vi.fn()
 }));
 const create = createFinaleDraw as jest.MockedFunction<typeof createFinaleDraw>;
 const skip = skipFinaleWord as jest.MockedFunction<typeof skipFinaleWord>;

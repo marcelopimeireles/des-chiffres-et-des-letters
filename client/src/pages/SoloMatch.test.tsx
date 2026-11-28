@@ -1,4 +1,5 @@
 import React from 'react';
+import { vi } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import SoloMatch from './SoloMatch';
@@ -9,16 +10,16 @@ import {
   validateDuelAnswer, skipFinaleWord, fetchDuelSolution, fetchFinaleSolutions
 } from '../services/gameService';
 
-jest.mock('../services/gameService', () => ({
-  createSoloMatch: jest.fn(),
-  fetchSoloMatch: jest.fn(),
-  nextSoloRound: jest.fn(),
-  validateLettersWord: jest.fn(),
-  validateNumbersAnswer: jest.fn(),
-  fetchLettersSolutions: jest.fn(),
-  fetchNumbersSolutions: jest.fn(),
-  validateDuelAnswer: jest.fn(), validateFinaleWord: jest.fn(), skipFinaleWord: jest.fn(),
-  fetchDuelSolution: jest.fn(), fetchFinaleSolutions: jest.fn()
+vi.mock('../services/gameService', () => ({
+  createSoloMatch: vi.fn(),
+  fetchSoloMatch: vi.fn(),
+  nextSoloRound: vi.fn(),
+  validateLettersWord: vi.fn(),
+  validateNumbersAnswer: vi.fn(),
+  fetchLettersSolutions: vi.fn(),
+  fetchNumbersSolutions: vi.fn(),
+  validateDuelAnswer: vi.fn(), validateFinaleWord: vi.fn(), skipFinaleWord: vi.fn(),
+  fetchDuelSolution: vi.fn(), fetchFinaleSolutions: vi.fn()
 }));
 
 const create = createSoloMatch as jest.MockedFunction<typeof createSoloMatch>;

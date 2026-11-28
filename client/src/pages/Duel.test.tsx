@@ -1,12 +1,13 @@
 import React from 'react';
+import { vi } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Duel from './Duel';
 import { createDuelDraw, fetchDuelDraw, fetchDuelSolution, validateDuelAnswer } from '../services/gameService';
 
-jest.mock('../services/gameService', () => ({
-  createDuelDraw: jest.fn(), fetchDuelDraw: jest.fn(),
-  fetchDuelSolution: jest.fn(), validateDuelAnswer: jest.fn()
+vi.mock('../services/gameService', () => ({
+  createDuelDraw: vi.fn(), fetchDuelDraw: vi.fn(),
+  fetchDuelSolution: vi.fn(), validateDuelAnswer: vi.fn()
 }));
 const create = createDuelDraw as jest.MockedFunction<typeof createDuelDraw>;
 const fetchRound = fetchDuelDraw as jest.MockedFunction<typeof fetchDuelDraw>;

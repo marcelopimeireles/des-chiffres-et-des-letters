@@ -21,7 +21,7 @@ interface BoardProps {
   onKey: (key: string) => void;
 }
 
-const ASSET_URL = process.env.REACT_APP_RIVE_GAME_SRC || '/animations/game-board.riv';
+const ASSET_URL = process.env.VITE_RIVE_GAME_SRC || '/animations/game-board.riv';
 
 const RiveGameBoard: React.FC<BoardProps> = ({ text, tiles, keyboardVisible, revealKey, onAction, onKey }) => {
   const canvas = useRef<HTMLCanvasElement>(null);

@@ -1,13 +1,14 @@
 import React from 'react';
+import { vi } from 'vitest';
 import { fireEvent, render, screen, waitFor, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { UiLanguageContext } from '../i18n';
 import LetterRound from './LetterRound';
 import { fetchLettersDraw, validateLettersWord } from '../services/gameService';
 
-jest.mock('../services/gameService', () => ({
-  fetchLettersDraw: jest.fn(),
-  validateLettersWord: jest.fn()
+vi.mock('../services/gameService', () => ({
+  fetchLettersDraw: vi.fn(),
+  validateLettersWord: vi.fn()
 }));
 
 const mockedDraw = fetchLettersDraw as jest.MockedFunction<typeof fetchLettersDraw>;
@@ -46,7 +47,7 @@ test('the player can undo the last choice', () => {
 });
 
 test('a valid English word is only accepted after server dictionary validation', async () => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
   try {
     mockedDraw.mockResolvedValue({
       drawId: 'example-uuid', language: 'en',
@@ -63,7 +64,7 @@ test('a valid English word is only accepted after server dictionary validation',
     fireEvent.click(screen.getByRole('button', { name: 'Start draw' }));
     await act(async () => { await Promise.resolve(); });
     for (let i = 0; i < 10; i++) {
-      await act(async () => { jest.advanceTimersByTime(240); });
+      await act(async () => { vi.advanceTimersByTime(240); });
     }
     const answer = screen.getByRole('textbox', { name: 'Your word in English' });
     fireEvent.change(answer, { target: { value: 'cat' } });
@@ -74,6 +75,6 @@ test('a valid English word is only accepted after server dictionary validation',
     expect(screen.getByText('3 points')).toBeInTheDocument();
     expect(screen.getByText('certain')).toBeInTheDocument();
   } finally {
-    jest.useRealTimers();
+  vi.useRealTimers();
   }
 });

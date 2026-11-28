@@ -9,9 +9,9 @@ projetos pode ser automático em cada push/PR depois da ligação ao Git.
 
 ```text
 GitHub: des-chiffres-et-des-letters
- ├── client/    → Vercel "des-chiffres-web" (React 18, CRA)
+ ├── client/    → Vercel "des-chiffres-web" (React 18, Vite)
  │                 GET /match, /number-round, /duel, etc.
- │                 REACT_APP_API_URL → HTTPS backend
+ │                 VITE_API_URL → HTTPS backend
  └── server/    → Vercel "des-chiffres-api" (Express Function)
                    GET/POST /api/game/*
                      ↕
@@ -33,7 +33,7 @@ Crie uma base Redis com persistência no [Upstash Console](https://console.upsta
 ou em [Vercel Marketplace — Storage](https://vercel.com/marketplace?category=storage).
 Copie a **REST URL HTTPS** e o **REST Token com permissão de escrita**.
 Não use o token read-only. Nunca guarde tokens em `.env.example`, Git ou
-variáveis `REACT_APP_*`.
+variáveis `VITE_*`.
 
 Preferencialmente, coloque Vercel Function e Redis na mesma região para
 reduzir latência. Preview e Production podem partilhar o mesmo Redis
@@ -98,24 +98,24 @@ Importe **o mesmo repositório** como segundo projeto no Vercel:
 |---|---|
 | Project Name (exemplo) | `des-chiffres-web` |
 | Root Directory | `client` |
-| Framework Preset | `Create React App` |
+| Framework Preset | `Vite` |
 | Install Command | `yarn install --frozen-lockfile` |
 | Build Command | `yarn build` |
-| Output Directory | `build` |
+| Output Directory | `dist` |
 | Node.js Version | `22.x` |
 | Configuração | `client/vercel.json` |
 
 **Environment Variables**, para Production e Preview:
 
 ```dotenv
-REACT_APP_API_URL=https://<seu-projeto-api>.vercel.app/api/game
+VITE_API_URL=https://<seu-projeto-api>.vercel.app/api/game
 ```
 
 A variável tem de apontar para a URL definitiva **HTTPS**, sem barra
 final. O script `client/scripts/check-vercel-env.cjs` impede que
 um build Vercel use acidentalmente a URL `localhost`.
 
-React Scripts injeta `REACT_APP_*` **no build**: se a URL mudar,
+Vite injeta `VITE_*` **no build**: se a URL mudar,
 altere a variável e faça **Redeploy**. Nunca guarde tokens Redis no
 frontend. O fallback em `client/vercel.json` mantém acessíveis
 `/match`, `/duel`, `/final-words` e outras rotas após refresh.
@@ -181,3 +181,29 @@ e execute `vercel` dentro de `server/` ou `client/`.
 **Deploy automático não é ativado por um ficheiro de configuração:**
 é obrigatório associar o repositório à sua conta Vercel, provisionar
 Redis e definir as variáveis privadas nos projetos.
+
+## 7. Limite diário de deployments
+
+Antes de publicar manualmente, execute o guard com um token Vercel mantido
+fora do repositório:
+
+```bash
+VERCEL_TOKEN=... \
+VERCEL_TEAM_ID=team_... \
+VERCEL_DAILY_DEPLOY_LIMIT=2 \
+node scripts/check-vercel-deploy-limit.cjs
+```
+
+No PowerShell:
+
+```powershell
+$env:VERCEL_TOKEN = '...'
+$env:VERCEL_TEAM_ID = 'team_...'
+$env:VERCEL_DAILY_DEPLOY_LIMIT = '2'
+node scripts/check-vercel-deploy-limit.cjs
+```
+
+O limite padrão é de dois deployments por dia UTC. `VERCEL_PROJECT_ID` pode
+ser definido para contar apenas um projeto. O script falha fechado quando o
+token está ausente, a API não responde ou o limite já foi atingido. O token
+não deve ser colocado no Git, em logs ou em variáveis expostas ao frontend.
