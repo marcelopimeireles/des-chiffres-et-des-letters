@@ -22,7 +22,8 @@ de ambiente da Vercel e o fallback SPA.
    Concluída.
 3. Criar `client/index.html` equivalente ao `public/index.html`. Concluída.
 4. Migrar `REACT_APP_*` para `VITE_*` através de um adaptador de ambiente.
-   Concluída; `VITE_*` é agora o contrato único de produção.
+   Concluída; `VITE_*` é o contrato oficial e `REACT_APP_*` fica apenas como
+   fallback de compatibilidade até atualizar as variáveis existentes na Vercel.
 5. Migrar Jest para Vitest sem reduzir os 15 suites e 44 testes atuais.
    Concluída.
 6. Atualizar `client/vercel.json`, scripts E2E e workflows CI para `dist`.
@@ -36,7 +37,8 @@ de ambiente da Vercel e o fallback SPA.
 - `yarn test` mantém todos os testes verdes.
 - `yarn build` produz `client/dist` sem warnings bloqueantes.
 - `/`, `/match`, `/duel` e `/final-words` funcionam após refresh direto.
-- `VITE_API_URL` é obrigatório no deployment Vercel e URLs locais não passam.
+- `VITE_API_URL` é o nome oficial no deployment Vercel; o fallback legado só
+  existe para não quebrar previews com variáveis antigas.
 - Playwright desktop/mobile e o job Windows passam no CI.
 - Não há regressão no runtime Rive, nos assets públicos ou no fallback SPA.
 
