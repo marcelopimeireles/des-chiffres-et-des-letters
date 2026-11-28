@@ -16,7 +16,7 @@ jobs:
       - run: yarn --cwd server install --frozen-lockfile
       - run: yarn --cwd client install --frozen-lockfile
       - run: yarn --cwd server build
-      - run: yarn --cwd client build:vite
+      - run: yarn --cwd client build
       - run: npm install --prefix e2e --no-audit --no-fund
       - run: npx playwright install --with-deps chromium
         working-directory: e2e
