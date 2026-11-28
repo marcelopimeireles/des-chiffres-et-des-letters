@@ -30,7 +30,9 @@ variáveis de ambiente da Vercel e o fallback SPA.
    fallback para os nomes CRA existentes.
 5. Migrar Jest para Vitest ou manter Jest explicitamente configurado, sem
    reduzir os 15 suites e 44 testes atuais.
-6. Atualizar `client/vercel.json`, scripts E2E e workflows CI para `dist/`.
+6. Atualizar `client/vercel.json`, scripts E2E e workflows CI para `dist/`. Os
+   workflows passam a executar explicitamente os comandos Vite, mantendo os
+   scripts CRA disponíveis apenas como fallback durante a migração.
 7. Remover `react-scripts`, configurações CRA e scripts temporários apenas
    depois de validar frontend, Windows, Playwright e dois previews Vercel.
 

@@ -15,6 +15,6 @@ module.exports = defineConfig({
   ],
   webServer: [
     { command: 'yarn --cwd ../server start', port: 5000, reuseExistingServer: !process.env.CI, env: { GAME_STATE_FILE: gameStateFile } },
-    { command: 'yarn --cwd ../client start', url: 'http://localhost:3000', reuseExistingServer: !process.env.CI, env: { BROWSER: 'none', REACT_APP_API_URL: 'http://localhost:5000/api/game' }, timeout: 120000 }
+    { command: 'yarn --cwd ../client start:vite --host 0.0.0.0', url: 'http://localhost:3000', reuseExistingServer: !process.env.CI, env: { VITE_API_URL: 'http://localhost:5000/api/game' }, timeout: 120000 }
   ]
 });
