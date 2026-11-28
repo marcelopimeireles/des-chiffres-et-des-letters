@@ -197,8 +197,8 @@ yarn build
 yarn start
 ```
 
-Os ficheiros compilados vão para `server/dist` e `client/build`.
-O conteúdo de `client/build` precisa ser servido por um host estático
+Os ficheiros compilados vão para `server/dist` e `client/dist`.
+O conteúdo de `client/dist` precisa ser servido por um host estático
 num deploy de produção; `yarn start` no cliente inicia o servidor de
 desenvolvimento, não um servidor de produção.
 

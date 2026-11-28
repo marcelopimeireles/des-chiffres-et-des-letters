@@ -14,7 +14,7 @@ variáveis de ambiente da Vercel e o fallback SPA.
 - Build: `react-scripts build`.
 - Variável pública: `REACT_APP_API_URL`.
 - Assets públicos referenciados por `%PUBLIC_URL%`.
-- Vercel serve `client/build` e aplica fallback para `index.html`.
+- Vercel serve `client/dist` e aplica fallback para `index.html`.
 
 ## Plano por fases
 

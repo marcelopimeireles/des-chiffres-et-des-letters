@@ -98,24 +98,24 @@ Importe **o mesmo repositório** como segundo projeto no Vercel:
 |---|---|
 | Project Name (exemplo) | `des-chiffres-web` |
 | Root Directory | `client` |
-| Framework Preset | `Create React App` |
+| Framework Preset | `Vite` |
 | Install Command | `yarn install --frozen-lockfile` |
-| Build Command | `yarn build` |
-| Output Directory | `build` |
+| Build Command | `yarn build:vite` |
+| Output Directory | `dist` |
 | Node.js Version | `22.x` |
 | Configuração | `client/vercel.json` |
 
 **Environment Variables**, para Production e Preview:
 
 ```dotenv
-REACT_APP_API_URL=https://<seu-projeto-api>.vercel.app/api/game
+VITE_API_URL=https://<seu-projeto-api>.vercel.app/api/game
 ```
 
 A variável tem de apontar para a URL definitiva **HTTPS**, sem barra
 final. O script `client/scripts/check-vercel-env.cjs` impede que
 um build Vercel use acidentalmente a URL `localhost`.
 
-React Scripts injeta `REACT_APP_*` **no build**: se a URL mudar,
+Vite injeta `VITE_*` **no build**: se a URL mudar,
 altere a variável e faça **Redeploy**. Nunca guarde tokens Redis no
 frontend. O fallback em `client/vercel.json` mantém acessíveis
 `/match`, `/duel`, `/final-words` e outras rotas após refresh.
