@@ -97,6 +97,10 @@ VITE_API_URL=http://localhost:5000/api/game
 VITE_RIVE_STUDIO_SRC=
 ```
 
+Os endpoints de sorteio aceitam opcionalmente `seed` (1–128 caracteres) para
+reproduzir uma tiragem durante testes e auditorias. Sem `seed`, a tiragem usa
+aleatoriedade normal.
+
 Para utilizar a sua animação:
 
 1. Crie uma cena no Rive Editor e exporte o ficheiro `studio.riv`.

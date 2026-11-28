@@ -2,21 +2,27 @@ import { Request, Response } from 'express';
 import { numberRoundStore, NUMBER_PLAY_SECONDS } from '../domain/numberRounds';
 import { soloMatchStore } from '../domain/matches';
 import { parseNumbersExpression, scoreNumbers, solveNumbers } from '../domain/numbers';
+import { createSeededRandom, isValidSeed } from '../domain/random';
 
 const uuidPattern = /^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i;
 
 export const createNumbersDraw = (req: Request, res: Response) => {
   const largeCount: unknown = req.body?.largeCount ?? 2;
+  const seed: unknown = req.body?.seed;
   if (typeof largeCount !== 'number' || !Number.isInteger(largeCount) ||
       largeCount < 0 || largeCount > 4) {
     res.status(400).json({ code: 'invalid_large_count', error: 'largeCount must be an integer from 0 to 4.' });
     return;
   }
-  const round = numberRoundStore.create(largeCount);
+  if (seed !== undefined && !isValidSeed(seed)) {
+    res.status(400).json({ code: 'invalid_seed', error: 'seed must be a string between 1 and 128 characters.' });
+    return;
+  }
+  const round = numberRoundStore.create(largeCount, seed, seed ? createSeededRandom(seed) : Math.random);
   res.json({
     drawId: round.drawId, targetNumber: round.targetNumber,
     numbers: round.numbers, largeCount: round.largeCount,
-    deadlineAt: round.deadlineAt, playSeconds: NUMBER_PLAY_SECONDS
+    deadlineAt: round.deadlineAt, playSeconds: NUMBER_PLAY_SECONDS, seed: round.seed
   });
 };
 

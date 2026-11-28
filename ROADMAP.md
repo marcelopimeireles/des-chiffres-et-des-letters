@@ -87,7 +87,7 @@ licença compatível (uso comercial/redistribuição, se aplicável).
 - [x] Permitir escolher vogal ou consoante dez vezes e oferecer tiragem automática de 5/5.
 - [x] Validar no servidor a sequência de dez escolhas e revelar as letras por ordem.
 - [x] Guardar temporariamente sorteio e idioma no servidor usando `drawId` (5 minutos, em memória).
-- [ ] Adicionar `seed` e armazenamento persistente para auditabilidade/reinício do servidor.
+- [x] Adicionar `seed` determinístico aos sorteios standalone e persistir o valor no snapshot da ronda.
 - [x] Seletor de língua EN, PT-PT e FR com validação em léxicos locais offline.
 - [x] Disponibilizar subconjuntos de léxicos locais e documentar fontes/licenças.
 - [ ] Substituir subconjuntos por dicionários completos de competição, com revisão de direitos, flexões e lista de termos admitidos.
@@ -111,7 +111,7 @@ reprodutíveis com um `seed` de sorteio.
 **Dependência:** fechar regras numéricas da edição/modo escolhido.
 
 - [x] Configurar 0–4 placas grandes, seis placas com multiplicidade e alvo 101–999.
-- [ ] Adicionar seed/armazenamento persistente para sorteios reproduzíveis entre sessões.
+- [x] Adicionar seed determinístico aos sorteios standalone e persistir o valor no snapshot da ronda.
 - [x] Implementar motor matemático puro e parser seguro no servidor, separado da UI, com uso único de cada placa.
 - [x] Definir regras provisórias: resultados intermédios inteiros positivos, divisões exatas, sem zero.
 - [x] Solver por subconjuntos de placas, procura solução exata ou melhor aproximação sem exigir solução exata para todos os sorteios.

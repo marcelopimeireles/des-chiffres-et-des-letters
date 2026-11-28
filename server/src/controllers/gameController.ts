@@ -8,6 +8,7 @@ import {
 } from '../domain/letterRounds';
 import { getLexicon, lookupDictionaryWord, solveLetters } from '../services/dictionary';
 import { soloMatchStore } from '../domain/matches';
+import { createSeededRandom, isValidSeed } from '../domain/random';
 
 const numberPool = [25, 50, 75, 100,
   ...Array.from({ length: 10 }, (_, i) => i + 1),
@@ -33,20 +34,25 @@ export const getLettersGame = (_req: Request, res: Response) => {
 export const createLettersDraw = (req: Request, res: Response) => {
   const choices: unknown = req.body?.choices;
   const language: unknown = req.body?.language ?? 'fr';
+  const seed: unknown = req.body?.seed;
   if (!isLetterChoices(choices) || !isWordLanguage(language)) {
     res.status(400).json({
       error: 'Expected language en, pt or fr and exactly 10 choices of vowel or consonant.'
     });
     return;
   }
+  if (seed !== undefined && !isValidSeed(seed)) {
+    res.status(400).json({ error: 'seed must be a string between 1 and 128 characters.' });
+    return;
+  }
   try {
     // Do not create unplayable rounds if their local word list is missing.
     getLexicon(language);
-    const round = letterRoundStore.create(choices, language);
+    const round = letterRoundStore.create(choices, language, seed ? createSeededRandom(seed) : Math.random, seed);
     res.json({
       drawId: round.drawId, letters: round.letters, choices: round.choices,
       language, deadlineAt: round.deadlineAt,
-      revealDurationMs: LETTER_REVEAL_MS, playSeconds: LETTER_PLAY_SECONDS
+      revealDurationMs: LETTER_REVEAL_MS, playSeconds: LETTER_PLAY_SECONDS, seed: round.seed
     });
   } catch (error) {
     console.error('Unable to load local dictionary', error);
