@@ -13,7 +13,7 @@ studio animation. The site does not bundle third-party show graphics/audio.
    - `success`: correct answer celebration
 3. Export to `client/public/animations/studio.riv`.
 4. Copy `client/.env.example` to `client/.env` and set
-   `REACT_APP_RIVE_STUDIO_SRC=/animations/studio.riv`.
+   `VITE_RIVE_STUDIO_SRC=/animations/studio.riv`.
 5. Restart the React dev server.
 
 The app loads the pinned Rive Canvas JS runtime from a CDN **only when**
@@ -64,7 +64,7 @@ cd server && yarn && yarn dev
 cd client && yarn && yarn start
 ```
 
-Set `REACT_APP_API_URL` in the client's environment for another backend.
+Set `VITE_API_URL` in the client's environment for another backend.
 
 ## Suggested next steps
 

@@ -11,7 +11,7 @@ projetos pode ser automático em cada push/PR depois da ligação ao Git.
 GitHub: des-chiffres-et-des-letters
  ├── client/    → Vercel "des-chiffres-web" (React 18, Vite)
  │                 GET /match, /number-round, /duel, etc.
- │                 REACT_APP_API_URL → HTTPS backend
+ │                 VITE_API_URL → HTTPS backend
  └── server/    → Vercel "des-chiffres-api" (Express Function)
                    GET/POST /api/game/*
                      ↕
@@ -33,7 +33,7 @@ Crie uma base Redis com persistência no [Upstash Console](https://console.upsta
 ou em [Vercel Marketplace — Storage](https://vercel.com/marketplace?category=storage).
 Copie a **REST URL HTTPS** e o **REST Token com permissão de escrita**.
 Não use o token read-only. Nunca guarde tokens em `.env.example`, Git ou
-variáveis `REACT_APP_*`.
+variáveis `VITE_*`.
 
 Preferencialmente, coloque Vercel Function e Redis na mesma região para
 reduzir latência. Preview e Production podem partilhar o mesmo Redis

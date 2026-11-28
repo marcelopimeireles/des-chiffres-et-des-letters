@@ -27,7 +27,7 @@ const StudioRound: React.FC<StudioRoundProps> = ({ number, title, description, c
         <h1>{title}</h1>
         <p className="round-description">{description}</p>
       </div>
-      {process.env.REACT_APP_RIVE_STUDIO_SRC
+      {process.env.VITE_RIVE_STUDIO_SRC
         ? <div className="round-rive-badge"><RiveScene cue={animationCue} revision={animationRevision} compact /></div>
         : <span className="round-emblem" aria-hidden="true">{number}</span>}
     </div>
