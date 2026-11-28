@@ -9,6 +9,7 @@ export interface LetterRound {
   letters: string[];
   choices: LetterKind[];
   language: WordLanguage;
+  seed?: string;
   createdAt: number;
   deadlineAt: number;
   answer?: { word: string; score: number };
@@ -27,7 +28,7 @@ export class LetterRoundStore {
     private readonly ttlMs: number = 5 * 60 * 1000
   ) {}
 
-  create(choices: LetterKind[], language: WordLanguage): LetterRound {
+  create(choices: LetterKind[], language: WordLanguage, random: () => number = Math.random, seed?: string): LetterRound {
     for (const [id, round] of this.rounds) {
       if (this.now() - round.createdAt > this.ttlMs) this.rounds.delete(id);
     }
@@ -37,8 +38,8 @@ export class LetterRoundStore {
     }
     const createdAt = this.now();
     const round: LetterRound = {
-      drawId: randomUUID(), choices: [...choices], language,
-      letters: drawLetters(choices, Math.random, language),
+      drawId: randomUUID(), choices: [...choices], language, seed,
+      letters: drawLetters(choices, random, language),
       createdAt,
       deadlineAt: createdAt + LETTER_REVEAL_MS + LETTER_PLAY_SECONDS * 1000
     };

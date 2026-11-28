@@ -7,6 +7,7 @@ export interface NumberRound {
   numbers: number[];
   targetNumber: number;
   largeCount: number;
+  seed?: string;
   createdAt: number;
   deadlineAt: number;
   answer?: { expression: string; value: number; distance: number; score: number };
@@ -23,7 +24,7 @@ export class NumberRoundStore {
     private readonly ttlMs: number = 5 * 60 * 1000
   ) {}
 
-  create(largeCount: number): NumberRound {
+  create(largeCount: number, seed?: string, random: () => number = this.random): NumberRound {
     for (const [id, item] of this.rounds) {
       if (this.now() - item.createdAt > this.ttlMs) this.rounds.delete(id);
     }
@@ -34,9 +35,9 @@ export class NumberRoundStore {
     const createdAt = this.now();
     const round: NumberRound = {
       drawId: randomUUID(),
-      largeCount,
-      numbers: drawNumbers(largeCount, this.random),
-      targetNumber: 101 + Math.floor(this.random() * 899),
+      largeCount, seed,
+      numbers: drawNumbers(largeCount, random),
+      targetNumber: 101 + Math.floor(random() * 899),
       createdAt,
       deadlineAt: createdAt + NUMBER_PLAY_SECONDS * 1000
     };
