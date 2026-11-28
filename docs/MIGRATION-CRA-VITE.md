@@ -25,7 +25,9 @@ variáveis de ambiente da Vercel e o fallback SPA.
 3. Criar `client/index.html` equivalente ao `public/index.html` e manter
    manifest, favicon e animações em `public/`.
 4. Migrar `REACT_APP_*` para `VITE_*` através de um adaptador de ambiente;
-   atualizar o script de validação Vercel e a documentação.
+   atualizar o script de validação Vercel e a documentação. O primeiro passo
+   aceita `VITE_API_URL`, `VITE_RIVE_GAME_SRC` e `VITE_RIVE_STUDIO_SRC`, com
+   fallback para os nomes CRA existentes.
 5. Migrar Jest para Vitest ou manter Jest explicitamente configurado, sem
    reduzir os 15 suites e 44 testes atuais.
 6. Atualizar `client/vercel.json`, scripts E2E e workflows CI para `dist/`.

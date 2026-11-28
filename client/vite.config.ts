@@ -6,9 +6,9 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     define: {
-      'process.env.REACT_APP_API_URL': JSON.stringify(env.REACT_APP_API_URL || 'http://localhost:5000/api/game'),
-      'process.env.REACT_APP_RIVE_GAME_SRC': JSON.stringify(env.REACT_APP_RIVE_GAME_SRC || ''),
-      'process.env.REACT_APP_RIVE_STUDIO_SRC': JSON.stringify(env.REACT_APP_RIVE_STUDIO_SRC || '')
+      'process.env.REACT_APP_API_URL': JSON.stringify(env.VITE_API_URL || env.REACT_APP_API_URL || 'http://localhost:5000/api/game'),
+      'process.env.REACT_APP_RIVE_GAME_SRC': JSON.stringify(env.VITE_RIVE_GAME_SRC || env.REACT_APP_RIVE_GAME_SRC || ''),
+      'process.env.REACT_APP_RIVE_STUDIO_SRC': JSON.stringify(env.VITE_RIVE_STUDIO_SRC || env.REACT_APP_RIVE_STUDIO_SRC || '')
     },
     server: {
       port: 3000,
