@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from '../i18n';
 
 interface DeadlineClockProps {
   deadlineAt: number;
@@ -10,6 +11,7 @@ interface DeadlineClockProps {
 /** Absolute server deadline: a browser refresh cannot restart the countdown. */
 const DeadlineClock: React.FC<DeadlineClockProps> = ({ deadlineAt, running, onExpire, totalSeconds = 45 }) => {
   const remainingAt = () => Math.max(0, Math.ceil((deadlineAt - Date.now()) / 1000));
+  const t = useTranslation();
   const [remaining, setRemaining] = useState(remainingAt);
   const called = useRef(false);
   const callback = useRef(onExpire);
@@ -37,16 +39,16 @@ const DeadlineClock: React.FC<DeadlineClockProps> = ({ deadlineAt, running, onEx
   const angle = Math.min(360, Math.round((remaining / totalSeconds) * 360));
   return (
     <div className={`countdown ${remaining <= 10 ? 'countdown--urgent' : ''}`}
-      role="timer" aria-label={`Temps restant : ${remaining} secondes`}>
+      role="timer" aria-label={t(`Temps restant : ${remaining} secondes`, `Time remaining: ${remaining} seconds`, `Tempo restante: ${remaining} segundos`)}>
       <div className="countdown-dial" style={{
         background: `conic-gradient(var(--accent) ${angle}deg, rgba(255,255,255,.12) ${angle}deg)`
       }}>
         <div className="countdown-center">
-          <strong>{remaining}</strong><span>SEC</span>
+          <strong>{remaining}</strong><span>{t('SEC', 'SEC', 'SEG')}</span>
         </div>
       </div>
       <span className="countdown-caption">
-        {remaining === 0 ? 'TEMPS ÉCOULÉ' : 'TEMPS RESTANT'}
+        {remaining === 0 ? t('TEMPS ÉCOULÉ', 'TIME UP', 'TEMPO ESGOTADO') : t('TEMPS RESTANT', 'TIME LEFT', 'TEMPO RESTANTE')}
       </span>
     </div>
   );
