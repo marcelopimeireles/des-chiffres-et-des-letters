@@ -1,4 +1,5 @@
 import React from 'react';
+import { vi } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import NumberRound from './NumberRound';
@@ -6,10 +7,10 @@ import {
   fetchNumbersDraw, fetchNumbersSolutions, validateNumbersAnswer
 } from '../services/gameService';
 
-jest.mock('../services/gameService', () => ({
-  fetchNumbersDraw: jest.fn(),
-  fetchNumbersSolutions: jest.fn(),
-  validateNumbersAnswer: jest.fn()
+vi.mock('../services/gameService', () => ({
+  fetchNumbersDraw: vi.fn(),
+  fetchNumbersSolutions: vi.fn(),
+  validateNumbersAnswer: vi.fn()
 }));
 
 const mockedDraw = fetchNumbersDraw as jest.MockedFunction<typeof fetchNumbersDraw>;

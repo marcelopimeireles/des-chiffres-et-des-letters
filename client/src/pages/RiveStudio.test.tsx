@@ -1,9 +1,10 @@
 import React from 'react';
+import { vi } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import RiveStudio from './RiveStudio';
 
-jest.mock('../components/RiveGameBoard', () => ({
+vi.mock('../components/RiveGameBoard', () => ({
   __esModule: true,
   default: ({ onAction }: { onAction: (action: string) => void }) => (
     <div>
@@ -13,8 +14,8 @@ jest.mock('../components/RiveGameBoard', () => ({
     </div>
   )
 }));
-jest.mock('./RiveRound', () => ({ __esModule: true, default: ({ mode }: { mode: string }) => <div>{mode} round</div> }));
-jest.mock('./SoloMatch', () => ({ __esModule: true, default: () => <div>solo match</div> }));
+vi.mock('./RiveRound', () => ({ __esModule: true, default: ({ mode }: { mode: string }) => <div>{mode} round</div> }));
+vi.mock('./SoloMatch', () => ({ __esModule: true, default: () => <div>solo match</div> }));
 
 test('routes each studio menu action to its destination', () => {
   render(<MemoryRouter initialEntries={['/']}><RiveStudio /></MemoryRouter>);

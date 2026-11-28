@@ -31,8 +31,8 @@
     "start:vite": "vite",
     "build:vite": "node scripts/check-vercel-env.cjs && vite build",
     "preview:vite": "vite preview --host 0.0.0.0",
-    "test": "react-scripts test",
-    "test:coverage": "react-scripts test --watchAll=false --coverage --coverageReporters=text --coverageReporters=lcov --coverageReporters=json-summary --collectCoverageFrom=src/**/*.{ts,tsx} --collectCoverageFrom=!src/**/*.d.ts",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -58,9 +58,12 @@
     "@babel/plugin-proposal-private-property-in-object": "7.21.0-placeholder-for-preset-env.2",
     "@babel/plugin-syntax-flow": "7.24.7",
     "@babel/plugin-transform-react-jsx": "7.24.7",
-    "@vitejs/plugin-react": "4.3.4",
     "@testing-library/dom": "9.3.4",
+    "@vitejs/plugin-react": "4.3.4",
+    "@vitest/coverage-v8": "2.1.9",
+    "jsdom": "25.0.1",
     "sass": "^1.77.6",
-    "vite": "5.4.19"
+    "vite": "5.4.19",
+    "vitest": "2.1.9"
   }
 }

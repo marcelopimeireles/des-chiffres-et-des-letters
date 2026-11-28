@@ -1,10 +1,11 @@
 import React from 'react';
+import { vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import NumberTileBuilder from './NumberTileBuilder';
 import { UiLanguageContext } from '../i18n';
 
 function setup(numbers = [10,5,2], disabled = false) {
-  const onCompose = jest.fn();
+  const onCompose = vi.fn();
   render(<UiLanguageContext.Provider value="en"><NumberTileBuilder numbers={numbers} disabled={disabled} onCompose={onCompose}/></UiLanguageContext.Provider>);
   const choose = (value: number) => fireEvent.click(screen.getByRole('button',{name:String(value)}));
   const calculate = () => fireEvent.click(screen.getByRole('button',{name:'Calculate'}));
